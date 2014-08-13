@@ -373,14 +373,7 @@ table tr td {
   border-top: 1px solid #FFF;*/
 }
 
-ul.images {
-  width:450px;
-  height:450px;
-  overflow:hidden;
-  position:relative;
-  margin:0;
-  padding:0;
-} 
+ 
 
 ul.images li {
   position:absolute;
