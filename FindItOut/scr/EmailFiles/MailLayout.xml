@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Email>    
+    <Layout key="preAprobada">
+        <From>appuser@naturesweet.com.mx</From>
+        <Subject>Confirmación de cuenta</Subject>
+        <HTMLBody>preAprobada.htm</HTMLBody>
+        <Resources>
+            <Item Name="footerLogo" FileName="Footer.jpg">
+                footerLogo
+            </Item>
+            <Item Name="LogoNS" FileName="HeaderEmail.jpg">
+                LogoNS
+            </Item>
+        </Resources>
+    </Layout>
+
+  <Layout key="MandarPass">
+    <From>appuser@naturesweet.com.mx</From>
+    <Subject>Envio de contraseña</Subject>
+    <HTMLBody>MandarPass.htm</HTMLBody>
+    <Resources>
+      <Item Name="footerLogo" FileName="Footer.jpg">
+        footerLogo
+      </Item>
+      <Item Name="LogoNS" FileName="HeaderEmail.jpg">
+        LogoNS
+      </Item>
+    </Resources>
+  </Layout>
+  
+  
+</Email>

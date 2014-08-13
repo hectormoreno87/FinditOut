@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Bienvenida_EnvioPass" xml:space="preserve">
+    <value>Recupera tu cuenta</value>
+  </data>
+  <data name="Bienvenida_FindItOut" xml:space="preserve">
+    <value>Bienvenido a Find It Out!!</value>
+  </data>
+  <data name="Bienvenida_Registro1" xml:space="preserve">
+    <value>Crea una cuenta</value>
+  </data>
+  <data name="Bienvenida_Registro1Exito" xml:space="preserve">
+    <value>Ya está!</value>
+  </data>
+  <data name="Bienvenida_Registro1Exito2" xml:space="preserve">
+    <value>Correo repetido</value>
+  </data>
+  <data name="btn_CrearCuenta" xml:space="preserve">
+    <value>Crear Cuenta</value>
+  </data>
+  <data name="btn_Entrar" xml:space="preserve">
+    <value>Entrar</value>
+  </data>
+  <data name="btn_EnviarPass" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="EntrarAlSistema" xml:space="preserve">
+    <value>Entrar a Find It Out</value>
+  </data>
+  <data name="lbl_AunSinCuenta" xml:space="preserve">
+    <value>Si aún no tienes una cuenta con nosotros pika</value>
+  </data>
+  <data name="lbl_CampoObligatorio" xml:space="preserve">
+    <value>Ups! Olvidas este campo</value>
+  </data>
+  <data name="lbl_ConfirmPass" xml:space="preserve">
+    <value>Confirma contraseña</value>
+  </data>
+  <data name="lbl_Correo" xml:space="preserve">
+    <value>Correo</value>
+  </data>
+  <data name="lbl_correoEnviado1" xml:space="preserve">
+    <value>Hemos enviado un correo a:</value>
+  </data>
+  <data name="lbl_correoEnviado2" xml:space="preserve">
+    <value>Para activar la cuenta sigue los pasos incluidos en el correo</value>
+  </data>
+  <data name="lbl_CorreoMal" xml:space="preserve">
+    <value>El correo no está bien escrito</value>
+  </data>
+  <data name="lbl_correoRepetido" xml:space="preserve">
+    <value>El correo ya se encuentra registrado, no es posible agregarlo de nuevo. Intenta con uno diferente</value>
+  </data>
+  <data name="lbl_DireccionInvalida" xml:space="preserve">
+    <value>La dirección de correo electrónico no es válido</value>
+  </data>
+  <data name="lbl_DireccionInvalida2" xml:space="preserve">
+    <value>La cuenta de correo electrónico no se encuentra en los registros. Por favor, asegurate de escribirla correctamente</value>
+  </data>
+  <data name="lbl_EnvioPass" xml:space="preserve">
+    <value>Escribe tu cuenta de correo y te enviaremos tu contraseña</value>
+  </data>
+  <data name="lbl_inactivo" xml:space="preserve">
+    <value>Cuenta desactivada</value>
+  </data>
+  <data name="lbl_inactivo2" xml:space="preserve">
+    <value>Tu cuenta ha sido desactivada, por favor, envia un correo a XXXX para reactivar tu cuenta</value>
+  </data>
+  <data name="lbl_Pass" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="lbl_PassConfirmError" xml:space="preserve">
+    <value>La contraseña y la confirmación no corresponden, intenta de nuevo</value>
+  </data>
+  <data name="lbl_PassInvalido" xml:space="preserve">
+    <value>La contraseña no es correcta</value>
+  </data>
+  <data name="lbl_PassInvalido2" xml:space="preserve">
+    <value>La contraseña no es correcta, por favor, asegurate de escribirla correctamente</value>
+  </data>
+  <data name="lbl_sinConfirmar" xml:space="preserve">
+    <value>Cuenta sin confirmar</value>
+  </data>
+  <data name="lbl_sinConfirmar2" xml:space="preserve">
+    <value>Tu cuenta aún no ha sido confirmada. Por favor, revisa tu correo y sigue los pasos que se señalan</value>
+  </data>
+  <data name="link_Aqui" xml:space="preserve">
+    <value>Registrate Aquí</value>
+  </data>
+  <data name="link_irLogin" xml:space="preserve">
+    <value>Ir a la página de inicio</value>
+  </data>
+  <data name="link_OlvidePass" xml:space="preserve">
+    <value>Olvide mi contraseña</value>
+  </data>
+  <data name="link_RegistrateAqui" xml:space="preserve">
+    <value> Registrate Aquí</value>
+  </data>
+  <data name="link_regresarRegistro" xml:space="preserve">
+    <value>Volver al Registro</value>
+  </data>
+  <data name="Bienvenida_ConfirmarCuenta" xml:space="preserve">
+    <value>Enhorabuena!!</value>
+  </data>
+  <data name="Bienvenida_ConfirmarCuentaError" xml:space="preserve">
+    <value>Datos corruptos</value>
+  </data>
+  <data name="Bienvenida_SendPassExito" xml:space="preserve">
+    <value>Te hemos enviado tu contraseña</value>
+  </data>
+  <data name="Bienvenida_SendPassExitoFalse" xml:space="preserve">
+    <value>Ups!</value>
+  </data>
+  <data name="Bienvenida_SendPassExitoNoEncontrado" xml:space="preserve">
+    <value>No encontramos tu cuenta</value>
+  </data>
+  <data name="HolaCorreo" xml:space="preserve">
+    <value>Hola</value>
+  </data>
+  <data name="lbl_MssgConfirmarCuenta" xml:space="preserve">
+    <value>Tu cuenta ya está activa, configura tus datos y disfruta de los resultados</value>
+  </data>
+  <data name="lbl_MssgConfirmarCuentaError" xml:space="preserve">
+    <value>Los datos de tu cuenta se encuentran dañados o no existen en nuestro sistema. Por favor, vuelde a intentarlo más tarde</value>
+  </data>
+  <data name="lbl_SendPassExitoMesg" xml:space="preserve">
+    <value>Por favor, revisa tu correo y aquí te esperamos!</value>
+  </data>
+  <data name="lbl_SendPassExitoMesgFalse" xml:space="preserve">
+    <value>Hubo un problema en la conexión, por favor, intenta mas tarde</value>
+  </data>
+  <data name="lbl_SendPassExitoMesgNoEncontrado" xml:space="preserve">
+    <value>Por favor, asegurate de escribir bien tu cuenta de correo</value>
+  </data>
+  <data name="link_regresaSendPass" xml:space="preserve">
+    <value>Intentarlo de nuevo</value>
+  </data>
+  <data name="Mess1Correo" xml:space="preserve">
+    <value>Aquí está tu contraseña</value>
+  </data>
+  <data name="Mess1CorreoConfirmar" xml:space="preserve">
+    <value>Hemos recibido una solicitud de cuenta. Para confirmar presiona el link.</value>
+  </data>
+  <data name="Mess2Correo" xml:space="preserve">
+    <value>Recuerda que puedes cambiarla en los datos de tu cuenta</value>
+  </data>
+  <data name="Mess2CorreoConfirmar" xml:space="preserve">
+    <value>Si no eres tú, por favor, ignora este correo.</value>
+  </data>
+  <data name="Mess3Correo" xml:space="preserve">
+    <value>Te esperamos</value>
+  </data>
+  <data name="btn_Guardar" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="lbl_DescrLocaliz" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="lbl_DomLocaliz" xml:space="preserve">
+    <value>Domicilio</value>
+  </data>
+  <data name="lbl_TelLocaliz" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="lbl_UserExpLocaliz" xml:space="preserve">
+    <value>*Nombre de usuario</value>
+  </data>
+  <data name="lbl_UserLocaliz" xml:space="preserve">
+    <value>Nombre Find It Out</value>
+  </data>
+  <data name="menuCatalogo" xml:space="preserve">
+    <value>Mis Catálogos</value>
+  </data>
+  <data name="menuLocalizacion" xml:space="preserve">
+    <value>Datos de Localización</value>
+  </data>
+  <data name="lbl_BuscaEncuentra" xml:space="preserve">
+    <value>Busca. Encuentra</value>
+  </data>
+  <data name="Bienvenida_IniciaSesion" xml:space="preserve">
+    <value>Inicia Sesión</value>
+  </data>
+  <data name="lbl_bienvenida1" xml:space="preserve">
+    <value>This standards compliant, fixed width website template is released as an 'open source' design (under a Creative Commons Attribution 3.0 Licence), which means that you are free to use it for anything you want (including modifying and amending it). All I ask is that you leave the 'design from css3templates.co.uk' link in the footer of the template. All of the photos were taken by me - use as you wish.</value>
+  </data>
+  <data name="Bienvenida_Contacto" xml:space="preserve">
+    <value>Queremos saber de ti!!</value>
+  </data>
+  <data name="lblComentarioContacto" xml:space="preserve">
+    <value>Comentarios:</value>
+  </data>
+  <data name="lblCorreoContacto" xml:space="preserve">
+    <value>Tu correo:</value>
+  </data>
+  <data name="lbl_MssgContacto" xml:space="preserve">
+    <value>Dudas, comentarios, sugerencias... Mandanos un correo !!</value>
+  </data>
+  <data name="menuBuscar" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="menuContacto" xml:space="preserve">
+    <value>Contacto</value>
+  </data>
+  <data name="menuInicio" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="menuNosotros" xml:space="preserve">
+    <value>Acerca de Nosotros</value>
+  </data>
+  <data name="menuRegistro" xml:space="preserve">
+    <value>Registro</value>
+  </data>
+</root>

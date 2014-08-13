@@ -1,0 +1,60 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Admin.master.cs" Inherits="Admin_Admin" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table class="MasterAdmin">
+            <tr>
+            <td align="center">
+                <img src="../img/Logo_.png" / width="70px">
+            </td>
+            </tr>
+            <tr>
+                <td style="width:30%;">
+                    <table>
+                        <tr>
+                            <td>
+                                <asp:Button ID="btnDatos" runat="server" Text='<%$ Resources:GlobalResource, menuLocalizacion%>' CssClass="botonMenuVertical" />
+                                <%--<asp:Literal ID="lblLocalizacion" runat="server" Text='<%$ Resources:GlobalResource, menuLocalizacion%>'></asp:Literal>--%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >
+                            <asp:Button ID="btnCatalogos" runat="server" Text='<%$ Resources:GlobalResource, menuCatalogo%>' CssClass="botonMenuVertical" />
+                               <%-- <asp:Literal ID="Literal1" runat="server" Text='<%$ Resources:GlobalResource, menuCatalogo%>'></asp:Literal>--%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                 <asp:Button ID="Button1" runat="server" Text='<%$ Resources:GlobalResource, menuCatalogo%>' CssClass="botonMenuVertical" />                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                 <asp:Button ID="Button2" runat="server" Text='<%$ Resources:GlobalResource, menuCatalogo%>' CssClass="botonMenuVertical" />                              
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                 <asp:Button ID="Button3" runat="server" Text='<%$ Resources:GlobalResource, menuCatalogo%>' CssClass="botonMenuVertical" />                              
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="menuVertical" style="width:70%;">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+</body>
+</html>
