@@ -13,51 +13,97 @@
     <form id="form1" runat="server">
     <asp:ToolkitScriptManager ID="ScriptMaster" runat="server" AsyncPostBackTimeout="7200" EnablePageMethods="true" >
     </asp:ToolkitScriptManager>
-    <div id="main">
-        <header>
-        
-      <div id="logo">
-        <div id="logo_text">
-        <ul class="images">
-            <li class="show"><img width="100" height="100" src="../img/Logo_.png" alt="photo_one" /></li>  
-            </ul>                     
-          <h2><asp:Literal ID="Literal1" runat="server" Text='<%$ Resources:Globalresource, lbl_BuscaEncuentra %>'></asp:Literal></h2>
-        </div>
-        <p style="float: right; padding-top: 65px;"><img src="../images/twitter.png" alt="twitter" />&nbsp;<img src="../images/facebook.png" alt="facebook" />&nbsp;<img src="../images/rss.png" alt="rss" /></p>
+
+    <table width="100%" style="height:100%">
+    <tr>
+    <td align="center">
+
+    <table width="80%" style="height:95%">
+    <tr>
+    <td>
+    <%--parte superior--%>
+    <table width="100%">
+    <tr>
+    <td align="left">
+    <%--logo--%>
+    <img width="100" height="100" src="../img/Logo_.png" alt="photo_one" />
+    <asp:Literal ID="Literal4" runat="server" Text='<%$ Resources:Globalresource, lbl_BuscaEncuentra %>'></asp:Literal></h2>
+    </td>
+    <td align="right" valign="bottom">
+    <img src="../images/twitter.png" alt="twitter" />&nbsp;<img src="../images/facebook.png" alt="facebook" />&nbsp;<img src="../images/rss.png" alt="rss" />
+    </td>
+    </tr>
+    </table>
+    </td>
+    </tr>
+    <tr>
+    <td align="right">
+    <asp:HyperLink ID="HyperLink2" NavigateUrl="~/Start/Registro1.aspx" runat="server" Text='<%$Resources:Globalresource, menuRegistro %>'></asp:HyperLink>
+    <asp:HyperLink ID="HyperLink3" NavigateUrl="~/Start/Registro1.aspx" runat="server" Text='<%$Resources:Globalresource, EntrarAlSistema %>'></asp:HyperLink>
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <%--menu--%>
+    <table>
+    <tr>
+    
      
-      </div>
-       <div>
-        <p style="float: right; padding-top: 1px;">
-        <asp:HyperLink ID="HyperLink1" NavigateUrl="~/Start/Registro1.aspx" runat="server" Text='<%$Resources:Globalresource, menuRegistro %>'></asp:HyperLink>
-        </p>
-        </div>
-      <nav>
-        <ul class="sf-menu" id="nav" runat="server">
-         <%--Desde server--%>
-        </ul>
-      </nav>
-    </header>
-        <div id="site_content">
-            <div id="sidebar_container">
-                <div>
-                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        <td class="selected"><a href="../Start/Inicio.aspx"> 
+                <asp:Literal ID="Literal6" runat="server" Text='<%$ Resources:Globalresource, menuInicio %>'></asp:Literal>
+                </a></td> 
+        <td><a href="../Start/Inicio.aspx" >  
+                <asp:Literal ID="Literal5" runat="server" Text='<%$ Resources:Globalresource, menuBuscar %>'></asp:Literal>
+                </a></td>
+        <td><a href="../Start/Nosotros.aspx"> 
+                <asp:Literal ID="Literal7" runat="server" Text='<%$ Resources:Globalresource, menuNosotros %>'></asp:Literal> 
+                </a></td>
+        <td><a href="../Start/Contacto.aspx">  
+                <asp:Literal ID="Literal8" runat="server" Text='<%$ Resources:Globalresource, menuContacto %>'></asp:Literal> 
+         </a>
+         </td>
+    </tr>
+    </table>
+
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <table>
+    <tr>
+    <td>
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                     </asp:ContentPlaceHolder>
-                </div>
-            </div>
-            <div id="content">
-                <h1>
+    </td>
+    <td>
+    <h1>
                     <asp:Literal ID="Literal2" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_FindItOut%>'></asp:Literal></h1>
                 <p>
                     <asp:Literal ID="Literal3" runat="server" Text='<%$ Resources:GlobalResource,lbl_bienvenida1%>'></asp:Literal>
                 </p>
-            </div>
-        </div>
-        <footer>
-      <p>Copyright &copy; photo_vibrant | <a href="http://fotogrph.com">Images</a> | <a href="http://www.css3templates.co.uk">design from css3templates.co.uk</a></p>
-    </footer>
-    </div>
-    <p>
-        &nbsp;</p>
+    </td>
+    </tr>
+    </table>
+
+      
+    </td>
+    </tr>
+    </table>
+    <table width="100%" style="height:5%">
+
+    <tr>
+    <td>
+    <p>Copyright &copy; photo_vibrant | <a href="http://fotogrph.com">Images</a> | <a href="http://www.css3templates.co.uk">design from css3templates.co.uk</a></p>
+    </td>
+    </tr>
+    </table>
+    
+    </td>
+    </tr>
+    </table>
+
+
+
     </form>
     <!-- javascript at the bottom for fast page loading -->
     
