@@ -4,7 +4,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
     <script src="../Scripts/Validaciones.js" type="text/javascript"></script>
-    
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -69,9 +68,7 @@
     <table>
         <tr>
             <td colspan="3" style="text-align: center;" class="titulo_tabla">
-                
-                    <asp:Literal runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_IniciaSesion%>'></asp:Literal>
-                
+                <asp:Literal runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_IniciaSesion%>'></asp:Literal>
             </td>
         </tr>
         <tr>
@@ -82,7 +79,9 @@
                 <asp:TextBox ID="txtMail" runat="server" MaxLength="100" CssClass="cajaLarga"></asp:TextBox>
             </td>
         </tr>
-        <tr><td></td>
+        <tr>
+            <td>
+            </td>
             <td>
                 <asp:Label ID="lblCorreoPon" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
                 <asp:Label ID="lblCorreoMal" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CorreoMal %>'></asp:Label>
@@ -96,7 +95,9 @@
                 <asp:TextBox ID="txtPass" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga"></asp:TextBox>
             </td>
         </tr>
-        <tr><td></td>
+        <tr>
+            <td>
+            </td>
             <td>
                 <asp:Label ID="lblPassPon" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
             </td>
@@ -107,7 +108,7 @@
                     onclick="javascript:validar();" />
             </td>
         </tr>
-        <tr>        
+        <tr>
             <td colspan="3" align="right" style="text-align: right;">
                 <asp:LinkButton CssClass="link" ID="LinkButton1" runat="server" Text='<%$ Resources:Globalresource, link_OlvidePass %>'
                     PostBackUrl="~/Start/SendPass.aspx"></asp:LinkButton>
