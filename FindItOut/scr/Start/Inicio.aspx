@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPageLogin.master" AutoEventWireup="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPageLogin.master" AutoEventWireup="true"
     CodeFile="Inicio.aspx.cs" Inherits="Inicio" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
@@ -66,17 +66,22 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <table>
+<table>
+<tr>
+<td>
+
+
+  <table class="login">
         <tr>
             <td colspan="3" style="text-align: center;" class="titulo_tabla">
                 
-                    <asp:Literal runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_IniciaSesion%>'></asp:Literal>
+                    <asp:Literal ID="Literal1" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_IniciaSesion%>'></asp:Literal>
                 
             </td>
         </tr>
         <tr>
             <td>
-                <asp:Literal ID="Literal1" runat="server" Text='<%$ Resources:Globalresource, lbl_Correo %>'></asp:Literal>
+                <asp:Literal ID="Literal2" runat="server" Text='<%$ Resources:Globalresource, lbl_Correo %>'></asp:Literal>
             </td>
             <td>
                 <asp:TextBox ID="txtMail" runat="server" MaxLength="100" CssClass="cajaLarga"></asp:TextBox>
@@ -90,7 +95,7 @@
         </tr>
         <tr>
             <td style="width: 30px;">
-                <asp:Literal ID="Literal2" runat="server" Text='<%$ Resources:Globalresource, lbl_Pass %>'></asp:Literal>
+                <asp:Literal ID="Literal5" runat="server" Text='<%$ Resources:Globalresource, lbl_Pass %>'></asp:Literal>
             </td>
             <td>
                 <asp:TextBox ID="txtPass" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga"></asp:TextBox>
@@ -120,4 +125,26 @@
             </td>
         </tr>
     </table>
+
+
+   </td>
+   <td>
+   <table>
+   <tr>
+       <td style="width:60%">
+    <h1>
+                    <asp:Literal ID="Literal3" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_FindItOut%>'></asp:Literal></h1>
+                <p>
+                    <asp:Literal ID="Literal4" runat="server" Text='<%$ Resources:GlobalResource,lbl_bienvenida1%>'></asp:Literal>
+                </p>
+ </td>
+   </tr>
+   </table>
+   </td>
+
+</tr>
+</table>
+
+
+  
 </asp:Content>

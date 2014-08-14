@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Start/MasterPageLogin.master" AutoEventWireup="true" CodeFile="Contacto.aspx.cs" Inherits="Start_Contacto" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPageLogin.master" AutoEventWireup="true" CodeFile="Contacto.aspx.cs" Inherits="Start_Contacto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
- <link href="../Styles/StyleSheet0.css" rel="stylesheet" type="text/css" />
+ 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<table>
+<table width="100%">
         <tr>
             <td class="titulo_tabla" style="text-align: center;">
             

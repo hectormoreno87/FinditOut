@@ -1,2 +1,168 @@
-﻿body {
+﻿@font-face { 
+  font-family: Droid Sans; 
+    src: url('../fonts/DroidSans-webfont.eot'); 
+    src: local("Droid Sans"), url('../fonts/DroidSans-webfont.woff'); 
+} 
+
+@font-face { 
+  font-family: Jenna Sue; 
+    src: url('../fonts/JennaSue-webfont.eot'); 
+    src: local("Jenna Sue"), url('../fonts/JennaSue-webfont.ttf'); 
+    
+} 
+
+body { 
+  font: normal .85em 'Droid Sans', arial, sans-serif;
+  /*background: #2E2E2E url(../images/pattern.jpg) repeat;*/
+  color: #444;
+}
+
+h1, h2, h3, h4, h5, h6 { 
+  color: #FB0424;
+  letter-spacing: 0em;
+  padding: 0 0 5px 0;
+}
+
+h1, h2, h3 { 
+  font: normal 400% "Jenna Sue", arial, sans-serif;
+  margin: 0;
+  padding: 16px 0 5px 0;
+}
+
+h2 { 
+  font-size: 260%;
+  padding: 9px 0 5px 0;
+}
+
+h3 { 
+  font-size: 240%;
+  padding: 5px 0 0 0;
+}
+
+h4, h6 { 
+  padding: 0 0 5px 0;
+  font: normal 130% arial, sans-serif;
+}
+
+h5, h6 { 
+  color: #555;
+  font: italic 95% arial, sans-serif;
+  letter-spacing: normal;
+  padding: 0 0 15px 0;
+}
+
+
+.menu
+{
+    background-color:#FB0424;    
+    
+}
+
+table .menu
+{
+    text-align:center;
+    border:0dp;
+}
+
+
+.menu a
+{
+    
+    color:White;
+    border:0dp;
+}
+
+table .login
+   {       
+       color: white;
+       margin: 30px 30px;      
+       width:100%;
+       /**border-color:#000;
+       border-width:medium;       
+       border-style:double;
+       border-width:3px;*/
+       background-color: #2d251d;
+        border: 1px solid #cccccc;
+        padding: 20px;
+        width: 370px;
+        line-height: 30px;
+        vertical-align: top;
+        /*puntas redondas*/
+        -moz-border-radius: 20px; /* Firefox */
+        -webkit-border-radius: 20px; /* Google Chrome y Safari */
+        border-radius: 20px; /* CSS3 (Opera 10.5, IE 9 y est�ndar a ser soportado por todos los futuros navegadores) */
+
+   }
+   
+   .titulo_tabla {
+    color: #000;
+    line-height: 25px;
+    font-weight: bold;
+    font-size: 13px;
+    font-family: arial;
+    border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px 6px 6px 6px;
+    -moz-border-radius: 6px 6px 6px 6px;
+    width: 300%;
+    background-color: #91867C;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.cajaLarga 
+{
+    width:250px;
+    -moz-border-radius-bottomright: 30px; 
+    -webkit-border-bottom-right-radius: 30px; 
+    /* border-bottom-right-radius: 30px; */  
+}
+
+.errorPeque
+{
+    font-size:10px;    
+    color:Orange;
+}
+
+
+
+.botonStandar
+{
+   
+  /* -webkit-box-shadow: #FEFFFF 0px 1px 1px ;
+   -moz-box-shadow: #FEFFFF 0px 1px 1px ; 
+   box-shadow: #FEFFFF 0px 1px 1px ; 
+   -webkit-border-radius: 3px; 
+   -moz-border-radius: 3px;
+   border-radius: 3px;  
+   padding: 5px 12px 5px 12px; 
+   text-decoration:none; 
+   display:inline-block;
+   text-shadow: 0px 1px 0 rgba(255,255,255,1);
+   font-weight:bold; */
+   
+   display: inline;
+cursor: pointer;
+text-decoration: none;
+color: #fff;
+font-size: .9em;
+padding: .5em;
+background: #555;
+border: 1px solid #666;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+margin-top: 1em;
+box-shadow: 0px 0px 10px #888888;
+ padding: 5px 50px 5px 50px; 
+   }
+   
+   a, a:hover { 
+  outline: none;
+  text-decoration: underline;
+  color: #05C6FC;
+}
+
+a:hover { 
+  text-decoration: none;
 }

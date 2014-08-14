@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPageLogin.master" AutoEventWireup="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPageLogin.master" AutoEventWireup="true"
     CodeFile="ErrorLog.aspx.cs" Inherits="ErrorLog" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
    <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
     <script src="../Scripts/Validaciones.js" type="text/javascript"></script>
-    <link href="../Styles/StyleSheet0.css" rel="stylesheet" type="text/css" />
+   
     <script type="text/javascript">
 
         $(document).ready(function () {
