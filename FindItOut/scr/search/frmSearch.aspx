@@ -36,7 +36,26 @@
 
 <table width="100%" style="height:100%">
 <tr>
-<td style="width:25%">
+<td style="width:25%" valign="top">
+<table>
+<tr>
+    <td>
+        <input id="search" type="text" />
+    </td>
+    <td>
+        
+    </td>
+
+</tr>
+<tr>
+    <td>
+    <div id="results">
+    </div>
+    </td>
+</tr>
+
+</table>
+
 
 </td>
 <td style="width:75%">
