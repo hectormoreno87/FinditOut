@@ -4,33 +4,111 @@
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDgswrmT3KpX1iyQjOjDq_G2LAP5cpz5KY&sensor=TRUE">
   </script>
   <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
-
+    <script src="../Scripts/jquery.bpopup.min.js" type="text/javascript"></script>
    <script type="text/javascript">
 
+       var mapGlobal;
+       var markerLocal;
+       var mapOptionsGlobal;
+       var populationOptions;
+       var cityCircle;
        $(function () {
-           initialize();
-       });
-       function initialize() {
-           var mapOptions = {
+          initialize();
+      });
+
+      function initialize() {
+
+          mapOptionsGlobal = {
                center: new google.maps.LatLng(20.6827248, -103.3466798),
                zoom: 8,
-               mapTypeId: google.maps.MapTypeId.SATELLITE
+               mapTypeId: google.maps.MapTypeId.ROADMAP 
            };
-           var map = new google.maps.Map(document.getElementById("map_canvas"),
-            mapOptions);
+           mapGlobal = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptionsGlobal);
 
-           var marker = new google.maps.Marker({
+           markerLocal = new google.maps.Marker({
                position: new google.maps.LatLng(20.6827248, -103.3466798),
-               map: map,
-               title: "JAJA que pendejos"
+               map: mapGlobal,
+               draggable: true,
+               title: "Mi posición"
            });
 
+           populationOptions = {
+               strokeColor: '#FFFF00',
+               strokeOpacity: 0.8,
+               strokeWeight: 2,
+               fillColor: '#FFFF00',
+               fillOpacity: 0.35,
+               map: mapGlobal,
+               center: markerLocal.getPosition(),
+               radius:parseInt($('#ddlDistance').val())
+           };
+           // Add the circle for this city to the map.
+           cityCircle = new google.maps.Circle(populationOptions);
+           getLocation();
+           google.maps.event.addListener(markerLocal, 'drag', function (event) {
+               $("#error").html('Latitude:' + event.latLng.lat() + ', Longitude:' + event.latLng.lng());
+               cityCircle.setCenter(markerLocal.getPosition());
+               cityCircle.setRadius(parseInt($('#ddlDistance').val()));
+
+               //new google.maps.Circle(populationOptions);
+           });
+
+           google.maps.event.addListener(markerLocal, 'dragend', function (event) {
+               $("#error").html('Latitude:' + event.latLng.lat() + ', Longitude:' + event.latLng.lng());
+               cityCircle.setCenter(markerLocal.getPosition());
+               cityCircle.setRadius(parseInt($('#ddlDistance').val()));
+               //new google.maps.Circle(populationOptions);
+
+           });
 
        }
 
+       var x = document.getElementById("error");
+       function getLocation() {
+           if (navigator.geolocation) {
+               navigator.geolocation.getCurrentPosition(showPosition, showError);
+           }
+           else {
+               x.innerHTML = "Geolocation is not supported by this browser.";
+           }
+       }
+       function showPosition(position) {
+           var latlondata = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+           markerLocal.setPosition(latlondata);
+           cityCircle.setCenter(markerLocal.getPosition());
+           cityCircle.setRadius(parseInt($('#ddlDistance').val()));
+           $("#error").html('Latitude:' + position.coords.latitude + ', Longitude:' + position.coords.longitude);
+
+
+       }
+       function showError(error) {
+           if (error.code == 1) {
+               x.innerHTML = "User denied the request for Geolocation."
+           }
+           else if (err.code == 2) {
+               x.innerHTML = "Location information is unavailable."
+           }
+           else if (err.code == 3) {
+               x.innerHTML = "The request to get user location timed out."
+           }
+           else {
+               x.innerHTML = "An unknown error occurred."
+           }
+       }
+
+
+       function setRadious() {
+           cityCircle.setRadius(parseInt($('#ddlDistance').val()));
+           //$("#content").bPopup().close();
+       }
+
+       function searchf() {
+           PageMethods.searchM(markerLocal.getPosition(), $('#search').val(), parseInt($('#ddlDistance').val()));
+       }
 
     </script>
-
+    <script src="../Scripts/geoLocation.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
@@ -40,12 +118,47 @@
 <table>
 <tr>
     <td>
-        <input id="search" type="text" />
+        <input id="search" type="text" class="cajaLarga" />
     </td>
     <td>
-        
+       <img src="../images/searchimage.png" width="30px" height="30px" onclick="javascript:searchf();" style="cursor:pointer" alt="buscar" />
     </td>
+</tr>
+<tr>
+<td>
+<%--<a class="link">
 
+    <asp:Label ID="Label1" runat="server"   Text='<%$ Resources:Globalresource, setLocation %>' onclick="javascript:searchf();"></asp:Label>
+</a>
+|--%> <a class="link">
+
+    <asp:Label ID="Label2" runat="server"   Text='<%$ Resources:Globalresource, setLocalLocation %>' onclick="javascript:getLocation();"></asp:Label>
+</a>
+</td>
+</tr>
+<tr>
+<td>
+  <asp:Label ID="Label1" runat="server"   Text='<%$ Resources:Globalresource, distance %>' ></asp:Label>
+    <select id="ddlDistance" onchange="javascript:setRadious();">
+        <option value="100">100 m</option>
+        <option value="200">200 m</option>
+        <option value="500">500 m</option>
+        <option value="700">700 m</option>
+        <option value="1000" selected="selected">1 km</option>
+        <option value="2000">2 km</option>
+        <option value="5000">5 km</option>
+        <option value="10000">10 km</option>
+        <option value="20000">20 km</option>
+        <option value="50000">50 km</option>
+    </select>
+</td>
+</tr>
+<tr>
+<td>
+    <div id="error">
+    Buscando..
+    </div>
+</td>
 </tr>
 <tr>
     <td>
@@ -59,10 +172,30 @@
 
 </td>
 <td style="width:75%">
- <div id="map_canvas" style="width:100%; height:100%"></div>
+ <div id="map_canvas" style="width:100%; height:100%;"></div>
 </td>
 </tr>
 </table>
 
+<div id="content" style="width:500px;height:500px;display:none">
+
+
+
+<table style="width:100%;height:100%">
+<tr>
+    <td>
+        <div id="mapLocation" style="width:100%;height:100%">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <input id="btnSaveLocation" type="button" value="OK" onclick="javascript:setLocation();" />
+    </td>
+</tr>
+</table>
+
+
+</div>
 </asp:Content>
 

@@ -11,7 +11,7 @@
 
 <body style="height:100%;vertical-align:top" >
     <form id="form1" runat="server" style="height:100%">
-    <asp:ToolkitScriptManager ID="ScriptMaster" runat="server" AsyncPostBackTimeout="7200" EnablePageMethods="true" >
+    <asp:ToolkitScriptManager ID="ScriptMaster" runat="server" AsyncPostBackTimeout="20000" EnablePageMethods="true" >
     </asp:ToolkitScriptManager>
 
     <table width="100%" style="height:100%;vertical-align:top"">
@@ -78,7 +78,7 @@
     <td style="vertical-align:top;height:67%;">
     <table width="100%" style="vertical-align:top;height:100%;">
     <tr>
-    <td align="center" valign="middle">
+    <td align="center" valign="top">
     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                     </asp:ContentPlaceHolder>
     </td>

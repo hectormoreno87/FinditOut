@@ -327,4 +327,13 @@
   <data name="menuRegistro" xml:space="preserve">
     <value>Registro</value>
   </data>
+  <data name="setLocation" xml:space="preserve">
+    <value>Otra posición inicial</value>
+  </data>
+  <data name="distance" xml:space="preserve">
+    <value>Distancia</value>
+  </data>
+  <data name="setLocalLocation" xml:space="preserve">
+    <value>Posición actual</value>
+  </data>
 </root>
