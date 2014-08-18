@@ -5,6 +5,7 @@
   </script>
   <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
     <script src="../Scripts/jquery.bpopup.min.js" type="text/javascript"></script>
+    <script src="../Scripts/richmarker.js" type="text/javascript"></script>
    <script type="text/javascript">
 
        var mapGlobal;
@@ -12,6 +13,7 @@
        var mapOptionsGlobal;
        var populationOptions;
        var cityCircle;
+       var markers=[];
        $(function () {
           initialize();
       });
@@ -104,7 +106,91 @@
        }
 
        function searchf() {
-           PageMethods.searchM(markerLocal.getPosition(), $('#search').val(), parseInt($('#ddlDistance').val()));
+           PageMethods.searchM(markerLocal.getPosition(), $('#search').val(), parseInt($('#ddlDistance').val()), searchfCallback);
+       }
+
+       function divSelected(id) {
+
+           $.each(markers, function (index, value) {
+               if (value.id == id) {
+                   $('#div' + id).hide();
+               }
+
+           });
+       }
+
+       function searchfCallback(sResult) {
+
+           markers = [];
+           var items = eval(sResult);
+           var st = "<table width='100%'>";
+           $.each(items, function (index, value) {
+               st += "<tr>";
+               st += "<td>";
+               st += "<div id='div"+value.idItem+"' onclick='javascript:divSelected("+value.idItem+")'>";
+               st += "<table>";
+               st += "<tr>";
+               st += "<td>";
+               st += "<img alt='" + value.name + "' src='" + value.image + "' width='55px' height='55px'/>";
+               st += "</td>";
+               st += "<td>";
+
+               st += "<table>";
+               st += "<tr>";
+               st += "<td>";
+               st += "<img alt='" + value.finditoutName + "' src='" + value.logo + "' width='20px' height='20px'/>";
+               st += value.finditoutName;
+               st += "</td>";
+               st += "</tr>";
+               st += "<tr>";
+               st += "<td>";
+               st += "<h3>";
+               st += value.name;
+               st += "</h3>";
+               st += "</td>";
+               st += "</tr>";
+               st += "<tr>";
+               st += "<td>";
+
+               st += value.distance;
+
+               st += "</td>";
+               st += "</tr>";
+               st += "<tr>";
+               st += "<td>";
+
+               st += '$ ' + value.cost;
+
+               st += "</td>";
+               st += "</tr>";
+
+               st += "</table>";
+
+
+               st += "</td>";
+               st += "</tr>";
+               st += "</table>";
+
+               st += "</div>";
+               st += "<td>";
+               st += "</tr>";
+
+
+               var marker = new RichMarker({
+                   position: new google.maps.LatLng(parseFloat(value.latitude), parseFloat(value.longitude)),
+                   map: mapGlobal,
+                   draggable: false,
+                   title: value.name,
+                   content:'<div>hola</div>'
+               });
+
+               var marker_ = { id: value.idItem, mark: marker };
+
+               markers.push(marker_);
+
+           });
+           st += "</table>";
+           $('#results').html(st);
        }
 
     </script>
@@ -150,6 +236,7 @@
         <option value="10000">10 km</option>
         <option value="20000">20 km</option>
         <option value="50000">50 km</option>
+        <option value="100000">100 km</option>
     </select>
 </td>
 </tr>
