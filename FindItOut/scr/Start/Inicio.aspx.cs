@@ -13,15 +13,21 @@ public partial class Inicio : System.Web.UI.Page
     {
         //pruebas
         txtMail.Text = "m@hotmail.com";
-        txtPass.Text = "123";        
+        txtPass.Text = "123";
+        Session["user"] =
+            Session["err"] =
+            Session["correoEnviar"] =
+            Session["findOut"] =
+            null;
+
     }
 
     [WebMethod]
     public static void btnIniciar_onclick(string mail, string pass)
     {
 
-        HttpContext.Current.Session["user"] = "1";
-        return;
+        //HttpContext.Current.Session["user"] = "1";
+        //return;
         if (validar( mail,  pass))
         {
             //revisar que los datos existan
@@ -40,6 +46,7 @@ public partial class Inicio : System.Web.UI.Page
                     if (result == "puedePasar")
                     {
                         HttpContext.Current.Session["user"] = dt.Rows[0]["nikname"].ToString().Trim();
+                        HttpContext.Current.Session["findOut"] = dt.Rows[0]["findOut"].ToString().Trim();
                     }
                 }
             }
