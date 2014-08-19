@@ -2,8 +2,9 @@
     CodeFile="Registro1.aspx.cs" Inherits="Registro1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
+   <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
     <script src="../Scripts/Validaciones.js" type="text/javascript"></script>
+    
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -85,7 +86,7 @@
                 $("#<%=lblErrorPass.ClientID %>").show();
                 $("#<%=txtPass.ClientID%>").value = "";
                 $("#<%=txtConfirm.ClientID%>").value = "";
-            }
+            }  
             else
                 window.location = "Parentesis.aspx";
         }
@@ -93,88 +94,70 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <table>
+    <table >
+        <tr>
+            <td style="text-align: center;" class="titulo_tabla">
+                
+                    <asp:Literal ID="Literal1" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_Registro1%>'></asp:Literal>
+               
+            </td>
+        </tr>
         <tr>
             <td>
-                <table class="login">
-                    <tr>
-                        <td style="text-align: center;" class="titulo_tabla">
-                            <asp:Literal ID="Literal1" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_Registro1%>'></asp:Literal>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Literal ID="Literal3" runat="server" Text='<%$ Resources:Globalresource, lbl_Correo %>'></asp:Literal>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:TextBox ID="txtMail" runat="server" MaxLength="100" CssClass="cajaLarga"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="lblCorreoPon" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
-                            <asp:Label ID="lblCorreoMal" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CorreoMal %>'></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Literal ID="Literal4" runat="server" Text='<%$ Resources:Globalresource, lbl_Pass %>'></asp:Literal>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:TextBox ID="txtPass" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="lblPassPon" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="word-wrap: break-word; width: 70px;">
-                            <asp:Literal ID="literla8" runat="server" Text='<%$ Resources:Globalresource, lbl_ConfirmPass %>'></asp:Literal>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:TextBox ID="txtConfirm" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="lblPassPon1" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="word-wrap: break-word;">
-                            <asp:Label ID="lblErrorPass" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_PassConfirmError %>'></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="right" style="text-align: right;">
-                            <input id="btnIniciar" class="botonStandar" runat="server" type="button" value='<%$ Resources:Globalresource, btn_CrearCuenta %>'
-                                onclick="javascript:validar();" />
-                        </td>
-                    </tr>
-                </table>
+                <asp:Literal ID="Literal3" runat="server" Text='<%$ Resources:Globalresource, lbl_Correo %>'></asp:Literal>
             </td>
+        </tr>
+        <tr>
             <td>
-                <table>
-                    <tr>
-                        <td style="width: 60%">
-                            <h1>
-                                <asp:Literal ID="Literal2" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_FindItOut%>'></asp:Literal></h1>
-                            <p>
-                                <asp:Literal ID="Literal5" runat="server" Text='<%$ Resources:GlobalResource,lbl_bienvenida1%>'></asp:Literal>
-                            </p>
-                        </td>
-                    </tr>
-                </table>
+                <asp:TextBox ID="txtMail" runat="server" MaxLength="100" CssClass="cajaLarga"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblCorreoPon" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
+                <asp:Label ID="lblCorreoMal" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CorreoMal %>'></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Literal ID="Literal4" runat="server" Text='<%$ Resources:Globalresource, lbl_Pass %>'></asp:Literal>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:TextBox ID="txtPass" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblPassPon" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td style="word-wrap: break-word; width: 70px;">
+                <asp:Literal ID="literla8" runat="server" Text='<%$ Resources:Globalresource, lbl_ConfirmPass %>'></asp:Literal>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:TextBox ID="txtConfirm" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblPassPon1" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td style="word-wrap: break-word;">
+                <asp:Label ID="lblErrorPass" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_PassConfirmError %>'></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right" style="text-align:right;">
+                <input id="btnIniciar" class="botonStandar" runat="server" type="button" value='<%$ Resources:Globalresource, btn_CrearCuenta %>'
+                    onclick="javascript:validar();" />
             </td>
         </tr>
     </table>
-    </tr> </table>
 </asp:Content>

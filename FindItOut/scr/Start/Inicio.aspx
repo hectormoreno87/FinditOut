@@ -65,79 +65,91 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <table>
+<table>
+<tr>
+<td>
+
+
+  <table class="login">
+        <tr>
+            <td colspan="3" style="text-align: center;" class="titulo_tabla">
+
+                
+                    <asp:Literal ID="Literal1" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_IniciaSesion%>'></asp:Literal>
+                
+
+            </td>
+        </tr>
         <tr>
             <td>
-                <table class="login">
-                    <tr>
-                        <td colspan="3" style="text-align: center;" class="titulo_tabla">
-                            <asp:Literal ID="Literal1" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_IniciaSesion%>'></asp:Literal>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Literal ID="Literal2" runat="server" Text='<%$ Resources:Globalresource, lbl_Correo %>'></asp:Literal>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtMail" runat="server" MaxLength="100" CssClass="cajaLarga"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <asp:Label ID="lblCorreoPon" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
-                            <asp:Label ID="lblCorreoMal" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CorreoMal %>'></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30px;">
-                            <asp:Literal ID="Literal5" runat="server" Text='<%$ Resources:Globalresource, lbl_Pass %>'></asp:Literal>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtPass" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <asp:Label ID="lblPassPon" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" align="right" style="text-align: right;">
-                            <input id="btnIniciar" class="botonStandar" runat="server" type="button" value='<%$ Resources:Globalresource, btn_Entrar %>'
-                                onclick="javascript:validar();" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" align="right" style="text-align: right;">
-                            <asp:LinkButton CssClass="link" ID="LinkButton1" runat="server" Text='<%$ Resources:Globalresource, link_OlvidePass %>'
-                                PostBackUrl="~/Start/SendPass.aspx"></asp:LinkButton>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" align="right" style="text-align: right;">
-                            <asp:LinkButton CssClass="link" ID="LinkButton2" runat="server" PostBackUrl="~/Start/Registro1.aspx"
-                                Text='<%$ Resources:Globalresource, link_Aqui %>'></asp:LinkButton>
-                        </td>
-                    </tr>
-                </table>
+                <asp:Literal ID="Literal2" runat="server" Text='<%$ Resources:Globalresource, lbl_Correo %>'></asp:Literal>
             </td>
             <td>
-                <table>
-                    <tr>
-                        <td style="width: 60%">
-                            <h1>
-                                <asp:Literal ID="Literal3" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_FindItOut%>'></asp:Literal></h1>
-                            <p>
-                                <asp:Literal ID="Literal4" runat="server" Text='<%$ Resources:GlobalResource,lbl_bienvenida1%>'></asp:Literal>
-                            </p>
-                        </td>
-                    </tr>
-                </table>
+                <asp:TextBox ID="txtMail" runat="server" MaxLength="100" CssClass="cajaLarga"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <asp:Label ID="lblCorreoPon" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
+                <asp:Label ID="lblCorreoMal" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CorreoMal %>'></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 30px;">
+                <asp:Literal ID="Literal5" runat="server" Text='<%$ Resources:Globalresource, lbl_Pass %>'></asp:Literal>
+            </td>
+            <td>
+                <asp:TextBox ID="txtPass" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <asp:Label ID="lblPassPon" runat="server" CssClass="errorPeque" Text='<%$ Resources:Globalresource, lbl_CampoObligatorio %>'></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" align="right" style="text-align: right;">
+                <input id="btnIniciar" class="botonStandar" runat="server" type="button" value='<%$ Resources:Globalresource, btn_Entrar %>'
+                    onclick="javascript:validar();" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" align="right" style="text-align: right;">
+                <asp:LinkButton CssClass="link" ID="LinkButton1" runat="server" Text='<%$ Resources:Globalresource, link_OlvidePass %>'
+                    PostBackUrl="~/Start/SendPass.aspx"></asp:LinkButton>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" align="right" style="text-align: right;">
+                <asp:LinkButton CssClass="link" ID="LinkButton2" runat="server" PostBackUrl="~/Start/Registro1.aspx"
+                    Text='<%$ Resources:Globalresource, link_Aqui %>'></asp:LinkButton>
             </td>
         </tr>
     </table>
+
+
+   </td>
+   <td>
+   <table>
+   <tr>
+       <td style="width:60%">
+    <h1>
+                    <asp:Literal ID="Literal3" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_FindItOut%>'></asp:Literal></h1>
+                <p>
+                    <asp:Literal ID="Literal4" runat="server" Text='<%$ Resources:GlobalResource,lbl_bienvenida1%>'></asp:Literal>
+                </p>
+ </td>
+   </tr>
+   </table>
+   </td>
+
+</tr>
+</table>
+
+
+  
 </asp:Content>

@@ -5,10 +5,9 @@
    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
- <table class="login">
+    <table>
         <tr>
-            <td class="titulo_tabla" style="text-align: center; ">
+            <td class="titulo_tabla" style="text-align: center;">
             
                     <asp:Literal ID="lblTitulo" runat="server" Text='<%$ Resources:GlobalResource, Bienvenida_Registro1Exito%>'></asp:Literal>
              

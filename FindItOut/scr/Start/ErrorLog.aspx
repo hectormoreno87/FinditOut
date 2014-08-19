@@ -2,8 +2,9 @@
     CodeFile="ErrorLog.aspx.cs" Inherits="ErrorLog" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
+   <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
     <script src="../Scripts/Validaciones.js" type="text/javascript"></script>
+   
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -65,7 +66,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <table class="login">
+    <table>
         <%--<tr>
             <td style="text-align: left;">
                 <h2>
@@ -75,7 +76,9 @@
         </tr>--%>
         <tr>
             <td class="titulo_tabla" style="text-align: center;">
-                <asp:Literal ID="lblTipoError" runat="server"></asp:Literal>
+             
+                    <asp:Literal ID="lblTipoError" runat="server"></asp:Literal>
+               
             </td>
         </tr>
         <tr>
@@ -117,19 +120,19 @@
             </td>
         </tr>
         <tr>
-            <td align="right" style="width: 50px; text-align: right;">
+            <td align="right" style="width: 50px;text-align:right;" >
                 <input id="btnIniciar" class="botonStandar" runat="server" type="button" value='<%$ Resources:Globalresource, btn_Entrar %>'
                     onclick="javascript:validar();" />
             </td>
         </tr>
         <tr>
-            <td align="right" style="text-align: right;">
+            <td align="right" style="text-align:right;">
                 <asp:LinkButton CssClass="link" ID="LinkButton1" runat="server" Text='<%$ Resources:Globalresource, link_OlvidePass %>'
                     PostBackUrl="SendPass.aspx"></asp:LinkButton>
             </td>
         </tr>
         <tr>
-            <td align="right" style="text-align: right;">
+            <td align="right" style="text-align:right;">
                 <asp:LinkButton ID="LinkButton2" runat="server" CssClass="link" PostBackUrl="Registro1.aspx"
                     Text='<%$ Resources:Globalresource, link_RegistrateAqui %>'></asp:LinkButton>
             </td>

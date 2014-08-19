@@ -9,17 +9,7 @@ public partial class MasterPageLogin : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["user"] != null)
-        {
-            if (!String.IsNullOrEmpty(Session["user"].ToString()))
-            {
-                ltUser.Visible = true;
-                ltUser.Text = Session["user"].ToString();
-            }
-        }
-        else
-            ltUser.Visible = false;
-        // crearMenu();
+       // crearMenu();
     }
 
     //private void crearMenu()
