@@ -173,3 +173,32 @@ table .tabla_sola
     border-top-width:15px;
     width:50%;
 }
+
+
+.mark
+{
+ background-color:rgba(224, 0, 0, 0.75);
+  -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;   
+}
+
+.itemDiv
+{
+     background-color:rgba(2, 0, 0, 0.75);
+  -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;   
+    }
+    
+    
+    .itemDivSelected
+{
+     background-color:rgba(234, 0, 0, 0.75);
+  -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;   
+    }

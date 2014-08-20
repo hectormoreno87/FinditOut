@@ -6,6 +6,7 @@
   <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
     <script src="../Scripts/jquery.bpopup.min.js" type="text/javascript"></script>
     <script src="../Scripts/richmarker.js" type="text/javascript"></script>
+    <link href="../Styles/styleLogin.css" rel="stylesheet" type="text/css" />
    <script type="text/javascript">
 
        var mapGlobal;
@@ -13,7 +14,9 @@
        var mapOptionsGlobal;
        var populationOptions;
        var cityCircle;
-       var markers=[];
+       var infowindow;
+       var markers = [];
+       var items = [];
        $(function () {
           initialize();
       });
@@ -22,7 +25,7 @@
 
           mapOptionsGlobal = {
                center: new google.maps.LatLng(20.6827248, -103.3466798),
-               zoom: 8,
+               zoom: 14,
                mapTypeId: google.maps.MapTypeId.ROADMAP 
            };
            mapGlobal = new google.maps.Map(document.getElementById("map_canvas"),
@@ -48,6 +51,7 @@
            // Add the circle for this city to the map.
            cityCircle = new google.maps.Circle(populationOptions);
            getLocation();
+
            google.maps.event.addListener(markerLocal, 'drag', function (event) {
                $("#error").html('Latitude:' + event.latLng.lat() + ', Longitude:' + event.latLng.lng());
                cityCircle.setCenter(markerLocal.getPosition());
@@ -77,6 +81,11 @@
        }
        function showPosition(position) {
            var latlondata = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+           
+           mapGlobal.setCenter(latlondata);
+
+
            markerLocal.setPosition(latlondata);
            cityCircle.setCenter(markerLocal.getPosition());
            cityCircle.setRadius(parseInt($('#ddlDistance').val()));
@@ -84,6 +93,21 @@
 
 
        }
+
+       function makeInfoWindowEvent(map, infowindow, contentString, marker) {
+           google.maps.event.addListener(marker, 'click', function () {
+               infowindow.setContent(contentString);
+               infowindow.open(map, marker);
+           });
+       }
+
+       function makeInfoWindowEventFromDiv(map, infowindow, contentString, marker) {
+           
+               infowindow.setContent(contentString);
+               infowindow.open(map, marker);
+           
+       }
+
        function showError(error) {
            if (error.code == 1) {
                x.innerHTML = "User denied the request for Geolocation."
@@ -109,32 +133,43 @@
            PageMethods.searchM(markerLocal.getPosition(), $('#search').val(), parseInt($('#ddlDistance').val()), searchfCallback);
        }
 
-       function divSelected(id) {
+       function divSelected(id,index) {
 
            $.each(markers, function (index, value) {
                if (value.id == id) {
-                   $('#div' + id).hide();
+
+                   
+
+                   mapGlobal.setCenter(value.mark.getPosition());
+                   $(".itemDivSelected").removeClass().addClass("itemDiv");
+                   $("#div" + items[index].idItem).removeClass().addClass("itemDivSelected");
+                   makeInfoWindowEventFromDiv(mapGlobal, infowindow, getHtmlpop(items[index]), value.mark);
+                   //value.mark.setContent(value.mark.getContent().replace('h3','h2'));
+                   
                }
 
            });
        }
 
        function searchfCallback(sResult) {
+          infowindow = new google.maps.InfoWindow();
 
            markers = [];
-           var items = eval(sResult);
+           items = eval(sResult);
            var st = "<table width='100%'>";
            $.each(items, function (index, value) {
                st += "<tr>";
                st += "<td>";
-               st += "<div id='div"+value.idItem+"' onclick='javascript:divSelected("+value.idItem+")'>";
+               st += "<div id='div" + value.idItem + "' class=\"itemDiv\" onclick='javascript:divSelected(" + value.idItem + ","+index+")'>";
                st += "<table>";
                st += "<tr>";
+               st += "<td>";
+               st += "<h1>" + (index + 1) + "</h1>";
+               st += "</td>";
                st += "<td>";
                st += "<img alt='" + value.name + "' src='" + value.image + "' width='55px' height='55px'/>";
                st += "</td>";
                st += "<td>";
-
                st += "<table>";
                st += "<tr>";
                st += "<td>";
@@ -180,17 +215,94 @@
                    position: new google.maps.LatLng(parseFloat(value.latitude), parseFloat(value.longitude)),
                    map: mapGlobal,
                    draggable: false,
+
                    title: value.name,
-                   content:'<div>hola</div>'
+                   shadow: false,
+                   content: '<div class="mark"><table><tr><td align="center" ><h3 style="color: white;margin: 7px;margin-right: 10px;">' + (index + 1) + '</h3></td></tr></table></div>' //'<div class="mark"><table><tr><td>'+(index + 1)+'<img alt="' + value.name + '" src="' + value.image + '" width="25px" height="25px"/></td><td>' + value.name + '</td></tr> <tr><td>$ ' + value.cost + '</td> <td> <a href="#">detalles</a></td></tr></table></div>'            
                });
 
                var marker_ = { id: value.idItem, mark: marker };
+
+               makeInfoWindowEvent(mapGlobal, infowindow, getHtmlpop(value), marker);
+               google.maps.event.addListener(marker, 'click', function () {
+
+                   mapGlobal.setCenter(marker.getPosition());
+                   $(".itemDivSelected").removeClass().addClass("itemDiv"); 
+                   $("#div" + value.idItem).removeClass().addClass("itemDivSelected"); 
+               });
 
                markers.push(marker_);
 
            });
            st += "</table>";
            $('#results').html(st);
+       }
+
+       function getHtmlpop(value) {
+          var  st = "<table>";
+           st += "<tr>";
+           st += "<td>";
+           st += "<img alt='" + value.name + "' src='" + value.image + "' width='75px' height='75px'/>";
+           st += "</td>";
+           st += "<td>";
+           st += "<table>";
+//           st += "<tr>";
+//           st += "<td>";
+//           st += "<img alt='" + value.finditoutName + "' src='" + value.logo + "' width='20px' height='20px'/>";
+//           st += value.finditoutName;
+//           st += "</td>";
+//           st += "</tr>";
+           st += "<tr>";
+           st += "<td>";
+           st += "<h3>";
+           st += value.name;
+           st += "</h3>";
+           st += "</td>";
+           st += "</tr>";
+           st += "<tr>";
+           st += "<td>";
+
+           st += "<div >"+value.description+"</div>";
+
+           st += "</td>";
+           st += "</tr>";
+           st += "<tr>";
+           st += "<td>";
+
+           st += "<div ><a href='#'>Detalles</a></div>";
+
+           st += "</td>";
+           st += "</tr>";
+           st += "<tr>";
+           st += "<td>";
+
+           st += value.distance;
+
+           st += "</td>";
+           st += "</tr>";
+           st += "<tr>";
+           st += "<td>";
+
+           st += '$ ' + value.cost;
+
+           st += "</td>";
+           st += "</tr>";
+           st += "<tr>";
+           st += "<td>";
+
+           st += "<div ><a href='#'>"+value.finditoutName+"</a></div>";
+
+           st += "</td>";
+           st += "</tr>";
+           st += "</table>";
+
+
+           st += "</td>";
+           st += "</tr>";
+
+           st += "</table>";
+
+           return st;
        }
 
     </script>
@@ -249,7 +361,7 @@
 </tr>
 <tr>
     <td>
-    <div id="results">
+    <div id="results" style="overflow: scroll;">
     </div>
     </td>
 </tr>
