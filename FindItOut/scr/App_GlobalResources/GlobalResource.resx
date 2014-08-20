@@ -208,7 +208,7 @@
     <value>Ir a la página de inicio</value>
   </data>
   <data name="link_OlvidePass" xml:space="preserve">
-    <value>Olvide mi contraseña</value>
+    <value>Olvidé mi contraseña</value>
   </data>
   <data name="link_RegistrateAqui" xml:space="preserve">
     <value> Registrate Aquí</value>
@@ -335,5 +335,14 @@
   </data>
   <data name="setLocalLocation" xml:space="preserve">
     <value>Posición actual</value>
+  </data>
+  <data name="SalirSistema" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="lbl_latitud" xml:space="preserve">
+    <value>Latitud</value>
+  </data>
+  <data name="lbl_longitud" xml:space="preserve">
+    <value>Longitud</value>
   </data>
 </root>

@@ -10,7 +10,7 @@ public partial class Start_ConfirmarCuenta : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {      
-        /*string mail = Request.QueryString["m"];
+        string mail = Request.QueryString["m"];
         string id = Request.QueryString["i"];
         string pass = Request.QueryString["p"];
 
@@ -32,15 +32,15 @@ public partial class Start_ConfirmarCuenta : System.Web.UI.Page
         {
         }
         if (result == "activado")
-        {*/
+        {
             lblBienvenida.Text = Resources.GlobalResource.Bienvenida_ConfirmarCuenta;
             lblMessg.Text = Resources.GlobalResource.lbl_MssgConfirmarCuenta;
-        /*}
+        }
         else
         {
             lblBienvenida.Text = Resources.GlobalResource.Bienvenida_ConfirmarCuentaError;
             lblMessg.Text = Resources.GlobalResource.lbl_MssgConfirmarCuentaError;           
-        }*/
+        }
 
     }
 }

@@ -7,7 +7,11 @@
    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <table>
+<br />
+<br />
+<br />
+<br />
+    <table  class="tabla_sola" >
         <tr>
             <td style="text-align: center;" class="titulo_tabla">
                 <asp:Literal ID="lblTitulo" runat="server"></asp:Literal>

@@ -74,14 +74,14 @@ table .menu
 
 table .login
    {       
-       color: white;
+       color: black;
        margin: 30px 30px;      
        width:100%;
        /**border-color:#000;
        border-width:medium;       
        border-style:double;
        border-width:3px;*/
-       background-color: #2d251d;
+       /*background-color:. #2d251d*/;
         border: 1px solid #cccccc;
         padding: 20px;
         width: 370px;
@@ -167,12 +167,9 @@ a:hover {
   text-decoration: none;
 }
 
-
-.mark
+table .tabla_sola
 {
- background-color:rgba(224, 0, 0, 0.75);
-  -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -khtml-border-radius: 10px;
-    border-radius: 10px;   
+    vertical-align: middle;
+    border-top-width:15px;
+    width:50%;
 }
