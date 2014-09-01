@@ -20,27 +20,27 @@ body {
 h1, h2, h3, h4, h5, h6 { 
   color: #FB0424;
   letter-spacing: 0em;
-  padding: 0 0 5px 0;
+/*  padding: 0 0 5px 0;*/
 }
 
 h1, h2, h3 { 
   font: normal 400% "Jenna Sue", arial, sans-serif;
   margin: 0;
-  padding: 16px 0 5px 0;
+  /*padding: 16px 0 5px 0;*/
 }
 
 h2 { 
   font-size: 260%;
-  padding: 9px 0 5px 0;
+ /* padding: 9px 0 5px 0;*/
 }
 
 h3 { 
   font-size: 240%;
-  padding: 5px 0 0 0;
+ /* padding: 5px 0 0 0;*/
 }
 
 h4, h6 { 
-  padding: 0 0 5px 0;
+  /*padding: 0 0 5px 0;*/
   font: normal 130% arial, sans-serif;
 }
 
@@ -48,7 +48,7 @@ h5, h6 {
   color: #555;
   font: italic 95% arial, sans-serif;
   letter-spacing: normal;
-  padding: 0 0 15px 0;
+ /* padding: 0 0 15px 0;*/
 }
 
 
@@ -186,19 +186,45 @@ table .tabla_sola
 
 .itemDiv
 {
-     background-color:rgba(2, 0, 0, 0.75);
+   background-color:#FFFFFF;
   -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     -khtml-border-radius: 10px;
-    border-radius: 10px;   
+    border-radius: 10px; 
+    border: 5px solid red;
     }
     
     
     .itemDivSelected
 {
-     background-color:rgba(234, 0, 0, 0.75);
+    
+    border: 5px solid red;
+     background-color:#FFE183;
   -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     -khtml-border-radius: 10px;
     border-radius: 10px;   
     }
+    
+    
+    .itemPopUp
+   {       
+       color: black;
+       margin: 5px 5px;      
+       width:100%;
+       /**border-color:#000;
+       border-width:medium;       
+       border-style:double;
+       border-width:3px;*/
+       background-color:#FFFFFF;
+        border: 1px solid #cccccc;
+        padding: 5px;
+        line-height: 30px;
+        vertical-align: top;
+        /*puntas redondas*/
+        -moz-border-radius: 20px; /* Firefox */
+        -webkit-border-radius: 20px; /* Google Chrome y Safari */
+        border-radius: 5px; /* CSS3 (Opera 10.5, IE 9 y est�ndar a ser soportado por todos los futuros navegadores) */
+
+   }
+   

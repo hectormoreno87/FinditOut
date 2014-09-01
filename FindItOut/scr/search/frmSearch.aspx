@@ -7,6 +7,123 @@
     <script src="../Scripts/jquery.bpopup.min.js" type="text/javascript"></script>
     <script src="../Scripts/richmarker.js" type="text/javascript"></script>
     <link href="../Styles/styleLogin.css" rel="stylesheet" type="text/css" />
+    <link href="../Styles/popUpStyle.css" rel="stylesheet" type="text/css" />
+    <script src="../Scripts/jquery.slides.min.js" type="text/javascript"></script>
+    
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+
+    <style>
+    
+
+    #slides {
+      display: none
+    }
+
+    #slides .slidesjs-navigation {
+      margin-top:3px;
+    }
+
+    #slides .slidesjs-previous {
+      margin-right: 5px;
+      float: left;
+    }
+
+    #slides .slidesjs-next {
+      margin-right: 5px;
+      float: left;
+    }
+
+    .slidesjs-pagination {
+      margin: 6px 0 0;
+      float: right;
+      list-style: none;
+    }
+
+    .slidesjs-pagination li {
+      float: left;
+      margin: 0 1px;
+    }
+
+    .slidesjs-pagination li a {
+      display: block;
+      width: 13px;
+      height: 0;
+      padding-top: 13px;
+      background-image: url(../img/pagination.png);
+      background-position: 0 0;
+      float: left;
+      overflow: hidden;
+    }
+
+    .slidesjs-pagination li a.active,
+    .slidesjs-pagination li a:hover.active {
+      background-position: 0 -13px
+    }
+
+    .slidesjs-pagination li a:hover {
+      background-position: 0 -26px
+    }
+
+    #slides a:link,
+    #slides a:visited {
+      color: #333
+    }
+
+    #slides a:hover,
+    #slides a:active {
+      color: #9e2020
+    }
+
+    .navbar {
+      overflow: hidden
+    }
+  </style>
+  <!-- End SlidesJS Optional-->
+
+  <!-- SlidesJS Required: These styles are required if you'd like a responsive slideshow -->
+  <style>
+    #slides {
+      display: none
+    }
+
+    .container {
+      margin: 0 auto
+    }
+
+    /* For tablets & smart phones */
+    @media (max-width: 767px) {
+      body {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .container {
+        width: auto
+      }
+    }
+
+    /* For smartphones */
+    @media (max-width: 480px) {
+      .container {
+        width: auto
+      }
+    }
+
+    /* For smaller displays like laptops */
+    @media (min-width: 768px) and (max-width: 979px) {
+      .container {
+        width: 724px
+      }
+    }
+
+    /* For larger displays */
+    @media (min-width: 1200px) {
+      .container {
+        width: 1170px
+      }
+    }
+  </style>
+
    <script type="text/javascript">
 
        var mapGlobal;
@@ -18,7 +135,15 @@
        var markers = [];
        var items = [];
        $(function () {
-          initialize();
+           initialize();
+           $('#load').hide();
+           $('#results').css('height', $(window).height()*.67);
+           $(window).resize(function () {
+               $('#results').css('height', $(window).height() * .67);
+               //$("#log").append("<div>Handler for .resize() called.</div>");
+           });
+
+           $.ajaxSetup({ cache: false });
       });
 
       function initialize() {
@@ -90,9 +215,84 @@
            cityCircle.setCenter(markerLocal.getPosition());
            cityCircle.setRadius(parseInt($('#ddlDistance').val()));
            $("#error").html('Latitude:' + position.coords.latitude + ', Longitude:' + position.coords.longitude);
+       }
 
+       function showItemPopUp(idItem) {
+           $('#load').show();
+           $('#content').addClass('modalBackground');
+           PageMethods.geTInfoItem(idItem, getInfoItemCallback);
+       }
+
+       function closePop() {
+           $('#load').hide();
+           $('#content').removeClass('modalBackground');
+           $('#itemResult').html('');
+       }
+
+       var images = [];
+       function getInfoItemCallback(sRes) {
+
+           $('#load').hide();
+           var infoItem = eval(sRes)[0];
+           $.get("../utils/htmlPopUp/item.html", function (respons) {
+
+               respons = respons.replace('@logo@', infoItem.logo);
+               respons = respons.replace('@company@','<h1>'+ infoItem.finditoutName+'</h1>');
+               images = infoItem.images.split("@@");
+               var divImages = '';
+               var counter = 0;
+               $.each(images, function (key, value) {
+                   //if (counter == 0)
+                   divImages = divImages + '<img id="_' + key + '" src="' + value + '" width="200px" height="150px" ></img>';
+                   //else
+                   //    divImages = divImages + '<img id="_' + key + '" src="' + value + '" style="display:none"></img>';
+                   counter = counter + 1;
+               });
+
+               respons = respons.replace('@images@', divImages);
+               respons = respons.replace('@producto@', '<h1>' + infoItem.name + '</h1>');
+               respons = respons.replace('@description@', infoItem.description);
+
+
+               var divphones = '';
+               var phones = infoItem.phones.split("@");
+               $.each(phones, function (key, value) {
+                   //if (counter == 0)
+                   divphones = divphones + '<a>' + value + ' </a>|';
+                   //else
+                   //    divImages = divImages + '<img id="_' + key + '" src="' + value + '" style="display:none"></img>';
+                   counter = counter + 1;
+               });
+
+
+               respons = respons.replace('@phones@', divphones);
+
+
+               var divsaps = '';
+               var wats = infoItem.whatsaps.split("@");
+               $.each(wats, function (key, value) {
+                   //if (counter == 0)
+                   divsaps = divsaps + '<a>' + value + ' </a>|';
+                   //else
+                   //    divImages = divImages + '<img id="_' + key + '" src="' + value + '" style="display:none"></img>';
+                   counter = counter + 1;
+               });
+
+
+               respons = respons.replace('@whatsapp@', divsaps);
+               respons = respons.replace('@face@', infoItem.facebook);
+               respons = respons.replace('@twitter@', infoItem.twitter);
+               $('#itemResult').html(respons);
+
+               $('#slides').slidesjs({
+                   width: 940,
+                   height: 528,
+                   navigation: false
+               });
+           });
 
        }
+     
 
        function makeInfoWindowEvent(map, infowindow, contentString, marker) {
            google.maps.event.addListener(marker, 'click', function () {
@@ -133,12 +333,16 @@
            PageMethods.searchM(markerLocal.getPosition(), $('#search').val(), parseInt($('#ddlDistance').val()), searchfCallback);
        }
 
-       function divSelected(id,index) {
+       function divSelected(id, index) {
+           $('#map_canvas').animate({ height: ($(window).height() * .67)+'px' },1000);
+           $('#divBack').html('');
+           $('#divBack').animate({ height: "0%" }, 1000);
+           $('#divCompany').html('');
+           $('#divCompany').animate({ height: "0%" }, 1000);
 
            $.each(markers, function (index, value) {
                if (value.id == id) {
-
-                   
+                  
 
                    mapGlobal.setCenter(value.mark.getPosition());
                    $(".itemDivSelected").removeClass().addClass("itemDiv");
@@ -150,6 +354,39 @@
 
            });
        }
+
+
+       function showCompany(idI) {
+           PageMethods.getCompany(idI, getCompanyCallback);
+
+     }
+
+     function getCompanyCallback(sResult) {
+         $('#map_canvas').animate({ height: "0%" }, 1000);
+         $('#divBack').animate({ height: "5%" }, 1000);
+         $('#divBack').html('Volver a Producto');
+         $('#divCompany').html(sResult).animate({ height: "95%" }, 1000);
+     }
+
+     function backToProduct(idI) {
+         $('#map_canvas').animate({ height: ($(window).height() * .67) + 'px' }, 1000);
+         $('#divBack').html('');
+         $('#divBack').animate({ height: "0%" }, 1000);
+         $('#divCompany').html('');
+         $('#divCompany').animate({ height: "0%" }, 1000);
+
+     }
+
+     function getInfoSucursal() {
+         var s = $('#idSucursal').val();
+         PageMethods.getInfoSucursal(s, callbackGetSucursal);
+
+
+      }
+
+      function callbackGetSucursal(sRes) {
+          $('#datosSucursal').html(sRes); 
+      }
 
        function searchfCallback(sResult) {
           infowindow = new google.maps.InfoWindow();
@@ -269,7 +506,7 @@
            st += "<tr>";
            st += "<td>";
 
-           st += "<div ><a href='#'>Detalles</a></div>";
+           st += "<div ><a onclick=\"javascript:showItemPopUp(" + value.idItem + ")\">Detalles</a></div>";
 
            st += "</td>";
            st += "</tr>";
@@ -290,7 +527,7 @@
            st += "<tr>";
            st += "<td>";
 
-           st += "<div ><a href='#'>"+value.finditoutName+"</a></div>";
+           st += "<div ><a href='#'><span onclick='javascript:showCompany("+value.idItem+");'>"+value.finditoutName+"</span></a></div>";
 
            st += "</td>";
            st += "</tr>";
@@ -361,7 +598,7 @@
 </tr>
 <tr>
     <td>
-    <div id="results" style="overflow: scroll;">
+    <div id="results" style="overflow: scroll;" >
     </div>
     </td>
 </tr>
@@ -370,21 +607,21 @@
 
 
 </td>
-<td style="width:75%">
+<td style="width:100%">
  <div id="map_canvas" style="width:100%; height:100%;"></div>
+ <div id="divBack" style="width:100%; height:0%;" onclick="javascript:backToProduct(1);">Volver a Producto</div>
+ <div id="divCompany" style="width:100%; height:0%;"></div>
 </td>
 </tr>
 </table>
 
-<div id="content" style="width:500px;height:500px;display:none">
+<div id="content" style="display:none">
 
 
-
-<table style="width:100%;height:100%">
+<%--<table>
 <tr>
     <td>
-        <div id="mapLocation" style="width:100%;height:100%">
-        </div>
+        
     </td>
 </tr>
 <tr>
@@ -392,9 +629,11 @@
         <input id="btnSaveLocation" type="button" value="OK" onclick="javascript:setLocation();" />
     </td>
 </tr>
-</table>
+</table>--%>
 
 
 </div>
+
+
 </asp:Content>
 

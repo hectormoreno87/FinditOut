@@ -20,7 +20,7 @@
             <td align="center" style="vertical-align: top">
                 <table width="70%" style="height: 95%;">
                     <tr>
-                        <td style="vertical-align: top; height: 25%;">
+                        <td style="vertical-align: top; height: 20%;">
                             <%--parte superior--%>
                             <table width="100%">
                                 <tr>
@@ -115,6 +115,13 @@
             </td>
         </tr>
     </table>
+    <div id="mapLocation">
+<div id="itemResult">
+</div>
+        <img id="load" src="../images/loading.gif"  height="70px" width="70px"/>
+            
+
+</div>
     </form>
     <!-- javascript at the bottom for fast page loading -->
 </body>
