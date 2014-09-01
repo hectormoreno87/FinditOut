@@ -214,6 +214,7 @@ table .tabla_sola
     border-radius: 10px;   
     }
     
+<<<<<<< HEAD
 
     
     .itemPopUp
@@ -238,6 +239,8 @@ table .tabla_sola
    }
    
 
+=======
+>>>>>>> 208d64d13b7b7557f06a4424c25fc2cd68181de3
     .modalPopup
 {
     border-width: 5px;
@@ -370,5 +373,7 @@ box-shadow: 0px 0px 10px #888888;
     left: 72px;
     border-color: #666 transparent;
     border-width: 0 10px 10px;
+
 }
+
 
