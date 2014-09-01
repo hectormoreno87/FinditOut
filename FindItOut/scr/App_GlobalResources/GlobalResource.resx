@@ -280,10 +280,10 @@
     <value>Teléfono</value>
   </data>
   <data name="lbl_UserExpLocaliz" xml:space="preserve">
-    <value>*Nombre de usuario</value>
+    <value>Tu nombre de usuario para Find it Out!</value>
   </data>
   <data name="lbl_UserLocaliz" xml:space="preserve">
-    <value>Nombre Find It Out</value>
+    <value>Usuario</value>
   </data>
   <data name="menuCatalogo" xml:space="preserve">
     <value>Mis Catálogos</value>
@@ -344,5 +344,71 @@
   </data>
   <data name="lbl_longitud" xml:space="preserve">
     <value>Longitud</value>
+  </data>
+  <data name="lbl_DirExpLocaliz" xml:space="preserve">
+    <value>Describe tu empresa o negocio para que tus clientes te conozcan mejor</value>
+  </data>
+  <data name="lbl_MisSucursales" xml:space="preserve">
+    <value>Mis Sucursales</value>
+  </data>
+  <data name="lbl_MisSucursalesNuevo" xml:space="preserve">
+    <value>Nueva</value>
+  </data>
+  <data name="Bienvenida_NuevaSucursal" xml:space="preserve">
+    <value>Tu Nueva Sucursal!!</value>
+  </data>
+  <data name="btn_Cancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="lbl_DomExpli" xml:space="preserve">
+    <value>Dirección de tu sucursal</value>
+  </data>
+  <data name="lbl_LogoExpLocaliz" xml:space="preserve">
+    <value>El logotipo de tu empresa</value>
+  </data>
+  <data name="lbl_LogoLocaliz" xml:space="preserve">
+    <value>Logo</value>
+  </data>
+  <data name="lbl_NomSuc" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="lbl_NomSucExpli" xml:space="preserve">
+    <value>Nombre de tu sucursal</value>
+  </data>
+  <data name="lbl_telSuc" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="lbl_telSucExpli" xml:space="preserve">
+    <value>Teléfono de la sucursal</value>
+  </data>
+  <data name="lbl_telSucExpliMas" xml:space="preserve">
+    <value>Agregar otro número</value>
+  </data>
+  <data name="lbl_UsarWhatsApp" xml:space="preserve">
+    <value>¿Usar tambien como WatsApp?</value>
+  </data>
+  <data name="lbl_MailExpli" xml:space="preserve">
+    <value>El correo de tu empresa</value>
+  </data>
+  <data name="lbl_MailLocaliz" xml:space="preserve">
+    <value>Mail</value>
+  </data>
+  <data name="lbl_WebExpli" xml:space="preserve">
+    <value>El sitio Web de tu empresa</value>
+  </data>
+  <data name="lbl_WebLocaliz" xml:space="preserve">
+    <value>Web</value>
+  </data>
+  <data name="lbl_EmpreExpLocaliz" xml:space="preserve">
+    <value>El nombre de tu empresa o franquicia</value>
+  </data>
+  <data name="lbl_EmpreLocaliz" xml:space="preserve">
+    <value>Empresa</value>
+  </data>
+  <data name="lbl_MiEmpreLocaliz" xml:space="preserve">
+    <value>Mi empresa</value>
+  </data>
+  <data name="lbl_MiUserLocaliz" xml:space="preserve">
+    <value>Yo</value>
   </data>
 </root>

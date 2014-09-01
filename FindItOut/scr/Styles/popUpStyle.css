@@ -17,6 +17,7 @@
 
 
 
+
        #mapLocation
        {
            z-index: 99999;
@@ -27,3 +28,15 @@
     margin-left: -15%;
     
 }​
+
+/*#mapLocation
+{
+    z-index: 99999;
+    height: 0px;
+    width: 0px;
+    position: fixed;
+    margin-top: auto;
+    margin-left: auto;
+}
+
+*/
