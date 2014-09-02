@@ -14,6 +14,9 @@ public partial class pruebas_uploadImages : System.Web.UI.Page
     {
         String s = "";
 
+
+
+
         if (this.Request.Files.Count > 0)
         {
             File.Delete(Server.MapPath("~") + "\\img\\FindOut\\FindItOutName\\Item\\filename2.jpg");
