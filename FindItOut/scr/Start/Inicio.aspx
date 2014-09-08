@@ -4,10 +4,23 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
     <script src="../Scripts/Validaciones.js" type="text/javascript"></script>
+    <script src="../Scripts/1.8.2.min.js" type="text/javascript"></script>
+    <script src="../Scripts/jquery.tooltip.min.js" type="text/javascript"></script>
+    <link href="../Styles/styleToolTip.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
 
         $(document).ready(function () {
-            limpiaMensajes();
+            limpiaMensajes();            
+        });
+
+    
+
+        $(function () {
+
+//            var pass = $("#<%=txtPass.ClientID%>");
+//            pass.tooltip({ placement: 'right' });
+            $("#<%=txtPass.ClientID%>").tooltip({ placement: 'right' });
+           
         });
 
         function limpiaMensajes() {
@@ -20,12 +33,12 @@
             limpiaMensajes();
 
             var errores = 0;
-            var mail = $("#<%=txtMail.ClientID%>");
-            var pass = $("#<%=txtPass.ClientID%>");
+            var mail = $("#<%=txtMail.ClientID%>").val();
+            var pass = $("#<%=txtPass.ClientID%>").val();
             //mail
             if (validarVacio(mail)) {
                 $("#<%=lblCorreoPon.ClientID%>").hide();
-                if (validarEmail(mail.val())) {
+                if (validarEmail(mail)) {
                     $("#<%=lblCorreoMal.ClientID%>").hide();
                 }
                 else {
@@ -48,7 +61,7 @@
             }
 
             if (errores == 0) {
-                conectarServidor(mail.val(), pass.val());
+                conectarServidor(mail, pass);
             }
         }
 
@@ -95,7 +108,7 @@
                             <asp:Literal ID="Literal5" runat="server" Text='<%$ Resources:Globalresource, lbl_Pass %>'></asp:Literal>
                         </td>
                         <td>
-                            <asp:TextBox ID="txtPass" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga"></asp:TextBox>
+                            <asp:TextBox ID="txtPass" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga" Title="Algodond e azucar"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>

@@ -33,7 +33,7 @@ function DecimalesPositivos(e) {
 
 function validarVacio(campo) {
 
-    if ((campo.val().length) == 0)
+    if ((campo.length) == 0)
         return false;
     else
         return true;

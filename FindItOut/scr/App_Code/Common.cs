@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 
 /// <summary>
@@ -684,7 +685,7 @@ public static class Common
     /// </summary>
     #endregion
     
-    //correo de envio de pass
+    //correo de envio de pass o token
     public static void SendMailByDictionary(Dictionary<string, string> dicEmailInfo, Dictionary<string, Stream> dicFiles, string emailTo, String Key, string pass)
     {
         clsEmail email = new clsEmail(Key);
@@ -703,7 +704,7 @@ public static class Common
     }
 
     //correo para solicitar confirmación de cuenta
-    public static void SendMailByDictionary(Dictionary<string, string> dicEmailInfo, Dictionary<string, Stream> dicFiles, string emailTo, String Key, string mail, string pass, string id)
+    public static void SendMailByDictionary(Dictionary<string, string> dicEmailInfo, Dictionary<string, Stream> dicFiles, string emailTo, String Key, string mail, string token)
     {
         clsEmail email = new clsEmail(Key);
         try
@@ -712,14 +713,14 @@ public static class Common
             email.setMessage(dicEmailInfo);
             email.setFiles(dicFiles);
             email.ToAdress = emailTo;
-            email.Send(mail, pass, id);
+            email.Send(mail, token);
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
     }
-
+    
 
     //codificacion de cadena
     public static string  codifica(string cadena)
@@ -746,6 +747,7 @@ public static class Common
 
         return bytes;
     }
+
 
     //decodificar
     public static string decodifica(string cadena)
@@ -774,6 +776,18 @@ public static class Common
         }
         return bytes;
     }
+
+    public static string GetSHA1(string str)
+    {
+        SHA1 sha1 = SHA1Managed.Create();
+        ASCIIEncoding encoding = new ASCIIEncoding();
+        byte[] stream = null;
+        StringBuilder sb = new StringBuilder();
+        stream = sha1.ComputeHash(encoding.GetBytes(str));
+        for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
+        return sb.ToString();
+    }
+
 
     static string GetString(byte[] bytes)
     {

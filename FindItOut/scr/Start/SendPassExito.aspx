@@ -43,8 +43,8 @@
         </tr>
         <tr>
             <td align="right" style="text-align:right;">
-                <asp:LinkButton CssClass="link" ID="lnkInicio" runat="server" PostBackUrl="Registro1.aspx"
-                    Text='<%$ Resources:Globalresource, link_RegistrateAqui %>'></asp:LinkButton>
+                <asp:LinkButton CssClass="link" ID="lnkInicio" runat="server" PostBackUrl="Inicio.aspx"
+                    Text='<%$ Resources:Globalresource, link_irLogin %>'></asp:LinkButton>
             </td>
         </tr>  
     </table>

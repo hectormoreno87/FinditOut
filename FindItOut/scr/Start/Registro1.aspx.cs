@@ -17,17 +17,21 @@ public partial class Registro1 : System.Web.UI.Page
 
     [WebMethod]
     public static int btnCrearCuenta_onclick(string mail, string pass, string confirm)
-    {       
+    {
         //se vuelven a hacer validadiones, por si acaso
-        int valor = pass.CompareTo(confirm);        
+        int valor = pass.CompareTo(confirm);
         if (valor != 0)//son diferentes
         {
         }
         else
         {
-            Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-            parameters.Add("@mail", mail);
-            parameters.Add("@pass", pass);
+        //generar token
+        string tok = Common.GetSHA1(mail+pass+ DateTime.Now.ToString() );
+        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
+        parameters.Add("@mail", mail);
+        parameters.Add("@pass", pass);
+        parameters.Add("@token", tok);
+
 
             DataTable dt = null;
             dt = DataAccess.executeStoreProcedureDataTable("spr_INSERT_Usuario", parameters);
@@ -51,11 +55,11 @@ public partial class Registro1 : System.Web.UI.Page
                         var pv = new Dictionary<string, string>();
                         var files = new Dictionary<string, Stream>();
 
-                        mail = Common.codifica(mail);
-                        pass = Common.codifica(pass);
-                        string id = Common.codifica(dt.Rows[0]["llave"].ToString());
-
-                        Common.SendMailByDictionary(pv, files, /*mail*/"maritza.morfin@dominio6.com", "preAprobada", mail, pass, id);
+                        //mail = Common.codifica(mail);
+                        //pass = Common.codifica(pass);
+                        //string id = Common.codifica(dt.Rows[0]["llave"].ToString());
+                       Common.SendMailByDictionary(pv, files, /*mail*/"maritza.morfin@dominio6.com", "preAprobada", mail, tok);
+                        
                         
                     }
                     catch (Exception ex)
@@ -67,5 +71,6 @@ public partial class Registro1 : System.Web.UI.Page
             }
         }
         return valor;
+                      
     }
 }

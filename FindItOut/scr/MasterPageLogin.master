@@ -7,6 +7,14 @@
 <head id="Head1" runat="server">
     <title></title>
     <link href="~/Styles/styleLogin.css" rel="stylesheet" type="text/css" />
+
+
+    <%--confirmaciones--%>    
+     <link href="~/css/alertify.default.css" rel="stylesheet" type="text/css" />
+    <%--<link href="~/css/alertify.bootstrap.css" rel="stylesheet" type="text/css" />--%>
+    <link href="~/css/alertify.core.css" rel="stylesheet" type="text/css" />
+
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -15,6 +23,10 @@
     <asp:ToolkitScriptManager ID="ScriptMaster" runat="server" AsyncPostBackTimeout="20000"
         EnablePageMethods="true">
     </asp:ToolkitScriptManager>
+
+    <script type="text/javascript">
+    
+    </script>
     <table width="100%" style="height: 100%; vertical-align: top;">
         <tr>
             <td align="center" style="vertical-align: top">
@@ -115,13 +127,11 @@
             </td>
         </tr>
     </table>
-    <div id="mapLocation">
-<div id="itemResult">
-</div>
-        <img id="load" src="../images/loading.gif"  height="70px" width="70px"/>
-            
-
-</div>
+    <%--  <div id="mapLocation">
+        <div id="itemResult">
+        </div>
+        <img id="load" src="../images/loading.gif" height="70px" width="70px" />
+    </div>--%>
     </form>
     <!-- javascript at the bottom for fast page loading -->
 </body>

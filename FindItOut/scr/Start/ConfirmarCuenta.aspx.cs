@@ -9,20 +9,22 @@ using System.Data;
 public partial class Start_ConfirmarCuenta : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
-    {      
-        string mail = Request.QueryString["m"];
-        string id = Request.QueryString["i"];
-        string pass = Request.QueryString["p"];
+    {
+        string token = Request.QueryString["t"];
+        //string mail = Request.QueryString["m"];
+        //string id = Request.QueryString["i"];
+        //string pass = Request.QueryString["p"];
 
         //decodificar
-        mail = Common.decodifica(mail);
-        id = Common.decodifica(id);
-        pass = Common.decodifica(pass);
+        //mail = Common.decodifica(mail);
+        //id = Common.decodifica(id);
+        //pass = Common.decodifica(pass);
 
         Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-        parameters.Add("@mail", mail);
-        parameters.Add("@pass", pass);
-        parameters.Add("@id", id);
+        //parameters.Add("@mail", mail);
+        //parameters.Add("@pass", pass);
+        //parameters.Add("@id", id);
+        parameters.Add("@token", token);
         string result = "";
         try
         {

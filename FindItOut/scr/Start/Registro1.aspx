@@ -22,13 +22,13 @@
             limpiaMensajes();
 
             var errores = false;
-            var mail = $("#<%=txtMail.ClientID%>");
-            var pass = $("#<%=txtPass.ClientID%>");
-            var confirm = $("#<%=txtConfirm.ClientID%>");
+            var mail = $("#<%=txtMail.ClientID%>").val();
+            var pass = $("#<%=txtPass.ClientID%>").val();
+            var confirm = $("#<%=txtConfirm.ClientID%>").val();
             //mail
             if (validarVacio(mail)) {
                 $("#<%=lblCorreoPon.ClientID%>").hide();
-                if (validarEmail(mail.val())) {
+                if (validarEmail(mail)) {
                     $("#<%=lblCorreoMal.ClientID%>").hide();
                 }
                 else {
@@ -60,7 +60,7 @@
             }
             if (!errores) {
                 //comparar contraseñas
-                if (pass.val() == confirm.val()) {
+                if (pass == confirm) {
                 }
 
                 else {
@@ -75,7 +75,7 @@
             }
             else {
                 //guardar en base de datos
-                PageMethods.btnCrearCuenta_onclick(mail.val(), pass.val(), confirm.val(), callBackCrearCuenta);
+                PageMethods.btnCrearCuenta_onclick(mail, pass, confirm, callBackCrearCuenta);
             }
         }
 

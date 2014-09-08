@@ -12,16 +12,14 @@
                 <table>
                     <tr>
                         <td>
-                            <asp:Button ID="btnDatos" runat="server" Text='<%$ Resources:GlobalResource, menuLocalizacion%>'
-                                CssClass="botonMenuVertical" />
-                            <%--<asp:Literal ID="lblLocalizacion" runat="server" Text='<%$ Resources:GlobalResource, menuLocalizacion%>'></asp:Literal>--%>
+                            <asp:LinkButton ID="LinkButton1" runat="server" Text='<%$ Resources:GlobalResource, menuLocalizacion%>'
+                                PostBackUrl="~/Admin/Localizacion.aspx">LinkButton</asp:LinkButton>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <asp:Button ID="btnCatalogos" runat="server" Text='<%$ Resources:GlobalResource, menuCatalogo%>'
-                                CssClass="botonMenuVertical" />
-                            <%-- <asp:Literal ID="Literal1" runat="server" Text='<%$ Resources:GlobalResource, menuCatalogo%>'></asp:Literal>--%>
+                            <asp:LinkButton ID="lnkSucursales" runat="server" Text='<%$ Resources:GlobalResource, menuSucursales%>'
+                                PostBackUrl="~/Admin/Sucursales.aspx">LinkButton</asp:LinkButton>
                         </td>
                     </tr>
                     <tr>
@@ -49,5 +47,5 @@
                 </asp:ContentPlaceHolder>
             </td>
         </tr>
-    </table>    
+    </table>
 </asp:Content>

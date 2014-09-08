@@ -64,7 +64,7 @@
         }
 
         //boton remover plaga
-        $('.btnRemoverPlaga').live('click', function () {
+        $('.btnRemoverPlaga').on('click', function () {
 
             $(this).parent().parent().remove();
         });

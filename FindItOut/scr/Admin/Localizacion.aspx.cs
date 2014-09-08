@@ -6,9 +6,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using System.Data;
+using System.IO;
+using System.Configuration;
 
 public partial class Admin_Localizacion : System.Web.UI.Page
 {
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["user"] == null)
@@ -18,99 +21,82 @@ public partial class Admin_Localizacion : System.Web.UI.Page
         if (!IsPostBack)
         {
             Limpiar();
-            cargarDatos();
+            cargaDatos();
         }
+
+        //if (this.Request.Files.Count > 0)
+        //{
+        //    File.Delete(Server.MapPath("~") + "\\img\\FindOut\\FindItOutName\\Item\\filename2.jpg");
+
+        //    this.Request.Files[0].SaveAs(Server.MapPath("~")+"\\img\\FindOut\\FindItOutName\\Item\\filename2.jpg");
+        //}
+        //this.respuesta.InnerHtml = "respuasdasesta";
+     
     }
 
     public void Limpiar()
     {
-        txtEmpre.Text= txtDesc.Text = txtUser.Text = txtLogo.Text = txtMail.Text = txtWeb.Text = String.Empty;
+        txtEmpre.Text= txtDesc.Text = txtUser.Text = /*txtLogo.Text =*/ txtMail.Text = txtWeb.Text = String.Empty;
     }
 
-    public void cargarDatos(){
+    public void cargaDatos()
+    {
         if (Session["findOut"] == null)
         {
             Response.Redirect("../Start/Inicio.aspx", false);
         }
         else
         {
-            grdSucursales.DataSource = null;
-            grdSucursales.DataBind(); 
-            cargaDatosEmpresa();
+            Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
+            parameters.Add("idUser", Session["findOut"].ToString());
+            DataTable dt = null;
+            try
+            {
+                dt = DataAccess.executeStoreProcedureDataTable("spr_GET_InfoUser", parameters);
+            }
+            catch (Exception ex) { }
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                txtDesc.Text = dt.Rows[0]["desc"].ToString();
+                txtUser.Text = dt.Rows[0]["user"].ToString();
+                txtMail.Text = dt.Rows[0]["mail"].ToString();
+                txtWeb.Text = dt.Rows[0]["web"].ToString();
+                txtEmpre.Text = dt.Rows[0]["empresa"].ToString();
+            }
+
+            if (!String.IsNullOrEmpty(txtEmpre.Text))
+            {
+                txtEmpre.Enabled = false;
+            }
+            
         }
     }
-    public void cargaDatosEmpresa()
-    {
-        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-        parameters.Add("idCorreo", Session["findOut"].ToString());
-        DataSet dt = null;
-        try
-        {
-            dt = DataAccess.executeStoreProcedureDataSet("spr_GET_InfoUser", parameters);
-        }
-        catch (Exception ex) { }
-        if (dt != null && dt.Tables[0].Rows.Count > 0)
-        {
-            txtDesc.Text = dt.Tables[0].Rows[0]["desc"].ToString();
-            txtUser.Text = dt.Tables[0].Rows[0]["user"].ToString();
-            txtMail.Text = dt.Tables[0].Rows[0]["mail"].ToString();
-            txtWeb.Text = dt.Tables[0].Rows[0]["web"].ToString();
-            txtEmpre.Text = dt.Tables[0].Rows[0]["empresa"].ToString();
-        }
-
-        if (dt != null && dt.Tables[1].Rows.Count > 0)
-        {
-            grdSucursales.DataSource = dt.Tables[1];
-            grdSucursales.DataBind();
-        }
-    }
-
-    public static void cargaDatosSucursales()
-    {
-        /*Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-        parameters.Add("idCorreo", HttpContext.Current.Session["findOut"].ToString());
-        DataSet dt = null;
-        try
-        {
-            dt = DataAccess.executeStoreProcedureDataSet("spr_GET_SucursalesNombre", parameters);
-        }
-        catch (Exception ex) { }
-        if (dt != null && dt.Tables[0].Rows.Count > 0)
-        {
-            grdSucursales.DataSource = dt.Tables[0];
-            grdSucursales.DataBind();
-        }*/
-    }
-
-    #region grid
-    protected void grdSucursales_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        switch (e.Row.RowType)
-        {
-            case DataControlRowType.DataRow:
-                GridViewRow row = e.Row;
-                Image img = e.Row.FindControl("img") as Image;
-                 if (row.RowIndex > -1)
-                    {
-                        img.ImageUrl = "../img/pin.png"; //Aqui asignas la imagen dependiendo de lo que necesitas
-                    }
-                break;
-        }
-    }
-    #endregion
-
+    
     [WebMethod]
-    public static int btnIniciar_onclick(string user, string desc, string logo, string web, string mail, string empre)
+    public static int btnGuardar_onclick(string user, string desc, string logo, string web, string mail, string empre)
     {
         Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-        parameters.Add("idCorreo", HttpContext.Current.Session["findOut"].ToString());
+        parameters.Add("idUser", HttpContext.Current.Session["findOut"].ToString());
+        int result = 0;
+        string carpeta = String.Empty;
+
+        //revisar en BD si el cliente tiene carpeta
+        try
+        {
+            carpeta = DataAccess.executeStoreProcedureString("spr_Get_InfoLogo", parameters);
+        }
+        catch (Exception ex) { }
+        
+        if (String.IsNullOrEmpty( carpeta ) ) //no tiene
+             carpeta = creaCarpeta(empre);
+
         parameters.Add("newUser", user.Trim());
         parameters.Add("desc", desc.Trim());
         parameters.Add("web", web.Trim());
         parameters.Add("mail", mail.Trim());
-        parameters.Add("logo", logo.Trim());
+        parameters.Add("logo", carpeta.Trim());
         parameters.Add("empresa", empre.Trim());
-        int result = 0;
+
         try
         {
             result = DataAccess.executeStoreProcedureGetInt("spr_INSERT_InfoUser", parameters);
@@ -119,29 +105,33 @@ public partial class Admin_Localizacion : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static int btnIniciarControl_onclick(string suc, string dir, string longi, string lati, string telefonos, string wats)
+    public static string creaCarpeta(string empre)
     {
-        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-        parameters.Add("idCorreo", HttpContext.Current.Session["findOut"].ToString());
-        parameters.Add("suc", suc.Trim());
-        parameters.Add("dir", dir.Trim());
-        parameters.Add("longi", longi.Trim());
-        parameters.Add("lati", lati.Trim());
-        parameters.Add("telefonos", telefonos.Trim());
-        parameters.Add("whats", wats.Trim());
+        //empre = "   Maritza de JesusMorfin Franco ";
+        string carpeta = empre.Replace(" ","") + "-" + Common.GetSHA1(DateTime.Now.ToString());
 
-        int result = 0;
+       //crear carpeta principal
+        string PathDocs = ConfigurationManager.AppSettings["EmpresasFiles"];
+        string inicio = HttpContext.Current.Server.MapPath(PathDocs);
         try
         {
-            result = DataAccess.executeStoreProcedureGetInt("spr_INSERT_Sucursal", parameters);
+            if (!System.IO.Directory.Exists(inicio))
+                System.IO.Directory.CreateDirectory(inicio);
         }
-        catch (Exception ex) { }
-        return result;
-    }
-    
-    
-    protected void btnNueva_Click(object sender, ImageClickEventArgs e)
-    {
-        sucursal1.show();
+        catch (Exception ex)
+        {
+        }
+
+        //crear carpeta cliente
+        string carpetaCliente = inicio+carpeta;
+        try
+        {
+            if (!System.IO.Directory.Exists(carpetaCliente))
+                System.IO.Directory.CreateDirectory(carpetaCliente);
+        }
+        catch (Exception ex)
+        {
+        }
+        return carpeta;
     }
 }

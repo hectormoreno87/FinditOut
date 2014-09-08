@@ -287,7 +287,7 @@ public class clsEmail
     }
        
     //confirmar cuenta
-    public void Send(string mail1, string pass, string id)
+    public void Send(string mail1, string token)
     {
         //SmtpClient client = new SmtpClient(_sSMTPClient, _iPort);
         SmtpClient client = new SmtpClient(_sSMTPClient);
@@ -312,7 +312,7 @@ public class clsEmail
         string hola = Resources.GlobalResource.HolaCorreo;
         string mess1 = Resources.GlobalResource.Mess1CorreoConfirmar;
         string mess2 = Resources.GlobalResource.Mess2CorreoConfirmar;       
-        AlternateView htmlView = AlternateView.CreateAlternateViewFromString(_currentMessageBody.Replace("@hola", hola).Replace("@mess1", mess1).Replace("@mess2", mess2).Replace("@mail",mail1).Replace("@id",id).Replace("@pass",pass), null, "text/html");
+        AlternateView htmlView = AlternateView.CreateAlternateViewFromString(_currentMessageBody.Replace("@hola", hola).Replace("@mess1", mess1).Replace("@mess2", mess2).Replace("@mail",mail1).Replace("@token",token), null, "text/html");
         if (_LinkedResources != null)
         {
             foreach (string Keys in _LinkedResources.Keys)

@@ -21,12 +21,12 @@
             limpiaMensajes();
 
             var errores = 0;
-            var mail = $("#<%=txtMail.ClientID%>");
-            var pass = $("#<%=txtPass.ClientID%>");
+            var mail = $("#<%=txtMail.ClientID%>").val();
+            var pass = $("#<%=txtPass.ClientID%>").val();
             //mail
             if (validarVacio(mail)) {
                 $("#<%=lblCorreoPon.ClientID%>").hide();
-                if (validarEmail(mail.val())) {
+                if (validarEmail(mail)) {
                     $("#<%=lblCorreoMal.ClientID%>").hide();
                 }
                 else {
@@ -49,7 +49,7 @@
             }
 
             if (errores == 0) {
-                conectarServidor(mail.val(), pass.val());
+                conectarServidor(mail, pass);
             }
         }
 
