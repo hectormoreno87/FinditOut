@@ -1,0 +1,70 @@
+﻿<div class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="Create project"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            x</button>
+        <h3 id="myModalLabel">
+            Product</h3>
+    </div>
+    <div class="modal-body">
+        <table>
+            <tr>
+                <td>
+                    id
+                </td>
+                <td>
+                    <%= idProduct %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Active
+                </td>
+                <td>
+                    <input type="checkbox" name="active" value="true" <% if (active == true) { %> checked="checked"
+                        <% } %> />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    <input type="text" name="productName" class="input-block-level" value="<%= productName %>">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div id="prod_<%= idProduct %>" class="productImages">
+                        <%
+                    var ProductImages = this.model.get('ProductImages');
+                if(ProductImages){  
+                for(i=0; i<ProductImages.length; i++){              
+                        %>
+                        <img src="../img/company/products/<%= idProduct %>/<%=ProductImages[i].name %>" alt="<%=ProductImages[i].name %>"
+                            width="40px" height="40px" />
+                        <%} }%>
+                    </div>
+                    <%if(idProduct > 0 ){%>
+                    <form action="Catalog.aspx" id="imageform" method="POST" enctype="multipart/form-data">
+                        Upload image:
+                        <div id='imageloadstatus' style='display: none'>
+                            <img src="../images/loader.gif" alt="Uploading...." /></div>
+                        <div id='imageloadbutton'>
+                            <input type="file" name="photos[]" id="photoimg" multiple="true" />
+                        </div>
+                    </form>
+                    <%} %>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn close-action" data-dismiss="modal" aria-hidden="true">
+            Cancel</button>
+        <button class="btn btn-primary save-action">
+            Save</button>
+    </div>
+</div>
+<div class="modal-backdrop fade in">
+</div>

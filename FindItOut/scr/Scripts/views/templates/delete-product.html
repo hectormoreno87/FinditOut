@@ -1,0 +1,45 @@
+﻿<div class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="Create project"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            x</button>
+        <h3 id="myModalLabel">
+            Product</h3>
+    </div>
+    <div class="modal-body">
+        <table>
+            <tr>
+                <td>
+                    id
+                </td>
+                <td>
+                    <%= idProduct %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Active
+                </td>
+                <td>
+                    <%= active %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    <%= productName %>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn close-action" data-dismiss="modal" aria-hidden="true">
+            Cancel</button>
+        <button class="btn btn-primary delete-action">
+            Delete</button>
+    </div>
+</div>
+<div class="modal-backdrop fade in">
+</div>
