@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Web.Script.Services;
+using System.Data;
 
 /// <summary>
 /// Summary description for wsFindItOut
 /// </summary>
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+[ScriptService]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
 // [System.Web.Script.Services.ScriptService]
 public class wsFindItOut : System.Web.Services.WebService {
@@ -25,6 +28,7 @@ public class wsFindItOut : System.Web.Services.WebService {
     }
 
       [WebMethod]
+   
         public string GetInfo(string search, string latitud, string longitude, string distance)
         {
             return "[{\"idItem\": 1, \"idCategory\" : 1, \"name\":\"producto1\", \"category\":\"categoria 1\",\"description\":\"la description es indescriptible porque tenemos razones para inventar lo inventaro jaj que mamadas\", \"hasCost\": 1,\"cost\":16.5,\"active\":1, \"image\":\"http://192.168.1.110/finditout/images/image_1.jpg\"" + ",\"finditoutName\":\"dominio6\",\"distance\":300.3, \"latitude\":\"20.6827248\", \"longitude\":\"-103.3466798\", \"logo\":\"logo1\", \"allImages\":\"http://192.168.1.110/finditout/img/FindOut/FindItOutName/Item/item1.jpg@@http://192.168.1.110/finditout/img/FindOut/FindItOutName/Item/item2.jpg@@http://192.168.1.110/finditout/img/FindOut/FindItOutName/Item/item3.jpg\"}"+
@@ -75,6 +79,35 @@ public class wsFindItOut : System.Web.Services.WebService {
            ",{\"idItem\": 1, \"idCategory\" : 1, \"name\":\"producto1\", \"category\":\"categoria 1\",\"description\":\"la description es indescriptible porque tenemos razones para inventar lo inventaro jaj que mamadas\", \"hasCost\": 1,\"cost\":16.5,\"active\":1, \"image\":\"http://192.168.1.110/finditout/images/image_1.jpg\"" + ",\"finditoutName\":\"dominio6\",\"distance\":300.3, \"latitude\":\"20.6827248\", \"longitude\":\"-104.3466798\", \"logo\":\"logo1\"}" +
            ",{\"idItem\": 1, \"idCategory\" : 1, \"name\":\"producto1\", \"category\":\"categoria 1\",\"description\":\"la description es indescriptible porque tenemos razones para inventar lo inventaro jaj que mamadas\", \"hasCost\": 1,\"cost\":16.5,\"active\":1, \"image\":\"http://192.168.1.110/finditout/images/image_1.jpg\"" + ",\"finditoutName\":\"dominio6\",\"distance\":300.3, \"latitude\":\"20.6827248\", \"longitude\":\"-104.3466798\", \"logo\":\"logo1\"}" +
            ",{\"idItem\": 2, \"idCategory\" : 1, \"name\":\"producto2\", \"category\":\"categoria 1\",\"description\":\"la description es indescriptible porque tenemos razones para inventar lo inventaro jaj que mamadas\", \"hasCost\":1,\"cost\":20.5,\"active\":1, \"image\":\"http://192.168.1.110/finditout/images/image_1.jpg\"" + ",\"finditoutName\":\"dominio6\",\"distance\":300.3, \"latitude\":\"20.6827248\", \"longitude\":\"-104.6466798\", \"logo\":\"logo1\"}]";
+      }
+
+      [WebMethod]
+    public  string llenaMenuSucursales(string id)
+      {
+          string sucuesales = String.Empty;
+
+          Dictionary<string, object> parameters = new Dictionary<string, object>();
+          parameters.Add("idUser", id); //HttpContext.Current.Session["findOut"].ToString()
+          DataTable dt = null;
+          try
+          {
+              dt = DataAccess.executeStoreProcedureDataTable("spr_GET_InfoUserSucursales", parameters);
+          }
+          catch (Exception ex) { }
+
+          sucuesales = "<ul class=\"dropdown\">" +
+                                "<li class=\"active\">Mis Sucursales</li>" +
+                                "<li class=\"first\"><a href=\"Sucursales.aspx\">"+ Resources.GlobalResource.lbl_NuevaSuc +"</a></li>";
+
+          if (dt.Rows.Count > 0 && dt != null)
+          {
+              foreach (DataRow row in dt.Rows)
+              {
+                  sucuesales += "<li><a href=\"#\"> " + row["suc"] + "</a></li>";
+              }              
+          }
+          sucuesales += "</ul>";
+          return sucuesales;
       }
     
 }

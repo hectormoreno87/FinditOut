@@ -6,7 +6,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
 <head id="Head1" runat="server">
     <title></title>
-    <link href="~/Styles/styleLogin.css" rel="stylesheet" type="text/css" />
+    <%--apariencia general--%>
+  <%--  <link href="~/Styles/styleLogin.css" rel="stylesheet" type="text/css" />--%>
 
 
     <%--confirmaciones--%>    
@@ -19,7 +20,7 @@
     </asp:ContentPlaceHolder>
 </head>
 <body style="height: 100%; vertical-align: top">
-    <form id="form1" runat="server" style="height: 100%">
+    <form id="form1" runat="server" style="height: 100%"  method="post" enctype="multipart/form-data">
     <asp:ToolkitScriptManager ID="ScriptMaster" runat="server" AsyncPostBackTimeout="20000"
         EnablePageMethods="true">
     </asp:ToolkitScriptManager>

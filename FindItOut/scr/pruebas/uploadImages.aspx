@@ -77,7 +77,7 @@ float:left;
 Upload image: 
 <div id='imageloadstatus' style='display:none'><img src="../images/loader.gif" alt="Uploading...."/></div>
 <div id='imageloadbutton' onclick="javascript:addalgo();">
-<input type="file" name="photos[]" id="photoimg" multiple="true" />
+<input type="file" name="photos[]" id="photoimg" multiple="true" runat="server" />
 </div>
 
     <div>

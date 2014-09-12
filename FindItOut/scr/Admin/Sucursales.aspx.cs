@@ -19,53 +19,51 @@ public partial class Admin_Sucursales : System.Web.UI.Page
         if (!IsPostBack)
         {
             Limpiar();
-            cargaDatos();
-        }
-
-        if (this.Request.Files.Count > 0)
-        {
-            File.Delete(Server.MapPath("~") + "\\img\\FindOut\\FindItOutName\\Item\\filename2.jpg");
-
-            this.Request.Files[0].SaveAs(Server.MapPath("~") + "\\img\\FindOut\\FindItOutName\\Item\\filename2.jpg");
-        }
-        //this.respuesta.InnerHtml = "respuasdasesta";
+            cargaRedesSociales();           
+        }      
     }
 
     public void Limpiar()
     {
-       
+        txtNomSuc.Text = txtDom.Text = txtDom.Text = String.Empty;        
     }
 
-    public void cargaDatos()
+    public void cargaRedesSociales()
     {
-        if (Session["findOut"] == null)
+        div_redesS.Controls.Clear(); 
+        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
+        DataTable dt = null;
+        try
         {
-            Response.Redirect("../Start/Inicio.aspx", false);
+            dt = DataAccess.executeStoreProcedureDataTable("spr_GET_RedesSociales", parameters);
         }
-        else
+        catch (Exception ex) { }
+        if (dt != null && dt.Rows.Count > 0)
         {
-            grdSucursales.DataSource = null;
-            grdSucursales.DataBind();
-            Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-            parameters.Add("idCorreo", Session["findOut"].ToString());
-            DataTable dt = null;
-            try
+            string cad = "<table>";
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                dt = DataAccess.executeStoreProcedureDataTable("spr_GET_InfoUserSucursales", parameters);
+                cad += "<tr>";
+                //logo
+                cad += "<td style=\"width:65px;\">";
+                cad += "<img src=\"" + dt.Rows[i]["logoRedS"].ToString() + "\" height=\"25\" width=\"25\">";
+                cad += "</td>";                
+                cad += "<td>";
+                cad += "<input name= \"red_" + dt.Rows[i]["idRedS"].ToString() + "\" class=\"cajaLarga\">";
+                cad += "</td>";
+
+                cad += "</tr>";
             }
-            catch (Exception ex) { }
-            
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                grdSucursales.DataSource = dt;
-                grdSucursales.DataBind();
-            }
+            cad += "</table>";
+
+            LiteralControl menu = new LiteralControl(cad);
+            div_redesS.Controls.Add(menu);
         }
     }
-
+    /*
     public static void cargaDatosSucursales()
     {
-        /*Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
+        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
         parameters.Add("idCorreo", HttpContext.Current.Session["findOut"].ToString());
         DataSet dt = null;
         try
@@ -77,14 +75,47 @@ public partial class Admin_Sucursales : System.Web.UI.Page
         {
             grdSucursales.DataSource = dt.Tables[0];
             grdSucursales.DataBind();
-        }*/
+        }
+    }
+    */
+
+    [WebMethod]
+    public static string cargaRedesSocialesWM()
+    {        
+        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
+        DataTable dt = null;
+        string cad = "";
+        try
+        {
+            dt = DataAccess.executeStoreProcedureDataTable("spr_GET_RedesSociales", parameters);
+        }
+        catch (Exception ex) { }
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            cad = "<table>";
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                cad += "<tr>";
+                //logo
+                cad += "<td style=\"width:65px;\">";
+                cad += "<img src=\"" + dt.Rows[i]["logoRedS"].ToString() + "\" height=\"25\" width=\"25\">";
+                cad += "</td>";
+                cad += "<td>";
+                cad += "<input name= \"red_" + dt.Rows[i]["idRedS"].ToString() + "\" class=\"cajaLarga\">";
+                cad += "</td>";
+
+                cad += "</tr>";
+            }
+            cad += "</table>";             
+        }
+        return cad;
     }
 
     [WebMethod]
     public static int btnIniciarControl_onclick(string suc, string dir, string longi, string lati, string telefonos, string wats)
     {
         Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-        parameters.Add("idCorreo", HttpContext.Current.Session["findOut"].ToString());
+        parameters.Add("idUser", HttpContext.Current.Session["findOut"].ToString());
         parameters.Add("suc", suc.Trim());
         parameters.Add("dir", dir.Trim());
         parameters.Add("longi", longi.Trim());
@@ -99,12 +130,6 @@ public partial class Admin_Sucursales : System.Web.UI.Page
         }
         catch (Exception ex) { }
         return result;
-    }
-
-
-    protected void btnNueva_Click(object sender, ImageClickEventArgs e)
-    {
-       // sucursal1.show();
     }
 
     #region grid

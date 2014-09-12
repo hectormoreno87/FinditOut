@@ -370,7 +370,7 @@
     <value>Logo</value>
   </data>
   <data name="lbl_NomSuc" xml:space="preserve">
-    <value>Nombre</value>
+    <value>Sucursal</value>
   </data>
   <data name="lbl_NomSucExpli" xml:space="preserve">
     <value>Nombre de tu sucursal</value>
@@ -419,5 +419,11 @@
   </data>
   <data name="guardar_falla" xml:space="preserve">
     <value>Ups! los datos no se guardaron</value>
+  </data>
+  <data name="guardarLogo_error" xml:space="preserve">
+    <value>Hubo un problema al guardar tu Logo, intenta de nuevo por favor</value>
+  </data>
+  <data name="lbl_NuevaSuc" xml:space="preserve">
+    <value>Nueva</value>
   </data>
 </root>

@@ -3,34 +3,157 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <asp:ContentPlaceHolder ID="Myhead" runat="server">
+        <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
+        <script src="../Scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
     </asp:ContentPlaceHolder>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                url: "../wsFindItOut.asmx/llenaMenuSucursales",
+                data: '{"id":"' + $('#ContentPlaceHolder1_hidden').val() + '"}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (message) {
+                    callbackLlenaMenuSucursales(message);
+                },
+                error: function (message) {
+                    alert('Error');
+                }
+            });
+        });
+
+
+        function displayOptions(e) {
+            e.show();
+        }
+        //funcion que OCULTA los elementos del menu
+        function hideOptions(e) {
+            e.find("li").hide();
+            e.find("li.active").show();
+        }
+
+        function callbackLlenaMenuSucursales(data) {
+            var menu1 = data.d;
+            $("#idDivMenu").html('');
+            $("#idDivMenu").html(menu1);
+
+            var menu = $("ul.dropdown");
+
+            menu.mouseover(function () {
+                displayOptions($(this).find("li"));
+            });
+            menu.mouseout(function () {
+                hideOptions($(this));
+            });
+        }
+    </script>
+    <style type="text/css">
+        ul
+        {
+            list-style: none;
+            list-style-type: none;
+            list-style-position: outside;
+        }
+        a
+        {
+            cursor: pointer; /*color: #ece6bd;
+            text-decoration: underline;*/
+            outline: none !important;
+        }
+        .wrapper
+        {
+            margin: 0pt auto;
+            padding-top: 10px;
+        }
+        /******* /GENERAL *******/
+        /******* CONTENT *******/
+        
+        /******* /CONTENT *******/
+        /******* MENU *******/
+        ul.dropdown
+        {
+            width: 200px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            /*background: #1a1a1a;
+            margin-top: 2em;*/
+        }
+        ul.dropdown li
+        {
+            display: none;
+            font-size: 12px;
+        }
+        ul.dropdown li.active
+        {
+            display: block;
+            /*color: #8c8c8c;*/
+            font-size: 14px;
+            padding: 12px;
+            color: #555;
+            /*border-top: 1px solid #313131;*/
+            border-radius: 4px;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+        }
+        ul.dropdown li.active span
+        {
+            background: transparent url("dropdown.png") no-repeat scroll right center;
+            /*padding-right: 24px;*/
+            color: #8c8c8c;
+        }
+        ul.dropdown li a
+        {
+            display: block;
+            text-decoration: none;
+            padding: 8px 8px 8px 10px;
+            /*background: #1e1e1e;
+            border-bottom: 1px solid #171717;*/
+        }
+        ul.dropdown li.last a
+        {
+            border: 0;
+        }
+        ul.dropdown li.first a
+        {
+            /*border-top: 3px solid #131313;*/
+        }
+        ul.dropdown li a:hover
+        {
+            background: #232323;
+            color: #fff;
+            /*padding-left: 11px;*/
+        }
+        /******* /MENU *******/
+    </style>
     <table style="width: 100%;">
         <tr>
             <td valign="top" style="width: 30%;">
                 <table>
                     <tr>
                         <td>
-                            <asp:LinkButton ID="LinkButton1" runat="server" Text='<%$ Resources:GlobalResource, menuLocalizacion%>'
-                                PostBackUrl="~/Admin/Localizacion.aspx">LinkButton</asp:LinkButton>
+                            <div class="wrapper">
+                                <ul class="dropdown">
+                                    <li class="active"><a href="Localizacion.aspx">
+                                        <asp:Label ID="Label1" runat="server" Text='<%$ Resources:GlobalResource, menuLocalizacion%>'></asp:Label>
+                                    </a></li>
+                                </ul>
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <asp:LinkButton ID="lnkSucursales" runat="server" Text='<%$ Resources:GlobalResource, menuSucursales%>'
-                                PostBackUrl="~/Admin/Sucursales.aspx">LinkButton</asp:LinkButton>
+                            <div id="idDivMenu" class="wrapper">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <asp:Button ID="Button1" runat="server" Text='<%$ Resources:GlobalResource, menuCatalogo%>'
-                                CssClass="botonMenuVertical" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Button ID="Button2" runat="server" Text='<%$ Resources:GlobalResource, menuCatalogo%>'
                                 CssClass="botonMenuVertical" />
                         </td>
                     </tr>
@@ -48,4 +171,5 @@
             </td>
         </tr>
     </table>
+    <input type="hidden" runat="server" id="hidden" />
 </asp:Content>

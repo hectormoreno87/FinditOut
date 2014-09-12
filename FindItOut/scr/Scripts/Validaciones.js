@@ -86,3 +86,33 @@ function cuenta(obj, evento, maxi) {
         obj.value = obj.value.substring(0, maxi)
     }
 }
+
+function esImagen(archivo) {
+    var extensiones_permitidas = new Array(".gif", ".jpg", ".png", ".jpeg");
+    var mierror = "NoEvaluado";
+    
+    if (!archivo) {
+        //Si no tengo archivo, es que no se ha seleccionado un archivo en el formulario 
+        mierror = "NoArchivo";
+    } 
+    else {
+        //recupero la extensión de este nombre de archivo 
+        var extension = (archivo.substring(archivo.lastIndexOf("."))).toLowerCase();
+        //compruebo si la extensión está entre las permitidas 
+        var permitida = false;
+        for (var i = 0; i < extensiones_permitidas.length; i++) {
+            if (extensiones_permitidas[i] == extension) {
+                permitida = true;
+                break;
+            }
+        }
+        if (!permitida) {
+            mierror = "NoExtension";
+        }
+        else {
+            //Todo bien
+            mierror = "Ok";
+        }
+    }
+    return mierror;
+}

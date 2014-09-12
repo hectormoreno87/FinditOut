@@ -1,53 +1,68 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterAdmin.master" AutoEventWireup="true"
-    CodeFile="Localizacion.aspx.cs" Inherits="Admin_Localizacion" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterAdmin.master" AutoEventWireup="true" CodeFile="Localizacion.aspx.cs" Inherits="Admin_Localizacion" %>
 
 <asp:Content ID="MyContent1" ContentPlaceHolderID="Myhead" runat="Server">
-<script src="../Scripts/Validaciones.js" type="text/javascript"></script>
+    <script src="../Scripts/Validaciones.js" type="text/javascript"></script>
     <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
-    
-    <script src="../Scripts/jquery.wallform.js" type="text/javascript"></script>
-    <script src="../Scripts/jquery.min.js" type="text/javascript"></script>
     <script src="../Scripts/alertify.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../Scripts/jquery.wallform.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#<%=photoimg.ClientID%>").on('change', function () {               
+                $("#form1").ajaxForm({ target: '#preview',
+                    beforeSubmit: function () {
+
+                        //console.log('ttest');
+                        $("#imageloadstatus").show();
+                        $("#imageloadbutton").hide();
+                        return;
+                    },
+                    success: function (s) {
+                        $("#preview").html("");
+                        $("#imageloadstatus").hide();
+                        $("#imageloadbutton").show();
+                        cargaImagen();
+                    },
+                    error: function () {
+                        // console.log('xtest');                        
+                        $("#imageloadstatus").hide();
+                        $("#imageloadbutton").show();
+                        var label = '<%=GetGlobalResourceObject("Globalresource", "guardarLogo_error" ) %> ';
+                        alertify.error(label);
+                    }
+                }).submit();
+            });
+        });
+
+        function cargaImagen() {
+            $("#preview").html("");
+            PageMethods.sacaImagen(callBackSacaImagen);
+        }
+        function callBackSacaImagen(carpeta) {
+            var logo = "" + carpeta + "";
+            $("#imageloadstatus").hide();
+            $("#imageloadbutton").show();          
+            var d = new Date();
+            $("#preview").html("<img src='..\\EmpresasFiles\\" + logo + "?"+d.getTime()+"' />");            
+        }
+               
+    </script>
 </asp:Content>
 <asp:Content ID="MyContent2" ContentPlaceHolderID="nestedContent" runat="Server">
     <script type="text/javascript">
 
         $(document).ready(function () {
             limpiaMensajes();
-            preparaCargaImagen();
+            cargaImagen();
+
+            //si aun no tiene empresa, que nomueste la opcion de subir logo, por qu elo necesito para crear la carpeta y guardarlo
+            var empre = $("#<%=txtEmpre.ClientID%>").val();
+            if (!validarVacio(empre)) {
+                $(".cargaLogo").hide();
+            }
+            else
+                $(".cargaLogo").show();
+
         });
-
-        function preparaCargaImagen() {
-            $('#photoimg').on('change', function () {
-                //$("#preview").html('');
-
-                $("#imageform").ajaxForm({ target: '#preview',
-                    beforeSubmit: function () {
-
-                        //console.log('ttest');
-                        $("#imageloadstatus").show();
-                        $("#imageloadbutton").hide();
-                    },
-                    success: function (s) {
-                        // console.log('test');
-                        var d = new Date();
-                        $("#preview").html("<img src='..\\img\\FindOut\\FindItOutName\\Item\\filename2.jpg?" + d.getTime() + "' />");
-                        $("#imageloadstatus").hide();
-                        $("#imageloadbutton").show();
-                    },
-                    error: function () {
-                        // console.log('xtest');
-                        $("#imageloadstatus").hide();
-                        $("#imageloadbutton").show();
-                    }
-                }).submit();
-            });
-        }
-
-        function addalgo() {
-
-            $('#nombreee').html($('#nombreee').html() + 'holaaaaa');
-        }
 
         function limpiaMensajes() {
             $(".mensaje").hide();
@@ -105,6 +120,7 @@
             var label;
             if (result = '1') {
                 label = '<%=GetGlobalResourceObject("Globalresource", "guardar_exito" ) %> ';
+                $(".cargaLogo").show();
                 alertify.success(label);
             }
             else {
@@ -114,6 +130,7 @@
         }
 
     </script>
+    
     <table class="login">
         <tr>
             <td colspan="2" style="text-align: center;">
@@ -189,37 +206,23 @@
         </tr>
         <tr>
             <td>
-                <asp:Literal ID="Literal3" runat="server" Text='<%$ Resources:Globalresource, lbl_LogoLocaliz %>'></asp:Literal>
+                <div class="cargaLogo">
+                    <asp:Literal ID="Literal3" runat="server" Text='<%$ Resources:Globalresource, lbl_LogoLocaliz %>'></asp:Literal></div>
             </td>
             <td>
-                <table>
-                    <tr>
-                        <td>
-                            <form id="imageform" method="post" enctype="multipart/form-data" style="clear: both"
-                            action="Localizacion.aspx">
-                            <div id='preview'>
-                            </div>
-                            Upload image:
-                            <div id='imageloadstatus' style='display: none'>
-                                <img src="../images/loader.gif" alt="Uploading...." /></div>
-                            <div id='imageloadbutton' onclick="javascript:addalgo();">
-                                <input type="file" name="photos[]" id="photoimg" multiple="true" />
-                            </div>
-                            <div>
-                            </div>
-                            <div id="nombreee">
-                            </div>
-                            <div id="respuesta" runat="server">
-                            </div>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Mar
+                <div class="cargaLogo">
+                    <div id='preview'>
+                    </div>
+                    <div id='imageloadstatus' style='display: none'>
+                        <img src="../images/loader.gif" alt="Uploading...." /></div>
+                    <div id='imageloadbutton' onclick="javascript:addalgo();">
+                        <input type="file" name="photos[]" id="photoimg" multiple="true" runat="server" />
+                    </div>
+                    <div>
+                    </div>
+                    <div id="respuesta" runat="server">
+                    </div>
+                </div>
             </td>
         </tr>
         <tr>
@@ -234,6 +237,5 @@
             Growl Notification</h1>
         <h2>
             Have a nice day!</h2>
-    </div>
-    <%--<uc2:Sucursal ID="sucursal1" runat="server" />--%>
+    </div>  
 </asp:Content>
