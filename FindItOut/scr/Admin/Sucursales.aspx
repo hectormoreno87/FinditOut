@@ -3,6 +3,9 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Myhead" runat="Server">
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDgswrmT3KpX1iyQjOjDq_G2LAP5cpz5KY&sensor=TRUE">
+    </script>
+    <script src="../Scripts/richmarker.js" type="text/javascript"></script>
     <script src="../Scripts/Validaciones.js" type="text/javascript"></script>
     <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
     <script src="../Scripts/alertify.min.js" type="text/javascript"></script>
@@ -74,7 +77,7 @@
         }
 
         //boton remover plaga
-        $('.btnRemoverPlaga').on('click', function () {
+        $('body').on('click','.btnRemoverPlaga' , function () {
             $(this).parent().parent().remove();
         });
 
@@ -94,11 +97,97 @@
         }
 
     </script>
+    <script type="text/javascript">
+
+        var mapGlobal;
+        var markerLocal;
+        var mapOptionsGlobal;
+        var populationOptions;
+        
+        $(function () {
+            initialize(); 
+            $.ajaxSetup({ cache: false });
+        });
+
+        function initialize() {
+            mapOptionsGlobal = {
+                center: new google.maps.LatLng(20.6827248, -103.3466798),
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            //aqui se crea el mapa
+            mapGlobal = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptionsGlobal);
+
+            markerLocal = new google.maps.Marker({
+                position: new google.maps.LatLng(20.6827248, -103.3466798),
+                map: mapGlobal,
+                draggable: true,
+                title: "Mi posición"
+            });
+            
+            getLocation();
+
+            google.maps.event.addListener(markerLocal, 'drag', function (event) {
+                $("#error").html('Latitude:' + event.latLng.lat() + ', Longitude:' + event.latLng.lng());
+            });
+
+            google.maps.event.addListener(markerLocal, 'dragend', function (event) {
+                $("#error").html('Latitude:' + event.latLng.lat() + ', Longitude:' + event.latLng.lng());
+            });
+        }
+
+        var x = document.getElementById("error");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            }
+            else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+        function showPosition(position) {
+            var latlondata = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            mapGlobal.setCenter(latlondata);
+            markerLocal.setPosition(latlondata);
+            $("#error").html('Latitude:' + position.coords.latitude + ', Longitude:' + position.coords.longitude);
+        }
+
+        var images = [];
+        function makeInfoWindowEvent(map, infowindow, contentString, marker) {
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.setContent(contentString);
+                infowindow.open(map, marker);
+            });
+        }
+
+        function makeInfoWindowEventFromDiv(map, infowindow, contentString, marker) {
+            infowindow.setContent(contentString);
+            infowindow.open(map, marker);
+        }
+
+        function showError(error) {
+            if (error.code == 1) {
+                x.innerHTML = "User denied the request for Geolocation."
+            }
+            else if (err.code == 2) {
+                x.innerHTML = "Location information is unavailable."
+            }
+            else if (err.code == 3) {
+                x.innerHTML = "The request to get user location timed out."
+            }
+            else {
+                x.innerHTML = "An unknown error occurred."
+            }
+        }
+    </script>
     <%--<div id="scrolltable" style="overflow: auto; padding-right: 15px; padding-top: 15px;
         padding-left: 15px; padding-bottom: 15px; height: 250px; left: 100; top: 20;
         width: 98%">--%>
     <h2>
         <asp:Literal ID="ltTiTulo" runat="server" Text='<%$ Resources:Globalresource, lbl_NuevaSuc %>'></asp:Literal></h2>
+    <div id="error">
+    </div>
     <table>
         <tr>
             <td style="width: 68px;">
@@ -135,7 +224,6 @@
                             <img width="20" id="imgAdd" src="../img/add.png" title='<%$ Resources:Globalresource, lbl_telSucExpliMas %>'
                                 runat="server" onclick="addTel();" />
                         </td>
-                        
                         <td>
                             <span>
                                 <asp:CheckBox ID="CheckBox1" runat="server" CssClass="checkbox" title='<%$ Resources:Globalresource, lbl_UsarWhatsApp %>' />
@@ -185,8 +273,10 @@
             </td>
         </tr>
         <tr>
-            <td id="tbl_mapa" runat="server" colspan="2">
-                <img src="../img/mapaLogin.jpg" />
+            <td id="tbl_mapa" colspan="2">
+                <%-- <img src="../img/mapaLogin.jpg" />--%>
+                <div id="map_canvas" style="width: 500px; height: 300px;">
+                </div>
             </td>
         </tr>
     </table>
@@ -196,8 +286,8 @@
             <td colspan="2" align="right">
                 <input id="btnIniciar" class="botonStandar" runat="server" type="button" value='<%$ Resources:Globalresource, btn_Guardar %>'
                     onclick="javascript:validarControl();" />
-                    <input id="btnCancelar" class="botonStandar" runat="server" type="button" value='<%$ Resources:Globalresource, btn_Cancelar %>'
-                    onclick="javascript:Limpiar();" />                
+                <input id="btnCancelar" class="botonStandar" runat="server" type="button" value='<%$ Resources:Globalresource, btn_Cancelar %>'
+                    onclick="javascript:Limpiar();" />
             </td>
         </tr>
     </table>
