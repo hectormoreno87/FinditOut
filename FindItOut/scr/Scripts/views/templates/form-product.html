@@ -21,8 +21,7 @@
                     Active
                 </td>
                 <td>
-                    <input type="checkbox" name="active" value="true" <% if (active == true) { %> checked="checked"
-                        <% } %> />
+                    <input type="checkbox" name="active" value="true"<% if (active == true) { %> checked="checked"<% } %> />
                 </td>
             </tr>
             <tr>
@@ -41,7 +40,7 @@
                 if(ProductImages){  
                 for(i=0; i<ProductImages.length; i++){              
                         %>
-                        <img src="../img/company/products/<%= idProduct %>/<%=ProductImages[i].name %>" alt="<%=ProductImages[i].name %>"
+                        <img src="../EmpresasFiles/<%= hdnCo %>/products/<%= idProduct %>/<%=ProductImages[i].fileName %>" alt="<%=ProductImages[i].fileName %>"
                             width="40px" height="40px" />
                         <%} }%>
                     </div>

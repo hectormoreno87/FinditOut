@@ -11,6 +11,12 @@
             width: 500px;
             background-color: gainsboro;
         }
+        
+        #appMain button
+        {
+            float: right;
+        }
+        
         #appMain .product
         {
             float: left;
@@ -37,7 +43,11 @@
     </style>    
     <script src="../scripts/libs/jquery/jquery-min.js"></script>
     <script type="text/javascript">
-        var hdnUser = $('#<%= hdnUser.ClientID %>').val();
+        var hdnUser, hdnCo;
+        $(document).ready(function () {
+            hdnUser = $('#<%= hdnUser.ClientID %>').val();
+            hdnCo = $('#<%= hdnCo.ClientID %>').val();
+        });
     </script>
     <script src="../scripts/libs/jquery/jquery-ui-min.js"></script>
     <script type="text/javascript" src="../scripts/libs/bootstrap/bootstrap.js"></script>
@@ -50,6 +60,7 @@
     <div id="appContainer" >
         
         <asp:HiddenField ID="hdnUser" runat="server" />
+        <asp:HiddenField ID="hdnCo" runat="server" />
         
     </div>
 </asp:Content>

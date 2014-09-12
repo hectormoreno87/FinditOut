@@ -43,7 +43,8 @@
         save: function () {
             var cloneModel = this.model.clone();
             cloneModel.set(this.attribute);
-            PageMethods.saveProduct(cloneModel.toJSON(), this.onCompleteSaveProduct);
+            var idCategory = cloneModel.get('idCategory');
+            PageMethods.saveProduct(hdnUser, idCategory, cloneModel.toJSON(), this.onCompleteSaveProduct);
             $.blockUI();
         },
 

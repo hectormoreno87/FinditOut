@@ -9,6 +9,7 @@ using System.Web;
 public class Product
 {
     public int idProduct { get; set; }
+    public int idCategory { get; set; }
     public bool active { get; set; }
     public string productName { get; set; }
     public List<ProductImage> ProductImages;

@@ -39,7 +39,9 @@
                 this.$('#cat_' + this.model.get('idCategory')).append(prodView.el);
             }
             if (this.model.get('idCategory') > 0) {
-                var prodView = new ProductView({ model: new ProductModel() });
+                var productModel = new ProductModel();
+                productModel.set('idCategory', this.model.get('idCategory'));
+                var prodView = new ProductView({ model: productModel });
                 prodView.render();
                 this.$('#cat_' + this.model.get('idCategory')).append(prodView.el);
             }

@@ -8,6 +8,7 @@ using System.Web;
 /// </summary>
 public class ProductImage
 {
-    public int idProductImage { get; set; }
-    public string name { get; set; }          
+    public int idImage { get; set; }
+    public int idProduct { get; set; }
+    public string fileName { get; set; }          
 }

@@ -8,7 +8,7 @@
      defaults: {
             idProduct: 0,
             active: false,
-            productName: 'nuevo'
+            productName: 'nuevo'            
         }	
     });
 
