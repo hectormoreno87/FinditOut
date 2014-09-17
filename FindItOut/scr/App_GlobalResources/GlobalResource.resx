@@ -426,4 +426,13 @@
   <data name="lbl_NuevaSuc" xml:space="preserve">
     <value>Nueva</value>
   </data>
+  <data name="lbl_DanosUbicacion" xml:space="preserve">
+    <value>Danos tu ubicación en el mapa. Arrastra el puntero hasta donde se encuentra tu sucursal</value>
+  </data>
+  <data name="lblMapaPon" xml:space="preserve">
+    <value>Ups! Arrastra el puntero para capturar la hubicación en el mapa</value>
+  </data>
+  <data name="lbl_DanosFotoSucursal" xml:space="preserve">
+    <value>Sube una foto de tu sucursal</value>
+  </data>
 </root>
