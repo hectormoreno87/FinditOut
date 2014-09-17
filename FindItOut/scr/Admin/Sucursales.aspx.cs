@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Data;
 using System.Web.Services;
+using System.Configuration;
 
 public partial class Admin_Sucursales : System.Web.UI.Page
 {
@@ -60,25 +61,7 @@ public partial class Admin_Sucursales : System.Web.UI.Page
             div_redesS.Controls.Add(menu);
         }
     }
-    /*
-    public static void cargaDatosSucursales()
-    {
-        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-        parameters.Add("idCorreo", HttpContext.Current.Session["findOut"].ToString());
-        DataSet dt = null;
-        try
-        {
-            dt = DataAccess.executeStoreProcedureDataSet("spr_GET_SucursalesNombre", parameters);
-        }
-        catch (Exception ex) { }
-        if (dt != null && dt.Tables[0].Rows.Count > 0)
-        {
-            grdSucursales.DataSource = dt.Tables[0];
-            grdSucursales.DataBind();
-        }
-    }
-    */
-
+  
     [WebMethod]
     public static string cargaRedesSocialesWM()
     {        
@@ -114,39 +97,58 @@ public partial class Admin_Sucursales : System.Web.UI.Page
     [WebMethod]
     public static int btnIniciarControl_onclick(string suc, string dir, string longi, string lati, string telefonos, string wats)
     {
+        string carpeta = String.Empty;
+        int result = 0;
+
+        //checar que exista la carpeta de la empresa, que para estas alturas debe de tener,, pero por si acaso            
         Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
         parameters.Add("idUser", HttpContext.Current.Session["findOut"].ToString());
-        parameters.Add("suc", suc.Trim());
-        parameters.Add("dir", dir.Trim());
-        parameters.Add("longi", longi.Trim());
-        parameters.Add("lati", lati.Trim());
-        parameters.Add("telefonos", telefonos.Trim());
-        parameters.Add("whats", wats.Trim());
-
-        int result = 0;
         try
         {
-            result = DataAccess.executeStoreProcedureGetInt("spr_INSERT_Sucursal", parameters);
+            carpeta = DataAccess.executeStoreProcedureString("spr_Get_InfoLogo", parameters);
         }
         catch (Exception ex) { }
+
+
+        if (String.IsNullOrEmpty(carpeta)) //no tiene carpeta la empresa
+        { 
+            result = -1; 
+        }
+        else
+        {
+            //revisar si tiene carpeta de "sucursales", sino, crearla
+            string PathDocs = ConfigurationManager.AppSettings["EmpresasFiles"];
+            string inicio = HttpContext.Current.Server.MapPath(PathDocs);
+            string carpSuc = ConfigurationManager.AppSettings["CarpetaSucursales"];
+            string resp = Common.creaCarpetaSucursales(carpeta, inicio, carpSuc);
+
+            if (String.IsNullOrEmpty(resp))//todo bien
+            {
+                parameters.Clear();
+                parameters.Add("idUser", HttpContext.Current.Session["findOut"].ToString());
+                parameters.Add("suc", suc.Trim());
+                parameters.Add("dir", dir.Trim());
+                parameters.Add("longi", longi.Trim());
+                parameters.Add("lati", lati.Trim());
+                parameters.Add("telefonos", telefonos.Trim());
+                parameters.Add("whats", wats.Trim());
+
+                try
+                {
+                    result = DataAccess.executeStoreProcedureGetInt("spr_INSERT_Sucursal", parameters);
+                }
+                catch (Exception ex) { }
+
+            }
+            else
+            {
+                result = 0;
+            }
+
+        }
         return result;
     }
 
-    #region grid
-    protected void grdSucursales_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        switch (e.Row.RowType)
-        {
-            case DataControlRowType.DataRow:
-                GridViewRow row = e.Row;
-                Image img = e.Row.FindControl("img") as Image;
-                if (row.RowIndex > -1)
-                {
-                    img.ImageUrl = "../img/pin.png"; //Aqui asignas la imagen dependiendo de lo que necesitas
-                }
-                break;
-        }
-    }
-    #endregion
+  
 
 }

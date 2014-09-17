@@ -435,4 +435,7 @@
   <data name="lbl_DanosFotoSucursal" xml:space="preserve">
     <value>Sube una foto de tu sucursal</value>
   </data>
+  <data name="guardar_error_noEmpresa" xml:space="preserve">
+    <value>Antes de crear sucursales, por favor, asegurate de crear una empresa</value>
+  </data>
 </root>

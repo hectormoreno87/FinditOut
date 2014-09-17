@@ -146,6 +146,11 @@
                 alertify.success(label);
                 Limpiar();
             }
+            else if (result == '-1') {
+                label = '<%=GetGlobalResourceObject("Globalresource", "guardar_error_noEmpresa" ) %> ';
+                alertify.error(label);
+                Limpiar();
+            }
             else {
                 label = '<%=GetGlobalResourceObject("Globalresource", "guardar_falla" ) %> ';
                 alertify.error(label);

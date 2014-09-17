@@ -78,24 +78,33 @@ public partial class Admin_Localizacion : System.Web.UI.Page
     [WebMethod]
     public static string sacaImagen()
     {
-        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-        parameters.Add("idUser", HttpContext.Current.Session["findOut"].ToString());
-        string carpeta = String.Empty;
-
-        //revisar en BD si el cliente tiene carpeta
-        try
+        if (HttpContext.Current.Session["findOut"].ToString() == null)
         {
-            carpeta = DataAccess.executeStoreProcedureString("spr_Get_InfoLogo", parameters);
+            HttpContext.Current.Response.Redirect("../Start/Inicio.aspx", false);
+            return "";
         }
-        catch (Exception ex) { }
+        else
+        {
+            Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
+            parameters.Add("idUser", HttpContext.Current.Session["findOut"].ToString());
+            string carpeta = String.Empty;
 
-         if (!String.IsNullOrEmpty(carpeta))
+            //revisar en BD si el cliente tiene carpeta
+            try
+            {
+                carpeta = DataAccess.executeStoreProcedureString("spr_Get_InfoLogo", parameters);
+            }
+            catch (Exception ex) { }
+
+            if (!String.IsNullOrEmpty(carpeta))
             {
                 //buscar el directorio
                 string PathDocs = ConfigurationManager.AppSettings["EmpresasFiles"];
                 string inicio = HttpContext.Current.Server.MapPath(PathDocs);
+                string carpLogo = ConfigurationManager.AppSettings["CarpetaLogo"];
+                carpeta = carpeta + "\\" + carpLogo;
                 string directorioFisico = inicio + carpeta;
-                               
+
                 try
                 {
                     if (System.IO.Directory.Exists(directorioFisico))
@@ -104,48 +113,60 @@ public partial class Admin_Localizacion : System.Web.UI.Page
                     }
                 }
                 catch (Exception ex) { }
-            }          
-        return "";
+            }
+            return "";
+        }
     }
     
     [WebMethod]
     public static int btnGuardar_onclick(string user, string desc, string logo, string web, string mail, string empre)
     {
-        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
-        parameters.Add("idUser", HttpContext.Current.Session["findOut"].ToString());
-        int result = 0;
-        string carpeta = String.Empty;
-
-        //revisar en BD si el cliente tiene carpeta
-        try
+        if (HttpContext.Current.Session["findOut"].ToString() == null)
         {
-            carpeta = DataAccess.executeStoreProcedureString("spr_Get_InfoLogo", parameters);
+            HttpContext.Current.Response.Redirect("../Start/Inicio.aspx", false); 
+            return 0;
         }
-        catch (Exception ex) { }
-        
-        if (String.IsNullOrEmpty( carpeta ) ) //no tiene carpeta la empresa
-             carpeta = creaCarpeta(empre);
-  
-        parameters.Add("newUser", user.Trim());
-        parameters.Add("desc", desc.Trim());
-        parameters.Add("web", web.Trim());
-        parameters.Add("mail", mail.Trim());
-        parameters.Add("carpeta", carpeta.Trim());
-        parameters.Add("empresa", empre.Trim());
-
-        try
+        else
         {
-            result = DataAccess.executeStoreProcedureGetInt("spr_INSERT_InfoUser", parameters);
-        }catch(Exception ex){}
-        return result;
+            Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
+            parameters.Add("idUser", HttpContext.Current.Session["findOut"].ToString());
+            int result = 0;
+            string carpeta = String.Empty;
+
+            //revisar en BD si el cliente tiene carpeta
+            try
+            {
+                carpeta = DataAccess.executeStoreProcedureString("spr_Get_InfoLogo", parameters);
+            }
+            catch (Exception ex) { }
+
+            if (String.IsNullOrEmpty(carpeta)) //no tiene carpeta la empresa
+                carpeta = creaCarpeta(empre);
+
+            parameters.Add("newUser", user.Trim());
+            parameters.Add("desc", desc.Trim());
+            parameters.Add("web", web.Trim());
+            parameters.Add("mail", mail.Trim());
+            parameters.Add("carpeta", carpeta.Trim());
+            parameters.Add("empresa", empre.Trim());
+
+            try
+            {
+                result = DataAccess.executeStoreProcedureGetInt("spr_INSERT_InfoUser", parameters);
+            }
+            catch (Exception ex) { }
+            return result;
+        }
     }
 
     [WebMethod]
     public static string creaCarpeta(string empre)
     {
         string PathDocs = ConfigurationManager.AppSettings["EmpresasFiles"];
-        string inicio = HttpContext.Current.Server.MapPath(PathDocs);        
-        string carpeta = Common.creaCarpetaEmpresa(empre, PathDocs, inicio);
+        string inicio = HttpContext.Current.Server.MapPath(PathDocs);
+        string carpSucu = ConfigurationManager.AppSettings["CarpetaSucursales"];
+        string carpLogo = ConfigurationManager.AppSettings["CarpetaLogo"];
+        string carpeta = Common.creaCarpetaEmpresa(empre, inicio, carpSucu, carpLogo);
         return carpeta;
         
     }
@@ -176,6 +197,8 @@ public partial class Admin_Localizacion : System.Web.UI.Page
                     //buscar el directorio
                     string PathDocs = ConfigurationManager.AppSettings["EmpresasFiles"];
                     string inicio = HttpContext.Current.Server.MapPath(PathDocs);
+                    string carpLogo = ConfigurationManager.AppSettings["CarpetaLogo"];
+                    carpeta = carpeta + "\\" + carpLogo;
                     string directorioFisico = inicio + carpeta;
                     string directorioVirtual = "~\\EmpresasFiles\\";
                     //string extension = System.IO.Path.GetExtension(Request.Files[0].FileName);

@@ -796,7 +796,7 @@ public static class Common
         return new string(chars);
     }
 
-    public static string creaCarpetaEmpresa(string empre, string PathDocs, string inicio)
+    public static string creaCarpetaEmpresa(string empre, string inicio, string carpSucu, string carpLogo)
     {
         //empre = "   Maritza de JesusMorfin Franco ";
         string carpeta = empre.Replace(" ", "") + "-" + Common.GetSHA1(DateTime.Now.ToString());
@@ -819,11 +819,45 @@ public static class Common
         {
             if (!System.IO.Directory.Exists(carpetaCliente))
                 System.IO.Directory.CreateDirectory(carpetaCliente);
+
+            //crear carpeta para las sucursales
+            if (!System.IO.Directory.Exists(carpetaCliente + "\\" + carpSucu))
+                System.IO.Directory.CreateDirectory(carpetaCliente +"\\"+carpSucu);
+
+            //crear carpeta para logos
+            if (!System.IO.Directory.Exists(carpetaCliente + "\\" + carpLogo))
+                System.IO.Directory.CreateDirectory(carpetaCliente  +"\\"+ carpLogo );
+        }
+        catch (Exception ex)
+        {
+        }      
+        return carpeta;
+    }
+
+    public static string creaCarpetaSucursales(string carpeta, string inicio, string carpSucu)
+    {        
+        try
+        {
+            if (!System.IO.Directory.Exists(inicio))
+                System.IO.Directory.CreateDirectory(inicio);
         }
         catch (Exception ex)
         {
         }
-        return carpeta;
+
+        //crear carpeta cliente
+        string carpetaCliente = inicio + carpeta;
+        try
+        {  
+            //crear carpeta para las sucursales
+            if (!System.IO.Directory.Exists(carpetaCliente + "\\" + carpSucu))
+                System.IO.Directory.CreateDirectory(carpetaCliente + "\\" + carpSucu);           
+        }
+        catch (Exception ex)
+        {
+            return "error";
+        }
+        return "";
     }
 
     #region validaciones de campos
