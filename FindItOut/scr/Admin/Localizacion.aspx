@@ -7,6 +7,8 @@
     <script type="text/javascript" src="../Scripts/jquery.wallform.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            toolTip();
+
             $("#<%=photoimg.ClientID%>").on('change', function () {               
                 $("#form1").ajaxForm({ target: '#preview',
                     beforeSubmit: function () {
@@ -32,6 +34,27 @@
                 }).submit();
             });
         });
+
+        function toolTip() {
+            $('.masterTooltip').hover(function () {
+                // Hover over code
+                var title = $(this).attr('title');
+                $(this).data('tipText', title).removeAttr('title');
+                $('<p class="tooltip"></p>')
+                .text(title)
+                .appendTo('body')
+                .fadeIn('slow');
+            }, function () {
+                // Hover out code
+                $(this).attr('title', $(this).data('tipText'));
+                $('.tooltip').remove();
+            }).mousemove(function (e) {
+                var mousex = e.pageX + 20; //Get X coordinates
+                var mousey = e.pageY + 10; //Get Y coordinates
+                $('.tooltip')
+                .css({ top: mousey, left: mousex })
+            });
+        }
 
         function cargaImagen() {
             $("#preview").html("");
@@ -144,7 +167,7 @@
                 <asp:Literal ID="Literal2" runat="server" Text='<%$ Resources:Globalresource, lbl_UserLocaliz %>'></asp:Literal>
             </td>
             <td>
-                <asp:TextBox ID="txtUser" runat="server" MaxLength="50" CssClass="cajaLarga" title='<%$ Resources:Globalresource, lbl_UserExpLocaliz %>'></asp:TextBox>
+                <asp:TextBox ID="txtUser" runat="server" MaxLength="50" CssClass="cajaLarga masterTooltip" title='<%$ Resources:Globalresource, lbl_UserExpLocaliz %>'></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -159,7 +182,7 @@
                 <asp:Literal ID="Literal5" runat="server" Text='<%$ Resources:Globalresource, lbl_EmpreLocaliz %>'></asp:Literal>
             </td>
             <td>
-                <asp:TextBox ID="txtEmpre" runat="server" MaxLength="100" CssClass="cajaLarga" title='<%$ Resources:Globalresource, lbl_EmpreExpLocaliz %>'></asp:TextBox>
+                <asp:TextBox ID="txtEmpre" runat="server" MaxLength="100" CssClass="cajaLarga masterTooltip" title='<%$ Resources:Globalresource, lbl_EmpreExpLocaliz %>'></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -174,7 +197,7 @@
                 <asp:Literal ID="Literal4" runat="server" Text='<%$ Resources:Globalresource, lbl_DescrLocaliz %>'></asp:Literal>
             </td>
             <td>
-                <asp:TextBox ID="txtDesc" runat="server" MaxLength="250" CssClass="cajaLarga" TextMode="MultiLine"
+                <asp:TextBox ID="txtDesc" runat="server" MaxLength="250" CssClass="cajaLarga masterTooltip" TextMode="MultiLine"
                     onkeypress=" return limita(this, event,250)" onkeyup="cuenta(this, event,250)"
                     onchange="limita(this, event,250)" title='<%$ Resources:Globalresource, lbl_DirExpLocaliz %>'></asp:TextBox>
             </td>
@@ -185,16 +208,15 @@
                 <%-- <img id="imgWeb" runat="server" src="../img/web1.png" width="28" height="28" />--%>
             </td>
             <td>
-                <asp:TextBox ID="txtWeb" runat="server" MaxLength="100" CssClass="cajaLarga" title='<%$ Resources:Globalresource, lbl_WebExpli %>'></asp:TextBox>
+                <asp:TextBox ID="txtWeb" runat="server" MaxLength="100" CssClass="cajaLarga masterTooltip" title='<%$ Resources:Globalresource, lbl_WebExpli %>'></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td>
-                <asp:Literal ID="Literal6" runat="server" Text='<%$ Resources:Globalresource, lbl_MailLocaliz %>'></asp:Literal>
-                <%-- <img id="imgMail" runat="server" src="../img/mail.png" width="25" height="30" />--%>
+                <asp:Literal ID="Literal6" runat="server" Text='<%$ Resources:Globalresource, lbl_MailLocaliz %>'></asp:Literal>               
             </td>
             <td>
-                <asp:TextBox ID="txtMail" runat="server" MaxLength="100" CssClass="cajaLarga" title='<%$ Resources:Globalresource, lbl_MailExpli %>'></asp:TextBox>
+                <asp:TextBox ID="txtMail" runat="server" MaxLength="100" CssClass="cajaLarga masterTooltip" title='<%$ Resources:Globalresource, lbl_MailExpli %>'></asp:TextBox>
             </td>
         </tr>
         <tr>

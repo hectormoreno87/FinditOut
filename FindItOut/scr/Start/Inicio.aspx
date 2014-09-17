@@ -5,22 +5,45 @@
     <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
     <script src="../Scripts/Validaciones.js" type="text/javascript"></script>
     <script src="../Scripts/1.8.2.min.js" type="text/javascript"></script>
-    <script src="../Scripts/jquery.tooltip.min.js" type="text/javascript"></script>
-    <link href="../Styles/styleToolTip.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        
+    </style>
     <script type="text/javascript">
 
         $(document).ready(function () {
-            limpiaMensajes();            
+            limpiaMensajes();
+            toolTip();
         });
 
-    
+        function toolTip() {
+            $('.masterTooltip').hover(function () {
+                // Hover over code
+                var title = $(this).attr('title');
+                $(this).data('tipText', title).removeAttr('title');
+                $('<p class="tooltip"></p>')
+                .text(title)
+                .appendTo('body')
+                .fadeIn('slow');
+            }, function () {
+                // Hover out code
+                $(this).attr('title', $(this).data('tipText'));
+                $('.tooltip').remove();
+            }).mousemove(function (e) {
+                var mousex = e.pageX + 20; //Get X coordinates
+                var mousey = e.pageY + 10; //Get Y coordinates
+                $('.tooltip')
+                .css({ top: mousey, left: mousex })
+            });
+        }
+
+
 
         $(function () {
 
-//            var pass = $("#<%=txtPass.ClientID%>");
-//            pass.tooltip({ placement: 'right' });
+            //            var pass = $("#<%=txtPass.ClientID%>");
+            //            pass.tooltip({ placement: 'right' });
             $("#<%=txtPass.ClientID%>").tooltip({ placement: 'right' });
-           
+
         });
 
         function limpiaMensajes() {
@@ -108,7 +131,7 @@
                             <asp:Literal ID="Literal5" runat="server" Text='<%$ Resources:Globalresource, lbl_Pass %>'></asp:Literal>
                         </td>
                         <td>
-                            <asp:TextBox ID="txtPass" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga" Title="Algodond e azucar"></asp:TextBox>
+                            <asp:TextBox ID="txtPass" runat="server" MaxLength="15" TextMode="Password" CssClass="cajaLarga"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>

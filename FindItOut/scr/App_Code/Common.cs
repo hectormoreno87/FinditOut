@@ -796,6 +796,36 @@ public static class Common
         return new string(chars);
     }
 
+    public static string creaCarpetaEmpresa(string empre, string PathDocs, string inicio)
+    {
+        //empre = "   Maritza de JesusMorfin Franco ";
+        string carpeta = empre.Replace(" ", "") + "-" + Common.GetSHA1(DateTime.Now.ToString());
+
+        //crear carpeta principal
+        //string PathDocs = ConfigurationManager.AppSettings["EmpresasFiles"];
+        //string inicio = HttpContext.Current.Server.MapPath(PathDocs);
+        try
+        {
+            if (!System.IO.Directory.Exists(inicio))
+                System.IO.Directory.CreateDirectory(inicio);
+        }
+        catch (Exception ex)
+        {
+        }
+
+        //crear carpeta cliente
+        string carpetaCliente = inicio + carpeta;
+        try
+        {
+            if (!System.IO.Directory.Exists(carpetaCliente))
+                System.IO.Directory.CreateDirectory(carpetaCliente);
+        }
+        catch (Exception ex)
+        {
+        }
+        return carpeta;
+    }
+
     #region validaciones de campos
 
     //entero + o -   

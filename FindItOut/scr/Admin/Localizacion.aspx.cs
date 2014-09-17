@@ -69,10 +69,12 @@ public partial class Admin_Localizacion : System.Web.UI.Page
             
         }
     }
+    
     public void muestraLogo(string logo)
     {
         ClientScript.RegisterStartupScript(GetType(), "algo", "callBackSacaImagen("+logo+")" , true);
     }
+    
     [WebMethod]
     public static string sacaImagen()
     {
@@ -123,15 +125,12 @@ public partial class Admin_Localizacion : System.Web.UI.Page
         
         if (String.IsNullOrEmpty( carpeta ) ) //no tiene carpeta la empresa
              carpeta = creaCarpeta(empre);
-        
-        //if (!String.IsNullOrEmpty(logo))//trae logo para guardar
-           // guardaImagen();
-
+  
         parameters.Add("newUser", user.Trim());
         parameters.Add("desc", desc.Trim());
         parameters.Add("web", web.Trim());
         parameters.Add("mail", mail.Trim());
-        parameters.Add("logo", carpeta.Trim());
+        parameters.Add("carpeta", carpeta.Trim());
         parameters.Add("empresa", empre.Trim());
 
         try
@@ -144,38 +143,13 @@ public partial class Admin_Localizacion : System.Web.UI.Page
     [WebMethod]
     public static string creaCarpeta(string empre)
     {
-        //empre = "   Maritza de JesusMorfin Franco ";
-        string carpeta = empre.Replace(" ","") + "-" + Common.GetSHA1(DateTime.Now.ToString());
-
-       //crear carpeta principal
         string PathDocs = ConfigurationManager.AppSettings["EmpresasFiles"];
-        string inicio = HttpContext.Current.Server.MapPath(PathDocs);
-        try
-        {
-            if (!System.IO.Directory.Exists(inicio))
-                System.IO.Directory.CreateDirectory(inicio);
-        }
-        catch (Exception ex)
-        {
-        }
-
-        //crear carpeta cliente
-        string carpetaCliente = inicio+carpeta;
-        try
-        {
-            if (!System.IO.Directory.Exists(carpetaCliente))
-                System.IO.Directory.CreateDirectory(carpetaCliente);
-        }
-        catch (Exception ex)
-        {
-        }
+        string inicio = HttpContext.Current.Server.MapPath(PathDocs);        
+        string carpeta = Common.creaCarpetaEmpresa(empre, PathDocs, inicio);
         return carpeta;
+        
     }
 
-    public static System.Drawing.Image resizeImage(System.Drawing.Image imgToResize, Size size)
-    {
-        return (System.Drawing.Image)(new Bitmap(imgToResize, size));
-    }
     public string guardaImagen()
     {
         if (Session["user"] == null)

@@ -9,26 +9,6 @@
     <script src="../Scripts/jquery.blockUI.js" type="text/javascript"></script>
     
     
-    <script type="text/javascript">
-        $j = jQuery.noConflict();
-        //function to block the whole page  
-        function blockPage() {
-            $j.blockUI({ message: '<img src="/img/loading32.gif" /><h1> Loading...</h1>',
-                css: {
-                    border: 'none',
-                    padding: '15px',
-                    '-webkit-border-radius': '10px',
-                    '-moz-border-radius': '10px',
-                    opacity: .9
-                }
-            });
-            return false;
-        }
-        //function to unblock the page  
-        function unblockPage() {
-            $j.unblockUI();
-        }  
-   </script>  
 
 
     <script type="text/javascript">
@@ -71,7 +51,6 @@
         }
 
         function conectarServidor(mail) {
-            //alert(mail + '  ' + pass);
             PageMethods.btnIniciar_onclick(mail, redirigir);
         }
 
@@ -82,7 +61,6 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-     <input id="pageDemo1" type="submit" value="Default Message" />
      <table>
         <tr>
             <td>
