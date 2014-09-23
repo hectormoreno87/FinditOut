@@ -8,7 +8,11 @@
      defaults: {
             idProduct: 0,
             active: false,
-            productName: 'nuevo'            
+            locked: false,
+            productName: 'nuevo',
+            description: '',
+            price: 0.0
+                        
         }	
     });
 

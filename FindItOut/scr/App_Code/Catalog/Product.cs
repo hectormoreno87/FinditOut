@@ -12,6 +12,9 @@ public class Product
     public int idCategory { get; set; }
     public bool active { get; set; }
     public string productName { get; set; }
+    public string description { get; set; }
+    public decimal cost { get; set; }
+    public decimal blocked { get; set; }
     public List<ProductImage> ProductImages;
     
 }

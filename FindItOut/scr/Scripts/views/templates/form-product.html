@@ -26,10 +26,34 @@
             </tr>
             <tr>
                 <td>
+                    Blocked
+                </td>
+                <td>
+                    <input type="checkbox" name="blocked" value="true"<% if (blocked == true) { %> checked="checked"<% } %> />
+                </td>
+            </tr>
+            <tr>
+                <td>
                     Name
                 </td>
                 <td>
                     <input type="text" name="productName" class="input-block-level" value="<%= productName %>">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Description
+                </td>
+                <td>
+                    <input type="text" name="description" class="input-block-level" value="<%= description %>">
+                </td>
+            </tr>
+              <tr>
+                <td>
+                    Price
+                </td>
+                <td>
+                    <input type="text" name="price" class="input-block-level" value="<%= price %>">
                 </td>
             </tr>
             <tr>
@@ -38,10 +62,14 @@
                         <%
                     var ProductImages = this.model.get('ProductImages');
                 if(ProductImages){  
-                for(i=0; i<ProductImages.length; i++){              
+                        for(i=0; i<ProductImages.length; i++){              
                         %>
-                        <img src="../EmpresasFiles/<%= hdnCo %>/products/<%= idProduct %>/<%=ProductImages[i].fileName %>" alt="<%=ProductImages[i].fileName %>"
-                            width="40px" height="40px" />
+                        
+                                <img class="imgThumbnail" data-id="<%=ProductImages[i].idImage %>" src="../EmpresasFiles/<%= hdnCo %>/products/<%= idProduct %>/<%=ProductImages[i].fileName %>"
+                                    alt="<%=ProductImages[i].fileName %>" width="40px" height="40px" />
+                            
+                                  
+
                         <%} }%>
                     </div>
                     <%if(idProduct > 0 ){%>

@@ -10,5 +10,6 @@ public class ProductImage
 {
     public int idImage { get; set; }
     public int idProduct { get; set; }
-    public string fileName { get; set; }          
+    public string fileName { get; set; }
+    public bool defaultImage { get; set; }          
 }

@@ -26,7 +26,8 @@
             'click .save-action': 'save',
             'click .close,.close-action': 'close',
             'change input': 'modify',
-            'change #photoimg': 'fileSelected'
+            'change #photoimg': 'fileSelected',
+            'click .imgThumbnail': 'imgClicked'
         },
 
         template: _.template(formProductTemplate),
@@ -91,6 +92,34 @@
                     alert('se cago');
                 }
             }).submit();
+        },
+
+        imgClicked: function (e) {
+            var idUser = hdnUser;
+            var idProduct = this.model.get('idProduct');
+            var idImage = $(e.target).attr('data-id');
+            PageMethods.deleteImage(idUser, idProduct, idImage, this.onCompleteDeleteImage);
+        },
+
+        onCompleteDeleteImage: function (resStr) {
+            var res = $.parseJSON(resStr);
+            if (res.success) {
+                var modelAux = that.model;
+                var images = modelAux.get('ProductImages');
+                if (!images) {
+                    images = new Array();
+                }
+                var imgToRem;
+                $.each(images, function (index, value) {                    
+                    if (value.idImage == res.idImage) {
+                        imgToRem = index; 
+                    }
+                });
+                images.splice(imgToRem, 1);
+
+                modelAux.set('ProductImages', images);
+                modelAux.trigger('change');
+            }
         },
 
         close: function () {

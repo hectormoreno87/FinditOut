@@ -2,11 +2,6 @@
     <tr>
         <td>
             <%= idProduct%>
-            <button id="btnEditProduct" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
-                role="button" title="Button with icon only">
-                <span class="ui-button-icon-primary ui-icon ui-icon-<% if(idProduct > 0 ) {%>pencil<% }else{ %>plus<% } %>">
-                </span><span class="ui-button-text">Button with icon only</span>
-            </button>
             <% if(idProduct > 0 ) {%>
             <button id="btnDeleteProduct" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
                 role="button" title="Delete">
@@ -14,6 +9,12 @@
                     Delete</span>
             </button>
             <% } %>
+            <button id="btnEditProduct" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
+                role="button" title="Button with icon only">
+                <span class="ui-button-icon-primary ui-icon ui-icon-<% if(idProduct > 0 ) {%>pencil<% }else{ %>plus<% } %>">
+                </span><span class="ui-button-text">Button with icon only</span>
+            </button>
+            
         </td>
     </tr>
     <tr>
@@ -29,17 +30,23 @@
     <tr>
         <td>
             <div id="prod_<%= idProduct %>" class="productImages">
-                <!--<ul>-->
-                    <%
-                var ProductImages = this.model.get('ProductImages');
-                if(ProductImages){  
-                    for(i=0; i<ProductImages.length; i++){              
-                    %>
-                <!--    <li>-->
-                        <img src="../EmpresasFiles/<%= hdnCo %>/products/<%= idProduct %>/<%=ProductImages[i].fileName %>" alt="<%=ProductImages[i].fileName %>" width="40px" height="40px"/>
-                <!--    </li>-->
-                    <%} }%>
-                <!--</ul>  -->
+                <% if(ProductImages){ %>
+                <div id="thumbs">
+                    <ul class="thumbs noscript">
+                        <%
+                        var ProductImages = this.model.get('ProductImages');                          
+                        for(i=0; i<ProductImages.length; i++){              
+                        %>
+                                  <li><a class="thumb" name="optionalCustomIdentifier" href="#" title="<%=ProductImages[i].fileName %>">
+                                          <img src="../EmpresasFiles/<%= hdnCo %>/products/<%= idProduct %>/<%=ProductImages[i].fileName %>"
+                                               alt="<%=ProductImages[i].fileName %>" width="40px" height="40px" />
+                                      </a>
+                                      <div class="caption">
+                                      </div>
+                                  </li>
+                                  <%} }%>
+                    </ul>
+                </div>
             </div>
         </td>
     </tr>

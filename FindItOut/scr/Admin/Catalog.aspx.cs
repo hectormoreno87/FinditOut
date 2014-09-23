@@ -13,7 +13,7 @@ public partial class Admin_Catalog : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["user"] == null)
+        if (Session["user"] == null || HttpContext.Current.Session["findOut"] == null)
         {
             Response.Redirect("../Start/Inicio.aspx", false);
         }
@@ -105,7 +105,7 @@ public partial class Admin_Catalog : System.Web.UI.Page
                     }
                     if (result > 0)
                     {
-                        ret = "{\"success\": true, \"message\": \"\", \"attr\": {\"idProductImage\": " + result + " , \"fileName\": \"" +
+                        ret = "{\"success\": true, \"message\": \"\", \"attr\": {\"idImage\": " + result + " , \"fileName\": \"" +
                   filename + "\"}}";
                     }
                     else
@@ -231,5 +231,49 @@ public partial class Admin_Catalog : System.Web.UI.Page
     public static bool deleteProduct(int idProduct)
     {
         return true;
+    }
+
+    [WebMethod]
+    public static string deleteImage(int idUser, int idProduct, int idImage)
+    {
+        string errorMessage = string.Empty; 
+        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
+        parameters.Add("idUser", idUser);
+        string carpeta = string.Empty;
+        //revisar en BD si el cliente tiene carpeta
+
+        carpeta = DataAccess.executeStoreProcedureString("spr_Get_InfoLogo", parameters);
+        if (!String.IsNullOrEmpty(carpeta))
+        {
+            string PathDocs = ConfigurationManager.AppSettings["EmpresasFiles"];
+            string inicio = HttpContext.Current.Server.MapPath(PathDocs);
+            string directorioFisico = inicio + carpeta + "\\products\\" + idProduct;
+
+            parameters.Clear();
+            parameters.Add("idUser", idUser);
+            parameters.Add("idProducto", idProduct);
+            parameters.Add("idImagen", idImage);
+            string result = string.Empty;
+            try
+            {
+                result = DataAccess.executeStoreProcedureString("Spr_delete_image", parameters);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+
+            string filename = result;
+
+            Common.makeDirectoryIfNotExists(directorioFisico);
+            //si existe, borra el que habia
+            if (System.IO.File.Exists(directorioFisico + "\\" + filename))
+                File.Delete(directorioFisico + "\\" + filename);
+
+            if (System.IO.File.Exists(directorioFisico + "\\small_" + filename))
+                File.Delete(directorioFisico + "\\small_" + filename);
+        }
+
+        return "{ \"success\": " + (string.IsNullOrEmpty(errorMessage) ? "true" : "false") + ", \"idImage\": " + idImage + " , \"message\": \"" + errorMessage + " \" }";
     }
 }

@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Myhead" Runat="Server">
     <link href="../css/jquery-ui.css" rel="stylesheet" type="text/css" />
-    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
     <!--<link href="../css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />-->
     <style type="text/css">
         #appMain .categoryHeader
