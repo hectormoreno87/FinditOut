@@ -13,8 +13,21 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
 
-    <style>
+    <style type="text/css">
     
+    #itemResult
+    {
+    
+    position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+        
+   
+    z-index: 9999;
+    background-color: white;
+
+        }
 
     #slides {
       display: none
@@ -126,6 +139,32 @@
 
    <script type="text/javascript">
 
+       $(function () {
+           inicializaFacebok();
+
+       });
+
+       function inicializaFacebok() {
+           window.fbAsyncInit = function () {
+               FB.init({
+                   appId: '772335249490789',
+                   xfbml: true,
+                   status: 0,
+                   version: 'v2.1'
+               });
+           };
+
+           (function (d, s, id) {
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) { return; }
+               js = d.createElement(s); js.id = id;
+               js.src = "//connect.facebook.net/es_LA/sdk.js";
+               fjs.parentNode.insertBefore(js, fjs);
+           } (document, 'script', 'facebook-jssdk'));
+
+       }
+
+       var windowheight ;
        var mapGlobal;
        var markerLocal;
        var mapOptionsGlobal;
@@ -135,16 +174,41 @@
        var markers = [];
        var items = [];
        $(function () {
+           windowheight = window.innerHeight;
            initialize();
            $('#load').hide();
-           $('#results').css('height', $(window).height()*.67);
+           $('#results').css('height', $(window).height() * .67);
            $(window).resize(function () {
+               windowheight = window.innerHeight;
                $('#results').css('height', $(window).height() * .67);
+               $('.slidesjs-container').css('width', '500px');
+               $('.slidesjs-control').css('width', '500px');
+               $('.slidesjs-container').css('height', '430px !important');
+               $('.slidesjs-control').css('height', '430px !important');
                //$("#log").append("<div>Handler for .resize() called.</div>");
            });
 
+           $(window).change(function () {
+               windowheight = window.innerHeight;
+               $('#results').css('height', $(window).height() * .67);
+               $('.slidesjs-container').css('width', '500px');
+               $('.slidesjs-control').css('width', '500px');
+               $('.slidesjs-container').css('height', '430px !important');
+               $('.slidesjs-control').css('height', '430px !important');
+               //$("#log").append("<div>Handler for .resize() called.</div>");
+           });
+
+           window.onscroll = func;
+
            $.ajaxSetup({ cache: false });
-      });
+       });
+
+       function func() {
+
+           $('#content').css('top', window.pageYOffset);
+           $('#content').css('height', windowheight);
+           //$("#log").append("<div>Handler for .resize() called.</div>");
+       };
 
       function initialize() {
 
@@ -234,16 +298,17 @@
 
            $('#load').hide();
            var infoItem = eval(sRes)[0];
+
            $.get("../utils/htmlPopUp/item.html", function (respons) {
 
                respons = respons.replace('@logo@', infoItem.logo);
-               respons = respons.replace('@company@','<h1>'+ infoItem.finditoutName+'</h1>');
+               respons = respons.replace('@company@', '<h1>' + infoItem.finditoutName + '</h1>');
                images = infoItem.images.split("@@");
                var divImages = '';
                var counter = 0;
                $.each(images, function (key, value) {
                    //if (counter == 0)
-                   divImages = divImages + '<img id="_' + key + '" src="' + value + '" width="200px" height="150px" ></img>';
+                   divImages = divImages + '<img id="_' + key + '" src="' + value + '" style="width:500px !important; height:430px !important" ></img>';
                    //else
                    //    divImages = divImages + '<img id="_' + key + '" src="' + value + '" style="display:none"></img>';
                    counter = counter + 1;
@@ -252,6 +317,7 @@
                respons = respons.replace('@images@', divImages);
                respons = respons.replace('@producto@', '<h1>' + infoItem.name + '</h1>');
                respons = respons.replace('@description@', infoItem.description);
+               respons = respons.replace('@pluginFace@',  '<div  class="fb-like"  data-send="true"  data-width="430"  data-show-faces="true" data-href="http://www.google.com"></div>');
 
 
                var divphones = '';
@@ -285,11 +351,20 @@
                $('#itemResult').html(respons);
 
                $('#slides').slidesjs({
-                   width: 940,
-                   height: 528,
                    navigation: false
+                   
+
                });
+               $('.slidesjs-container').css('width', '500px');
+               $('.slidesjs-control').css('width', '500px');
+               $('.slidesjs-container').css('height', '430px');
+               $('.slidesjs-control').css('height', '430px');
+
+               FB.XFBML.parse();
+
            });
+
+           
 
        }
      
@@ -633,6 +708,10 @@
 
 
 </div>
+<div id="itemResult">
+
+</div>
+
 
 
 </asp:Content>
