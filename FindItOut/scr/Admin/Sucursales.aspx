@@ -9,6 +9,7 @@
     <script src="../Scripts/Validaciones.js" type="text/javascript"></script>
     <script src="../Scripts/jquery-1.11.1.js" type="text/javascript"></script>
     <script src="../Scripts/alertify.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../Scripts/jquery.wallform.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="nestedContent" runat="Server">
     <script type="text/javascript">
@@ -29,29 +30,33 @@
                         $("#preview").html("");
                         $("#imageloadstatus").hide();
                         $("#imageloadbutton").show();
-                        cargaImagen();
+                        cargaImagenes();
                     },
                     error: function () {
                         // console.log('xtest');                        
                         $("#imageloadstatus").hide();
                         $("#imageloadbutton").show();
-                        var label = '<%=GetGlobalResourceObject("Globalresource", "guardarLogo_error" ) %> ';
+                        var label = '<%=GetGlobalResourceObject("Globalresource", "lbl_NoMasImgs" ) %> ';
+                        $("#preview").html("");
                         alertify.error(label);
+                        cargaImagenes();
                     }
                 }).submit();
             });
         });
 
-        function cargaImagen() {
+        function cargaImagenes() {
             $("#preview").html("");
-            PageMethods.sacaImagen(callBackSacaImagen);
+            var suc = $("#<%=txtNomSuc.ClientID%>").val();
+            PageMethods.sacaImagen(suc, callBackSacaImagenes);
         }
-        function callBackSacaImagen(carpeta) {
+        function callBackSacaImagenes(carpeta) {
             var logo = "" + carpeta + "";
             $("#imageloadstatus").hide();
             $("#imageloadbutton").show();
             var d = new Date();
             $("#preview").html("<img src='..\\EmpresasFiles\\" + logo + "?" + d.getTime() + "' />");
+            $(".cargaLogo").show();
         }
 
         function limpiaMensajes() {
@@ -194,13 +199,25 @@
             $("#<%= txtTel.ClientID %>").val("");
             $("#<%= CheckBox1.ClientID %>").prop("checked", "");
             $("#<%= tbl_tel.ClientID %>").html('');
-            limpiaMensajes();
+            $("#preview").html("");
+            limpiaMensajes();            
             PageMethods.cargaRedesSocialesWM(callBackCargaRedes);
         }
 
         function callBackCargaRedes(cadena) {
             $("#<%= div_redesS.ClientID %>").html('');
             $("#<%= div_redesS.ClientID %>").html(cadena);
+        }
+
+        function mensajeServidor(tipo, label) {
+            if (tipo == 0) {
+                //error
+                alertify.error(label);
+            }
+            else if (tipo == 1) {
+                //exito
+                alertify.success(label);
+            }
         }
 
     </script>
@@ -262,8 +279,8 @@
             mapGlobal.setCenter(latlondata);
             markerLocal.setPosition(latlondata);
             //$("#posicion").html('Latitude:' + position.coords.latitude + ', Longitude:' + position.coords.longitude);
-            $("#<%=lblLatitud.ClientID%>").text(event.latLng.lat());
-            $("#<%=lblLongitud.ClientID%>").text(event.latLng.lng());
+            $("#<%=lblLatitud.ClientID%>").text(position.coords.latitude);
+            $("#<%=lblLongitud.ClientID%>").text(position.coords.longitude);
 
         }
 
@@ -411,17 +428,17 @@
             <td colspan="2">
                 <table id="tbl_foto">
                     <tr>
-                        <td>
+                        <td class="cargaLogo">
                             <asp:Literal ID="Literal2" runat="server" Text='<%$ Resources:Globalresource, lbl_DanosFotoSucursal %>'></asp:Literal>
                         </td>
-                        <td>
+                        <td class="cargaLogo">
                             <div class="cargaLogo">
                                 <div id='preview'>
                                 </div>
                                 <div id='imageloadstatus' style='display: none'>
                                     <img src="../images/loader.gif" alt="Uploading...." /></div>
-                                <div id='imageloadbutton' onclick="javascript:addalgo();">
-                                    <input type="file" name="photos[]" id="photoimg" multiple="true" runat="server" />
+                                <div id='imageloadbutton'>
+                                    <input type="file" name="photos[3]" id="photoimg" multiple="true" runat="server" />
                                 </div>
                                 <div>
                                 </div>

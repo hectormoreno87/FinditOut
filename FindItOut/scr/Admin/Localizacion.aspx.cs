@@ -181,9 +181,16 @@ public partial class Admin_Localizacion : System.Web.UI.Page
         {
             if ( /*this.*/Request.Files.Count > 0)
             {
+                //Revisar que no este vacio el nombre del archivo:
+                if (String.IsNullOrEmpty(Request.Files[0].FileName.ToString()))
+                {
+                    return String.Empty;
+                } 
+                
                 Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
                 parameters.Add("idUser", HttpContext.Current.Session["findOut"].ToString());
                 string carpeta = String.Empty;
+                
                 //revisar en BD si el cliente tiene carpeta
                 try
                 {
@@ -201,8 +208,7 @@ public partial class Admin_Localizacion : System.Web.UI.Page
                     carpeta = carpeta + "\\" + carpLogo;
                     string directorioFisico = inicio + carpeta;
                     string directorioVirtual = "~\\EmpresasFiles\\";
-                    //string extension = System.IO.Path.GetExtension(Request.Files[0].FileName);
-
+                   
                     try
                     {
                         if (System.IO.Directory.Exists(directorioFisico))
