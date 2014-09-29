@@ -3,7 +3,7 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Myhead" runat="Server">
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDgswrmT3KpX1iyQjOjDq_G2LAP5cpz5KY&sensor=TRUE">
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&region=uk&language=es&&key=AIzaSyDgswrmT3KpX1iyQjOjDq_G2LAP5cpz5KY&sensor=TRUE">
     </script>
     <script src="../Scripts/richmarker.js" type="text/javascript"></script>
     <script src="../Scripts/Validaciones.js" type="text/javascript"></script>
@@ -15,7 +15,7 @@
         $(document).ready(function () {
             limpiaMensajes();
             toolTip();
-
+         
             $("#<%=photoimg.ClientID%>").on('change', function () {
                 $("#form1").ajaxForm({ target: '#preview',
                     beforeSubmit: function () {
@@ -210,7 +210,7 @@
         var markerLocal;
         var mapOptionsGlobal;
         var populationOptions;
-
+        var infowindow = new google.maps.InfoWindow();
         $(function () {
             initialize();
             $.ajaxSetup({ cache: false });
@@ -246,6 +246,66 @@
                 $("#<%=lblLatitud.ClientID%>").text(event.latLng.lat());
                 $("#<%=lblLongitud.ClientID%>").text(event.latLng.lng());
             });
+
+            ////////aqui está el autocomplete
+            var input = document.getElementById('searchTextField');
+            var autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ["establishment"]
+
+            });
+
+            autocomplete.bindTo('bounds', mapGlobal);
+            
+
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                infowindow.close();
+                var place = autocomplete.getPlace();
+                if (place.geometry.viewport) {
+                    mapGlobal.fitBounds(place.geometry.viewport);
+                } else {
+                    mapGlobal.setCenter(place.geometry.location);
+                    mapGlobal.setZoom(17);
+                }
+
+                moveMarker(place.name, place.geometry.location);
+            });
+
+            $("input").focusin(function () {
+                $(document).keypress(function (e) {
+                    if (e.which == 13) {
+                        infowindow.close();
+                        var firstResult = $(".pac-container .pac-item:first").text();
+
+                        var geocoder = new google.maps.Geocoder();
+                        geocoder.geocode({ "address": firstResult }, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                var lat = results[0].geometry.location.lat(),
+                            lng = results[0].geometry.location.lng(),
+                            placeName = results[0].address_components[0].long_name,
+                            latlng = new google.maps.LatLng(lat, lng);
+                                $("#<%=lblLatitud.ClientID%>").text(lat);
+                                $("#<%=lblLongitud.ClientID%>").text(lng);
+                                moveMarker(placeName, latlng);
+                                //$("input").val(firstResult);
+                            }
+                        });
+                    }
+                });
+            });
+
+            
+
+            ///aquí termina el autocomplete
+        }
+
+        function moveMarker(placeName, latlng) {
+            var image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png'; 
+            markerLocal.setIcon(image);
+            markerLocal.setPosition(latlng);
+            $("#<%=lblLatitud.ClientID%>").text(latlng.lat());
+            $("#<%=lblLongitud.ClientID%>").text(latlng.lng());
+            infowindow.setContent(placeName);
+            infowindow.open(mapGlobal, markerLocal);
         }
 
         var x = document.getElementById("posicion");
@@ -262,8 +322,8 @@
             mapGlobal.setCenter(latlondata);
             markerLocal.setPosition(latlondata);
             //$("#posicion").html('Latitude:' + position.coords.latitude + ', Longitude:' + position.coords.longitude);
-            $("#<%=lblLatitud.ClientID%>").text(event.latLng.lat());
-            $("#<%=lblLongitud.ClientID%>").text(event.latLng.lng());
+            //$("#<%=lblLatitud.ClientID%>").text(event.latLng.lat());
+           // $("#<%=lblLongitud.ClientID%>").text(event.latLng.lng());
 
         }
 
@@ -403,6 +463,14 @@
         <tr>
             <td id="tbl_mapa" colspan="2">
                 <%-- <img src="../img/mapaLogin.jpg" />--%>
+                <table>
+                <tr>
+                <td>
+                ¿ Ya estás en Google maps ?
+                <input id="searchTextField" type="text" size="50"/>
+                </td>
+                </tr>
+                </table>  
                 <div id="map_canvas" style="width: 500px; height: 300px;">
                 </div>
             </td>

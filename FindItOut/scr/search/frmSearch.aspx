@@ -9,9 +9,9 @@
     <link href="../Styles/styleLogin.css" rel="stylesheet" type="text/css" />
     <link href="../Styles/popUpStyle.css" rel="stylesheet" type="text/css" />
     <script src="../Scripts/jquery.slides.min.js" type="text/javascript"></script>
-    
+    <link href="../Styles/styleToolTip.css" rel="stylesheet" type="text/css" />
     <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
+    
 
     <style type="text/css">
     
@@ -139,6 +139,40 @@
 
    <script type="text/javascript">
 
+
+
+       function calcRoute() {
+           var start = markerLocal.getPosition();
+           var end = markObjetive.getPosition();
+           
+
+           var request = {
+               origin: start,
+               destination: end,
+               waypoints: [],
+               optimizeWaypoints: true,
+               travelMode: google.maps.TravelMode.DRIVING
+           };
+           directionsService.route(request, function (response, status) {
+               if (status == google.maps.DirectionsStatus.OK) {
+                   directionsDisplay.setDirections(response);
+                   var route = response.routes[0];
+//                   var summaryPanel = document.getElementById('directions_panel');
+//                   summaryPanel.innerHTML = '';
+//                   // For each route, display summary information.
+//                   for (var i = 0; i < route.legs.length; i++) {
+//                       var routeSegment = i + 1;
+//                       summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
+//                       summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+//                       summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+//                       summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+//                   }
+               }
+           });
+       }
+
+
+
        $(function () {
            inicializaFacebok();
 
@@ -173,6 +207,11 @@
        var infowindow;
        var markers = [];
        var items = [];
+       var directionsDisplay;
+       var directionsService = new google.maps.DirectionsService();
+       var markObjetive;
+
+
        $(function () {
            windowheight = window.innerHeight;
            initialize();
@@ -211,7 +250,7 @@
        };
 
       function initialize() {
-
+          directionsDisplay = new google.maps.DirectionsRenderer();
           mapOptionsGlobal = {
                center: new google.maps.LatLng(20.6827248, -103.3466798),
                zoom: 14,
@@ -256,6 +295,7 @@
                //new google.maps.Circle(populationOptions);
 
            });
+           directionsDisplay.setMap(mapGlobal); 
 
        }
 
@@ -373,6 +413,8 @@
            google.maps.event.addListener(marker, 'click', function () {
                infowindow.setContent(contentString);
                infowindow.open(map, marker);
+               makeInfoWindowEvent
+               markObjetive = marker;
            });
        }
 
@@ -380,6 +422,7 @@
            
                infowindow.setContent(contentString);
                infowindow.open(map, marker);
+               markObjetive = marker;
            
        }
 
@@ -417,14 +460,15 @@
 
            $.each(markers, function (index, value) {
                if (value.id == id) {
-                  
+                   //markObjetive = value.mark;
 
                    mapGlobal.setCenter(value.mark.getPosition());
                    $(".itemDivSelected").removeClass().addClass("itemDiv");
                    $("#div" + items[index].idItem).removeClass().addClass("itemDivSelected");
                    makeInfoWindowEventFromDiv(mapGlobal, infowindow, getHtmlpop(items[index]), value.mark);
+
                    //value.mark.setContent(value.mark.getContent().replace('h3','h2'));
-                   
+
                }
 
            });
@@ -472,7 +516,7 @@
            $.each(items, function (index, value) {
                st += "<tr>";
                st += "<td>";
-               st += "<div id='div" + value.idItem + "' class=\"itemDiv\" onclick='javascript:divSelected(" + value.idItem + ","+index+")'>";
+               st += "<div id='div" + value.idItem + "' class=\"itemDiv\" onclick='javascript:divSelected(" + value.idItem + "," + index + ")'>";
                st += "<table>";
                st += "<tr>";
                st += "<td>";
@@ -537,10 +581,10 @@
 
                makeInfoWindowEvent(mapGlobal, infowindow, getHtmlpop(value), marker);
                google.maps.event.addListener(marker, 'click', function () {
-
+                   
                    mapGlobal.setCenter(marker.getPosition());
-                   $(".itemDivSelected").removeClass().addClass("itemDiv"); 
-                   $("#div" + value.idItem).removeClass().addClass("itemDivSelected"); 
+                   $(".itemDivSelected").removeClass().addClass("itemDiv");
+                   $("#div" + value.idItem).removeClass().addClass("itemDivSelected");
                });
 
                markers.push(marker_);
@@ -550,7 +594,15 @@
            $('#results').html(st);
        }
 
+
+       function getRoute() {
+           calcRoute();
+
+       }
+
        function getHtmlpop(value) {
+          // markObjetive = value;
+
           var  st = "<table>";
            st += "<tr>";
            st += "<td>";
@@ -570,19 +622,28 @@
            st += value.name;
            st += "</h3>";
            st += "</td>";
+           
            st += "</tr>";
            st += "<tr>";
            st += "<td>";
 
            st += "<div >"+value.description+"</div>";
-
            st += "</td>";
+
+           st += "<td>";
+           st += "<div id='divRoute' style='border-width: 2px;border-style: solid;' onclick='javascript:getRoute();'>";
+           st += "<img alt='" + value.name + "' src='../images/map-route-icon.png' width='30px' height='30px'  tittle='Route'/>";
+           st += "<div id='divRouteToolTip' >";
+           st += "Route";
+           st += "</div>";
+           st += "</div>";
+           
+           st += "</td>";
+
            st += "</tr>";
            st += "<tr>";
            st += "<td>";
-
            st += "<div ><a onclick=\"javascript:showItemPopUp(" + value.idItem + ")\">Detalles</a></div>";
-
            st += "</td>";
            st += "</tr>";
            st += "<tr>";
@@ -601,10 +662,9 @@
            st += "</tr>";
            st += "<tr>";
            st += "<td>";
-
            st += "<div ><a href='#'><span onclick='javascript:showCompany("+value.idItem+");'>"+value.finditoutName+"</span></a></div>";
-
            st += "</td>";
+           
            st += "</tr>";
            st += "</table>";
 
