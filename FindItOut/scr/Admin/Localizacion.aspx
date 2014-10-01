@@ -77,7 +77,7 @@
             limpiaMensajes();
             cargaImagen();
 
-            //si aun no tiene empresa, que nomueste la opcion de subir logo, por qu elo necesito para crear la carpeta y guardarlo
+            //si aun no tiene empresa, que no mueste la opcion de subir logo, por que lo necesito para crear la carpeta y guardarlo
             var empre = $("#<%=txtEmpre.ClientID%>").val();
             if (!validarVacio(empre)) {
                 $(".cargaLogo").hide();
@@ -237,8 +237,8 @@
                     </div>
                     <div id='imageloadstatus' style='display: none'>
                         <img src="../images/loader.gif" alt="Uploading...." /></div>
-                    <div id='imageloadbutton' onclick="javascript:addalgo();">
-                        <input type="file" name="photos[]" id="photoimg" multiple="true" runat="server" />
+                    <div id='imageloadbutton'>
+                        <input type="file" name="photos[1]" id="photoimg" multiple="true" runat="server" />
                     </div>
                     <div>
                     </div>

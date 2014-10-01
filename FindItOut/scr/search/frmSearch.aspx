@@ -9,12 +9,25 @@
     <link href="../Styles/styleLogin.css" rel="stylesheet" type="text/css" />
     <link href="../Styles/popUpStyle.css" rel="stylesheet" type="text/css" />
     <script src="../Scripts/jquery.slides.min.js" type="text/javascript"></script>
-    
+    <link href="../Styles/styleToolTip.css" rel="stylesheet" type="text/css" />
     <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
-
-    <style>
     
+
+    <style type="text/css">
+    
+    #itemResult
+    {
+    
+    position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+        
+   
+    z-index: 9999;
+    background-color: white;
+
+        }
 
     #slides {
       display: none
@@ -126,6 +139,66 @@
 
    <script type="text/javascript">
 
+
+
+       function calcRoute() {
+           var start = markerLocal.getPosition();
+           var end = markObjetive.getPosition();
+           
+
+           var request = {
+               origin: start,
+               destination: end,
+               waypoints: [],
+               optimizeWaypoints: true,
+               travelMode: google.maps.TravelMode.DRIVING
+           };
+           directionsService.route(request, function (response, status) {
+               if (status == google.maps.DirectionsStatus.OK) {
+                   directionsDisplay.setDirections(response);
+                   var route = response.routes[0];
+//                   var summaryPanel = document.getElementById('directions_panel');
+//                   summaryPanel.innerHTML = '';
+//                   // For each route, display summary information.
+//                   for (var i = 0; i < route.legs.length; i++) {
+//                       var routeSegment = i + 1;
+//                       summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
+//                       summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+//                       summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+//                       summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+//                   }
+               }
+           });
+       }
+
+
+
+       $(function () {
+           inicializaFacebok();
+
+       });
+
+       function inicializaFacebok() {
+           window.fbAsyncInit = function () {
+               FB.init({
+                   appId: '772335249490789',
+                   xfbml: true,
+                   status: 0,
+                   version: 'v2.1'
+               });
+           };
+
+           (function (d, s, id) {
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) { return; }
+               js = d.createElement(s); js.id = id;
+               js.src = "//connect.facebook.net/es_LA/sdk.js";
+               fjs.parentNode.insertBefore(js, fjs);
+           } (document, 'script', 'facebook-jssdk'));
+
+       }
+
+       var windowheight ;
        var mapGlobal;
        var markerLocal;
        var mapOptionsGlobal;
@@ -134,20 +207,50 @@
        var infowindow;
        var markers = [];
        var items = [];
+       var directionsDisplay;
+       var directionsService = new google.maps.DirectionsService();
+       var markObjetive;
+
+
        $(function () {
+           windowheight = window.innerHeight;
            initialize();
            $('#load').hide();
-           $('#results').css('height', $(window).height()*.67);
+           $('#results').css('height', $(window).height() * .67);
            $(window).resize(function () {
+               windowheight = window.innerHeight;
                $('#results').css('height', $(window).height() * .67);
+               $('.slidesjs-container').css('width', '500px');
+               $('.slidesjs-control').css('width', '500px');
+               $('.slidesjs-container').css('height', '430px !important');
+               $('.slidesjs-control').css('height', '430px !important');
                //$("#log").append("<div>Handler for .resize() called.</div>");
            });
 
+           $(window).change(function () {
+               windowheight = window.innerHeight;
+               $('#results').css('height', $(window).height() * .67);
+               $('.slidesjs-container').css('width', '500px');
+               $('.slidesjs-control').css('width', '500px');
+               $('.slidesjs-container').css('height', '430px !important');
+               $('.slidesjs-control').css('height', '430px !important');
+               //$("#log").append("<div>Handler for .resize() called.</div>");
+           });
+
+           window.onscroll = func;
+
            $.ajaxSetup({ cache: false });
-      });
+       });
+
+       function func() {
+
+           $('#content').css('top', window.pageYOffset);
+           $('#content').css('height', windowheight);
+           //$("#log").append("<div>Handler for .resize() called.</div>");
+       };
 
       function initialize() {
-
+          directionsDisplay = new google.maps.DirectionsRenderer();
           mapOptionsGlobal = {
                center: new google.maps.LatLng(20.6827248, -103.3466798),
                zoom: 14,
@@ -192,6 +295,7 @@
                //new google.maps.Circle(populationOptions);
 
            });
+           directionsDisplay.setMap(mapGlobal); 
 
        }
 
@@ -234,16 +338,17 @@
 
            $('#load').hide();
            var infoItem = eval(sRes)[0];
+
            $.get("../utils/htmlPopUp/item.html", function (respons) {
 
                respons = respons.replace('@logo@', infoItem.logo);
-               respons = respons.replace('@company@','<h1>'+ infoItem.finditoutName+'</h1>');
+               respons = respons.replace('@company@', '<h1>' + infoItem.finditoutName + '</h1>');
                images = infoItem.images.split("@@");
                var divImages = '';
                var counter = 0;
                $.each(images, function (key, value) {
                    //if (counter == 0)
-                   divImages = divImages + '<img id="_' + key + '" src="' + value + '" width="200px" height="150px" ></img>';
+                   divImages = divImages + '<img id="_' + key + '" src="' + value + '" style="width:500px !important; height:430px !important" ></img>';
                    //else
                    //    divImages = divImages + '<img id="_' + key + '" src="' + value + '" style="display:none"></img>';
                    counter = counter + 1;
@@ -252,6 +357,7 @@
                respons = respons.replace('@images@', divImages);
                respons = respons.replace('@producto@', '<h1>' + infoItem.name + '</h1>');
                respons = respons.replace('@description@', infoItem.description);
+               respons = respons.replace('@pluginFace@',  '<div  class="fb-like"  data-send="true"  data-width="430"  data-show-faces="true" data-href="http://www.google.com"></div>');
 
 
                var divphones = '';
@@ -285,11 +391,20 @@
                $('#itemResult').html(respons);
 
                $('#slides').slidesjs({
-                   width: 940,
-                   height: 528,
                    navigation: false
+                   
+
                });
+               $('.slidesjs-container').css('width', '500px');
+               $('.slidesjs-control').css('width', '500px');
+               $('.slidesjs-container').css('height', '430px');
+               $('.slidesjs-control').css('height', '430px');
+
+               FB.XFBML.parse();
+
            });
+
+           
 
        }
      
@@ -298,6 +413,8 @@
            google.maps.event.addListener(marker, 'click', function () {
                infowindow.setContent(contentString);
                infowindow.open(map, marker);
+               makeInfoWindowEvent
+               markObjetive = marker;
            });
        }
 
@@ -305,6 +422,7 @@
            
                infowindow.setContent(contentString);
                infowindow.open(map, marker);
+               markObjetive = marker;
            
        }
 
@@ -342,14 +460,15 @@
 
            $.each(markers, function (index, value) {
                if (value.id == id) {
-                  
+                   //markObjetive = value.mark;
 
                    mapGlobal.setCenter(value.mark.getPosition());
                    $(".itemDivSelected").removeClass().addClass("itemDiv");
                    $("#div" + items[index].idItem).removeClass().addClass("itemDivSelected");
                    makeInfoWindowEventFromDiv(mapGlobal, infowindow, getHtmlpop(items[index]), value.mark);
+
                    //value.mark.setContent(value.mark.getContent().replace('h3','h2'));
-                   
+
                }
 
            });
@@ -397,7 +516,7 @@
            $.each(items, function (index, value) {
                st += "<tr>";
                st += "<td>";
-               st += "<div id='div" + value.idItem + "' class=\"itemDiv\" onclick='javascript:divSelected(" + value.idItem + ","+index+")'>";
+               st += "<div id='div" + value.idItem + "' class=\"itemDiv\" onclick='javascript:divSelected(" + value.idItem + "," + index + ")'>";
                st += "<table>";
                st += "<tr>";
                st += "<td>";
@@ -462,10 +581,10 @@
 
                makeInfoWindowEvent(mapGlobal, infowindow, getHtmlpop(value), marker);
                google.maps.event.addListener(marker, 'click', function () {
-
+                   
                    mapGlobal.setCenter(marker.getPosition());
-                   $(".itemDivSelected").removeClass().addClass("itemDiv"); 
-                   $("#div" + value.idItem).removeClass().addClass("itemDivSelected"); 
+                   $(".itemDivSelected").removeClass().addClass("itemDiv");
+                   $("#div" + value.idItem).removeClass().addClass("itemDivSelected");
                });
 
                markers.push(marker_);
@@ -475,7 +594,15 @@
            $('#results').html(st);
        }
 
+
+       function getRoute() {
+           calcRoute();
+
+       }
+
        function getHtmlpop(value) {
+          // markObjetive = value;
+
           var  st = "<table>";
            st += "<tr>";
            st += "<td>";
@@ -495,19 +622,28 @@
            st += value.name;
            st += "</h3>";
            st += "</td>";
+           
            st += "</tr>";
            st += "<tr>";
            st += "<td>";
 
            st += "<div >"+value.description+"</div>";
-
            st += "</td>";
+
+           st += "<td>";
+           st += "<div id='divRoute' style='border-width: 2px;border-style: solid;' onclick='javascript:getRoute();'>";
+           st += "<img alt='" + value.name + "' src='../images/map-route-icon.png' width='30px' height='30px'  tittle='Route'/>";
+           st += "<div id='divRouteToolTip' >";
+           st += "Route";
+           st += "</div>";
+           st += "</div>";
+           
+           st += "</td>";
+
            st += "</tr>";
            st += "<tr>";
            st += "<td>";
-
            st += "<div ><a onclick=\"javascript:showItemPopUp(" + value.idItem + ")\">Detalles</a></div>";
-
            st += "</td>";
            st += "</tr>";
            st += "<tr>";
@@ -526,10 +662,9 @@
            st += "</tr>";
            st += "<tr>";
            st += "<td>";
-
            st += "<div ><a href='#'><span onclick='javascript:showCompany("+value.idItem+");'>"+value.finditoutName+"</span></a></div>";
-
            st += "</td>";
+           
            st += "</tr>";
            st += "</table>";
 
@@ -633,6 +768,10 @@
 
 
 </div>
+<div id="itemResult">
+
+</div>
+
 
 
 </asp:Content>
