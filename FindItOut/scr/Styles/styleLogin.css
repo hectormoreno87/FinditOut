@@ -128,7 +128,7 @@ table .login
 
 .errorPeque
 {
-    font-size:10px;    
+    font-size:12px;    
     color:Orange;
 }
 
@@ -214,7 +214,7 @@ table .tabla_sola
     border-radius: 10px;   
     }
     
-<<<<<<< HEAD
+
 
     
     .itemPopUp
@@ -239,8 +239,6 @@ table .tabla_sola
    }
    
 
-=======
->>>>>>> 208d64d13b7b7557f06a4424c25fc2cd68181de3
     .modalPopup
 {
     border-width: 5px;
