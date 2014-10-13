@@ -47,10 +47,14 @@ public partial class Inicio : System.Web.UI.Page
                     {
                         HttpContext.Current.Session["user"] = dt.Rows[0]["nikname"].ToString().Trim();
                         HttpContext.Current.Session["findOut"] = dt.Rows[0]["findOut"].ToString().Trim();
+                        HttpContext.Current.Session["idEmpresa"] = dt.Rows[0]["idEmpresa"].ToString().Trim();
                     }
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) {
+            
+            
+            }
         }
     }
 

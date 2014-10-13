@@ -106,14 +106,14 @@ public class wsFindItOut : System.Web.Services.WebService {
           catch (Exception ex) { }
 
           sucuesales = "<ul class=\"dropdown\">" +
-                                "<li class=\"active\">Mis Sucursales</li>" +
+                                //"<li class=\"active\">Mis Sucursales</li>" +
                                 "<li class=\"first\"><a href=\"Sucursales.aspx\">"+ Resources.GlobalResource.lbl_NuevaSuc +"</a></li>";
 
           if (dt.Rows.Count > 0 && dt != null)
           {
               foreach (DataRow row in dt.Rows)
               {
-                  sucuesales += "<li><a href=\"#\"> " + row["suc"] + "</a></li>";
+                  sucuesales += "<li><a href=\"Sucursales.aspx?id=" + row["idSuc"].ToString() + "\"> " + row["suc"] + "</a></li>";
               }              
           }
           sucuesales += "</ul>";

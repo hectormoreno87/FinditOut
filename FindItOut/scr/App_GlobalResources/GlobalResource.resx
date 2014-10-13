@@ -379,13 +379,13 @@
     <value>Teléfono</value>
   </data>
   <data name="lbl_telSucExpli" xml:space="preserve">
-    <value>Teléfono de la sucursal</value>
+    <value>    Teléfono de la sucursal</value>
   </data>
   <data name="lbl_telSucExpliMas" xml:space="preserve">
     <value>Agregar otro número</value>
   </data>
   <data name="lbl_UsarWhatsApp" xml:space="preserve">
-    <value>¿Usar tambien como WatsApp?</value>
+    <value>    ¿Usar tambien como WatsApp?</value>
   </data>
   <data name="lbl_MailExpli" xml:space="preserve">
     <value>El correo de tu empresa</value>

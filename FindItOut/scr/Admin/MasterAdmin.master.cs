@@ -20,6 +20,7 @@ public partial class Admin_MasterAdmin : System.Web.UI.MasterPage
         
         else
             this.hidden.Value = this.Session["findOut"].ToString();
+        
     }
     
 }
