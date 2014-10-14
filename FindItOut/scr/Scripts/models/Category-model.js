@@ -3,8 +3,8 @@
   'backbone',
   'models/product-model',
   'collections/product-collection',
-  'backbone-relational'
-
+  'backbone-relational',
+  'libs/backbone/backbone-validator'
 ], function (_, Backbone, ProductModel, ProductCollection) {
 
     var CategoryModel = Backbone.RelationalModel.extend({
@@ -24,7 +24,17 @@
                 key: 'Category',
                 includeInJSON: false
             }
-        }]
+        }],
+        validation: {
+            categoryName: {
+                required: true,
+                maxLength: 100,
+                message: 'Name is required'
+            }
+        },
+        clear: function () {
+            this.destroy();
+        }
     });
 
     return CategoryModel;

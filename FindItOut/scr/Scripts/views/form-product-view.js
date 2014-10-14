@@ -4,7 +4,8 @@
   'backbone',
   'text!templates/form-product.html',
   'jquery.form',
-  'libs/jquery/jquery.blockUI'
+  'libs/jquery/jquery.blockUI',
+  'libs/backbone/backbone-validator'
 ], function ($, _, Backbone, formProductTemplate) {
 
     var FormProductView = Backbone.View.extend({
@@ -14,9 +15,11 @@
 
         initialize: function () {
             that = this;
-            this.render = _.bind(this.render, this);
+            //this.render = _.bind(this.render, this);
+            _.bindAll(this, 'render', 'remove');
             this.model.bind('change', this.render);
             this.model.bind('destroy', this.remove);
+            this.bindValidation();
             this.attribute = {};
         },
 
@@ -44,14 +47,26 @@
         save: function () {
             var cloneModel = this.model.clone();
             cloneModel.set(this.attribute);
+            this.model.set(this.attribute, { validate: true });
             var idCategory = cloneModel.get('idCategory');
-            PageMethods.saveProduct(hdnUser, idCategory, cloneModel.toJSON(), this.onCompleteSaveProduct);
-            $.blockUI();
+            if (cloneModel.isValid()) {
+                PageMethods.saveProduct(hdnUser, idCategory, cloneModel.toJSON(), this.onCompleteSaveProduct);
+                $.blockUI();
+            }
         },
 
         onCompleteSaveProduct: function (res) {
+            var added = false;
+            //if (that.model.get('idProduct') === 0) {
+            //    added = true;
+            //}
             that.model.set(that.attribute);
             that.model.set('idProduct', res);
+            //if (added) {
+            //    appView.categories.where({ idCategory: that.model.get('idCategory') })[0].get('Products').push(that.model.toJSON());
+            //}
+            //appView.categories.where({ idCategory: that.model.get('idCategory') })[0].trigger('change');
+            appView.getCategories();
             $.unblockUI();
         },
 
@@ -63,11 +78,12 @@
             var A = $("#imageloadstatus");
             var B = $("#imageloadbutton");
 
-            var model = this.model.toJSON();
+            var modelJSON = this.model.toJSON();
+            var model = this.model;
             $("#imageform").ajaxForm({
                 target: '#preview',
                 dataType: 'json',
-                data: model,
+                data: modelJSON,
                 beforeSubmit: function () {
                     A.show();
                     B.hide();
@@ -76,7 +92,7 @@
                     A.hide();
                     B.show();
                     if (res.success) {
-                        var modelAux = that.model;
+                        var modelAux = model;
                         var images = modelAux.get('ProductImages');
                         if (!images) {
                             images = new Array();
@@ -110,9 +126,9 @@
                     images = new Array();
                 }
                 var imgToRem;
-                $.each(images, function (index, value) {                    
+                $.each(images, function (index, value) {
                     if (value.idImage == res.idImage) {
-                        imgToRem = index; 
+                        imgToRem = index;
                     }
                 });
                 images.splice(imgToRem, 1);

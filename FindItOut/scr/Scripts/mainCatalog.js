@@ -1,8 +1,8 @@
 ﻿require.config({
     paths: {
         jquery: 'libs/jquery/jquery-min',
-        underscore: 'libs/underscore/underscore-min',
-        backbone: 'libs/backbone/backbone-min',
+        underscore: 'libs/underscore/underscore',
+        backbone: 'libs/backbone/backbone',
         'backbone-relational': 'libs/backbone/backbone-relational',
         templates: 'views/templates',
         'jquery-ui': 'libs/jquery/jquery-ui-min'

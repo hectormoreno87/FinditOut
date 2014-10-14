@@ -13,7 +13,8 @@
 
         initialize: function () {
             that = this;
-             this.render = _.bind(this.render, this);
+             //this.render = _.bind(this.render, this);
+            _.bindAll(this, 'render', 'remove');
             this.model.bind('change', this.render);
             this.model.bind('destroy', this.remove);
         },
@@ -37,13 +38,14 @@
         },
 
         delete: function () {
-            PageMethods.deleteProduct(this.model.get('idProduct'), this.onCompleteDeleteProduct);
+            var idUser = hdnUser;
+            PageMethods.deleteProduct(idUser, this.model.get('idProduct'), this.onCompleteDeleteProduct);
             $.blockUI();
         },
 
         onCompleteDeleteProduct: function (res) {
-            //that.model.destroy();
-            that.remove();
+            that.model.clear();
+            //that.remove();
             $.unblockUI();
         },
 

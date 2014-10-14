@@ -14,7 +14,8 @@
         className: 'product',
 
         initialize: function () {
-            this.render = _.bind(this.render, this);
+            //this.render = _.bind(this.render, this);
+            _.bindAll(this, 'render', 'remove');
             this.model.bind('change', this.render);
             this.model.bind('destroy', this.remove);
         },

@@ -17,7 +17,7 @@
         className: 'category',
 
         initialize: function () {
-            this.render = _.bind(this.render, this);
+            _.bindAll(this, 'render', 'remove');
             this.model.bind('change', this.render);
             this.model.bind('destroy', this.remove);
         },
@@ -41,6 +41,7 @@
             if (this.model.get('idCategory') > 0) {
                 var productModel = new ProductModel();
                 productModel.set('idCategory', this.model.get('idCategory'));
+                //productModel.set('Category', this.model, { add: true });
                 var prodView = new ProductView({ model: productModel });
                 prodView.render();
                 this.$('#cat_' + this.model.get('idCategory')).append(prodView.el);

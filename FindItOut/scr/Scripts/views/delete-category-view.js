@@ -13,7 +13,7 @@
 
         initialize: function () {
             that = this;
-             this.render = _.bind(this.render, this);
+             _.bindAll(this, 'render', 'remove');
             this.model.bind('change', this.render);
             this.model.bind('destroy', this.remove);
         },
@@ -37,13 +37,13 @@
         },
 
         delete: function () {
-            PageMethods.deleteCategory(this.model.get('idCategory'), this.onCompleteDeleteCategory);
+            var idUser = hdnUser;
+            PageMethods.deleteCategory(idUser, this.model.get('idCategory'), this.onCompleteDeleteCategory);
             $.blockUI();
         },
 
         onCompleteDeleteCategory : function (res) {
-            //that.model.destroy();
-            that.remove();
+            that.model.clear();
             $.unblockUI();
         },
 

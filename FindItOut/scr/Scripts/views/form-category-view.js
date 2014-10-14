@@ -3,7 +3,8 @@
   'underscore',
   'backbone',
   'text!templates/form-category.html',
-  'libs/jquery/jquery.blockUI'
+  'libs/jquery/jquery.blockUI',
+  'libs/backbone/backbone-validator'
 ], function ($, _, Backbone, formCategoryTemplate) {
 
     var FormCategoryView = Backbone.View.extend({
@@ -13,9 +14,10 @@
 
         initialize: function () {
             that = this;
-            this.render = _.bind(this.render, this);
+            _.bindAll(this, 'render', 'remove');
             this.model.bind('change', this.render);
             this.model.bind('destroy', this.remove);
+            this.bindValidation();
             this.attribute = {};
         },
 
@@ -41,13 +43,25 @@
         save: function () {
             var cloneModel = this.model.clone();
             cloneModel.set(this.attribute);
-            PageMethods.saveCategory(hdnUser, cloneModel.toJSON(), this.onCompleteSaveCategory);
-            $.blockUI();
+            this.model.set(this.attribute, { validate: true });
+            if (cloneModel.isValid()) {
+                PageMethods.saveCategory(hdnUser, cloneModel.toJSON(), this.onCompleteSaveCategory);
+                $.blockUI();
+            } 
         },
 
         onCompleteSaveCategory: function (res) {
+            var added = false;
+            if (that.model.get('idCategory') === 0) {
+                added = true;
+            }
             that.model.set(that.attribute);
-            that.model.set('idCategory', res);
+            if (added) {
+                that.model.set('idCategory', res);
+                that.model.set('Products', []);
+                appView.categories.push(that.model.toJSON());
+                appView.render();
+            }
             $.unblockUI();
         },
 

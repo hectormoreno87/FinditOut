@@ -23,8 +23,7 @@
             min-height: 0;
             height: 165px;
             width: 165px;
-            text-align: center;
-            /*padding: 92px 10px 0 10px;*/
+            text-align: center; /*padding: 92px 10px 0 10px;*/
             margin: 0 20px 30px 0;
             background-color: lightsteelblue;
         }
@@ -33,13 +32,20 @@
         {
             height: 80px;
             width: 165px;
-            text-align: center;
-            /*padding: 92px 10px 0 10px;*/
-            /*margin: 0 20px 30px 0;*/
+            text-align: center; /*padding: 92px 10px 0 10px;*/ /*margin: 0 20px 30px 0;*/
             background-color: lightsteelblue;
         }
-       
         
+        label, input, .error-text
+        {
+            display: inline-block;
+            margin: 0 10px 15px 0;
+        }
+        
+        .error-text
+        {
+            color: #900;
+        }
     </style>    
     <script src="../scripts/libs/jquery/jquery-min.js"></script>
     <script type="text/javascript">

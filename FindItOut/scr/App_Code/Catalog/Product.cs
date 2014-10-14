@@ -13,8 +13,8 @@ public class Product
     public bool active { get; set; }
     public string productName { get; set; }
     public string description { get; set; }
-    public decimal cost { get; set; }
-    public decimal blocked { get; set; }
+    public decimal price { get; set; }
+    public bool blocked { get; set; }
     public List<ProductImage> ProductImages;
     
 }

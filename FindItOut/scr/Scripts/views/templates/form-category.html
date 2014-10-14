@@ -10,7 +10,7 @@
         <table>
             <tr>
                 <td>
-                    id
+                    <label for="idCategory">id</label>
                 </td>
                 <td>
                     <%= idCategory %>
@@ -18,18 +18,18 @@
             </tr>
             <tr>
                 <td>
-                    Active
+                    <label for="active">Active</label>
                 </td>
                 <td>
-                    <input type="checkbox" name="active" value="true"<% if (active == true) { %> checked="checked" <% } %> />
+                    <input type="checkbox" name="active" id="active" value="true"<% if (active == true) { %> checked="checked" <% } %> />
                 </td>
             </tr>
             <tr>
                 <td>
-                    Name
+                    <label for="categoryName">Name</label>                    
                 </td>
                 <td>
-                    <input type="text" name="categoryName" class="input-block-level" value="<%= categoryName %>">
+                    <input type="text" name="categoryName" id="categoryName" class="input-block-level" value="<%= categoryName %>">
                 </td>
             </tr>
         </table>

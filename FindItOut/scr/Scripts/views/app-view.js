@@ -25,6 +25,18 @@
 
         render: function () {
             this.$el.html(this.template());
+
+            for (var i = 0; i < this.categories.length; i++) {
+                var catModel = this.categories.at(i);
+                var catView = new CategoryView({ model: catModel });
+                catView.render();
+                this.$('#appMain').append(catView.el);
+            }
+
+            var catView = new CategoryView({ model: new CategoryModel() });
+            catView.render();
+            this.$('#appMain').append(catView.el);
+
             return this;
         },
 
@@ -35,18 +47,8 @@
 
         onCompleteCategories: function (res) {
             var collection = new CategoryCollection(res);
-            that.render();
-            for (var i = 0; i < collection.length; i++) {
-                var catModel = collection.at(i);
-                var catView = new CategoryView({ model: catModel });
-                catView.render();
-                that.$('#appMain').append(catView.el);
-            }
-
-            var catView = new CategoryView({ model: new CategoryModel() });
-            catView.render();
-            that.$('#appMain').append(catView.el);
-
+            appView.categories = collection;
+            appView.render();           
             $.unblockUI();
         }
 

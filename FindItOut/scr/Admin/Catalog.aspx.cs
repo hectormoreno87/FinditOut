@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
@@ -201,9 +202,24 @@ public partial class Admin_Catalog : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static bool deleteCategory(int idCategory)
+    public static GenericResponse deleteCategory(int idUser, int idCategory)
     {
-        return true;
+        GenericResponse ret = new GenericResponse();
+        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
+        parameters.Add("idUser", idUser);
+        parameters.Add("idCategoria", idCategory);
+        DataSet result;
+        try
+        {
+            result = DataAccess.executeStoreProcedureDataSet("Spr_delete_category", parameters);
+        }
+        catch (Exception ex)
+        {
+            ret.success = false;
+            ret.message = ex.Message;
+        }
+
+        return ret;
     }
 
     [WebMethod]
@@ -215,6 +231,9 @@ public partial class Admin_Catalog : System.Web.UI.Page
         parameters.Add("idProducto", product.idProduct);
         parameters.Add("activo", product.active);
         parameters.Add("productoNombre", product.productName);
+        parameters.Add("descripcion", product.description);
+        parameters.Add("precio", product.price);
+        parameters.Add("bloqueado", product.blocked);
         int result = 0;
         try
         {
@@ -228,9 +247,52 @@ public partial class Admin_Catalog : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static bool deleteProduct(int idProduct)
+    public static GenericResponse deleteProduct(int idUser, int idProduct)
     {
-        return true;
+        GenericResponse ret = new GenericResponse();
+
+        Dictionary<string, object> parameters = new System.Collections.Generic.Dictionary<string, object>();
+        parameters.Add("idUser", idUser);
+        parameters.Add("idProducto", idProduct);
+        DataSet result;
+        try
+        {
+            result = DataAccess.executeStoreProcedureDataSet("Spr_delete_product", parameters);
+            if (null != result)
+            {
+                //Verificando respuesta
+                if ((int)result.Tables[0].Rows[0]["Success"] == 1)
+                {
+                    string carpeta = string.Empty;
+                    parameters.Clear();
+                    parameters.Add("idUser", idUser);
+                    carpeta = DataAccess.executeStoreProcedureString("spr_Get_InfoLogo", parameters);
+                    if (!String.IsNullOrEmpty(carpeta))
+                    {
+                        string PathDocs = ConfigurationManager.AppSettings["EmpresasFiles"];
+                        string inicio = HttpContext.Current.Server.MapPath( PathDocs );
+                        string directorioFisico = inicio + carpeta + "\\products\\" + idProduct;
+                        //Si ok Eliminando fotos
+                        foreach ( DataRow row in result.Tables[1].Rows )
+                        {                            
+                            if (System.IO.File.Exists(directorioFisico + "\\" + (string)row["nombreArchivo"] ))
+                                File.Delete(directorioFisico + "\\" + (string)row["nombreArchivo"]);
+
+                            if (System.IO.File.Exists(directorioFisico + "\\small_" + (string)row["nombreArchivo"]))
+                                File.Delete(directorioFisico + "\\small_" + (string)row["nombreArchivo"]);
+                        }
+
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ret.success = false;
+            ret.message = ex.Message;
+        }
+
+        return ret;
     }
 
     [WebMethod]
