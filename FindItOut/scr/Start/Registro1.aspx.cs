@@ -58,7 +58,7 @@ public partial class Registro1 : System.Web.UI.Page
                         //mail = Common.codifica(mail);
                         //pass = Common.codifica(pass);
                         //string id = Common.codifica(dt.Rows[0]["llave"].ToString());
-                       Common.SendMailByDictionary(pv, files, /*mail*/"maritza.morfin@dominio6.com", "preAprobada", mail, tok);
+                       Common.SendMailByDictionary(pv, files, /*mail*/"mmorfin7@hotmail.com", "preAprobada", mail, tok);
                         
                         
                     }

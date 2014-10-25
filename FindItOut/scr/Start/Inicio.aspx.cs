@@ -12,7 +12,7 @@ public partial class Inicio : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         //pruebas
-        txtMail.Text = "m@hotmail.com";
+        txtMail.Text = "m@m.com";
         txtPass.Text = "123";
         Session["user"] =
             Session["err"] =

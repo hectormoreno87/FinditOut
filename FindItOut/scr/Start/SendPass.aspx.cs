@@ -29,7 +29,7 @@ public partial class SendPass : System.Web.UI.Page
                 var pv = new Dictionary<string, string>();
                 var files = new Dictionary<string, Stream>();
 
-                Common.SendMailByDictionary(pv, files, /*mail*/"maritza.morfin@dominio6.com", "MandarPass", pass);
+                Common.SendMailByDictionary(pv, files, /*mail*/"mmorfin7@hotmail.com", "MandarPass", pass);
                 HttpContext.Current.Session["passEnviadoBien"] = "true";
             }
             catch (Exception ex)

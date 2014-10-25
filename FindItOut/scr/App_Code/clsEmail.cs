@@ -206,13 +206,19 @@ public class clsEmail
     //correo de envio de password
     public void Send( string pass)
     {
-        //SmtpClient client = new SmtpClient(_sSMTPClient, _iPort);
-        SmtpClient client = new SmtpClient(_sSMTPClient);
-        //client.EnableSsl = true;        
-        client.Credentials = new System.Net.NetworkCredential(_sNetCredUsername, _sNetCredPassword);
+        
+        SmtpClient client = new SmtpClient(/*_sSMTPClient*/);
+               
+        /*Descomentar en producción*/
+        //client.Credentials = new System.Net.NetworkCredential(_sNetCredUsername, _sNetCredPassword);
         MailAddress ma_From = new MailAddress(_FromAddress, "Find It Out",System.Text.Encoding.UTF8);
         MailMessage message = new MailMessage();
         message.From = ma_From;
+
+
+        /*Usar durante pruebas*/
+        client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
+        client.PickupDirectoryLocation = "c:\\temp\\maildrop\\";
 
         string[] mailAddresses = _ToAddress.Split(new char[] { ',', ';' });
         foreach (string mail in mailAddresses)

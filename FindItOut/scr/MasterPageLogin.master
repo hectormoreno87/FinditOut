@@ -83,6 +83,11 @@
                                         </a>
                                     </td>
                                     <td class="menu">
+                                        <a href="../AdminSystem/Membresias.aspx">
+                                            <asp:Literal ID="Literal1" runat="server" Text="Membresias"></asp:Literal>
+                                        </a>
+                                    </td>
+                                    <td class="menu">
                                         <a href="../Start/Nosotros.aspx">
                                             <asp:Literal ID="Literal7" runat="server" Text='<%$ Resources:Globalresource, menuNosotros %>'></asp:Literal>
                                         </a>
